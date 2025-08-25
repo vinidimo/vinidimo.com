@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Agência de design gráfico e digital. Criação de identidade visual, sites, landing pages e materiais promocionais para empresas.">
+  <title>Vinidimo Design | Soluções em Design Gráfico e Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {margin:0;padding:0;box-sizing:border-box;}
+    body {
+      font-family:'Inter',sans-serif;
+      line-height:1.6;
+      color:#333;
+      background:#fff;
+    }
+    header {
+      background:#111;
+      color:#fff;
+      padding:2rem 1rem;
+      text-align:center;
+    }
+    header h1 {font-size:2rem;margin-bottom:0.5rem;}
+    header p {font-size:1rem;opacity:0.8;}
+    nav {
+      margin-top:1rem;
+    }
+    nav a {
+      color:#fff;
+      margin:0 0.5rem;
+      text-decoration:none;
+      font-weight:600;
+    }
+    section {
+      max-width:1000px;
+      margin:auto;
+      padding:3rem 1rem;
+    }
+    .cta {
+      display:inline-block;
+      margin-top:1rem;
+      background:#0077ff;
+      color:#fff;
+      padding:0.75rem 1.5rem;
+      border-radius:4px;
+      text-decoration:none;
+      font-weight:600;
+      transition:background 0.3s;
+    }
+    .cta:hover {background:#005ccc;}
+    .grid {
+      display:grid;
+      gap:1.5rem;
+    }
+    .grid-3 {grid-template-columns:repeat(auto-fit,minmax(250px,1fr));}
+    .card {
+      background:#f7f7f7;
+      padding:2rem;
+      border-radius:6px;
+      text-align:center;
+    }
+    .portfolio img {
+      width:100%;
+      height:auto;
+      border-radius:6px;
+      display:block;
+    }
+    form {
+      display:grid;
+      gap:1rem;
+      max-width:500px;
+      margin:auto;
+    }
+    input,textarea {
+      padding:0.75rem;
+      border:1px solid #ccc;
+      border-radius:4px;
+      font-size:1rem;
+      width:100%;
+    }
+    button {
+      background:#0077ff;
+      color:#fff;
+      border:none;
+      padding:0.75rem;
+      font-size:1rem;
+      border-radius:4px;
+      cursor:pointer;
+      transition:background 0.3s;
+    }
+    button:hover {background:#005ccc;}
+    footer {
+      text-align:center;
+      padding:2rem 1rem;
+      background:#111;
+      color:#fff;
+      font-size:0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Vinidimo Design</h1>
+    <p>Soluções em design gráfico e digital para empresas</p>
+    <nav>
+      <a href="#servicos">Serviços</a>
+      <a href="#portfolio">Portfólio</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <section id="hero">
+    <h2>Design que gera impacto e resultados</h2>
+    <p>Identidade visual, materiais digitais e sites criados sob medida para destacar sua marca.</p>
+    <a href="#contato" class="cta">Peça um orçamento</a>
+  </section>
+
+  <section id="servicos">
+    <h2>Nossos Serviços</h2>
+    <div class="grid grid-3">
+      <div class="card"><h3>Identidade Visual</h3><p>Criação de logotipos e branding para fortalecer sua marca.</p></div>
+      <div class="card"><h3>Materiais Digitais</h3><p>Posts para redes sociais, apresentações e materiais gráficos.</p></div>
+      <div class="card"><h3>Sites e Landing Pages</h3><p>Projetos digitais responsivos e otimizados para conversão.</p></div>
+    </div>
+  </section>
+
+  <section id="portfolio" class="portfolio">
+    <h2>Portfólio</h2>
+    <div class="grid grid-3">
+      <img src="img/projeto1.jpg" alt="Projeto de design 1">
+      <img src="img/projeto2.jpg" alt="Projeto de design 2">
+      <img src="img/projeto3.jpg" alt="Projeto de design 3">
+    </div>
+  </section>
+
+  <section id="contato">
+    <h2>Entre em Contato</h2>
+    <form action="https://formspree.io/f/{SEU_ID}" method="POST">
+      <input type="text" name="name" placeholder="Seu nome" required>
+      <input type="email" name="email" placeholder="Seu e-mail" required>
+      <textarea name="message" rows="5" placeholder="Sua mensagem" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>© 2025 Vinidimo Design · contato@vinidimo.com</p>
+  </footer>
+
+</body>
+</html>
