@@ -3,152 +3,160 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Agência de design gráfico e digital. Criação de identidade visual, sites, landing pages e materiais promocionais para empresas.">
-  <title>vinidimo Design | Soluções em Design Gráfico e Digital</title>
+  <meta name="description" content="vinidimo — design gráfico e digital. Criação de identidades visuais, materiais digitais, sites e landing pages otimizadas para empresas e profissionais.">
+  <title>vinidimo | Design gráfico e digital</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {margin:0;padding:0;box-sizing:border-box;}
-    body {
-      font-family:'Inter',sans-serif;
-      line-height:1.6;
-      color:#333;
-      background:#fff;
-    }
-    header {
-      background:#111;
-      color:#fff;
-      padding:2rem 1rem;
-      text-align:center;
-    }
-    header h1 {font-size:2rem;margin-bottom:0.5rem;}
-    header p {font-size:1rem;opacity:0.8;}
-    nav {
-      margin-top:1rem;
-    }
-    nav a {
-      color:#fff;
-      margin:0 0.5rem;
-      text-decoration:none;
-      font-weight:600;
-    }
-    section {
-      max-width:1000px;
-      margin:auto;
-      padding:3rem 1rem;
-    }
-    .cta {
-      display:inline-block;
-      margin-top:1rem;
-      background:#0077ff;
-      color:#fff;
-      padding:0.75rem 1.5rem;
-      border-radius:4px;
-      text-decoration:none;
-      font-weight:600;
-      transition:background 0.3s;
-    }
-    .cta:hover {background:#005ccc;}
-    .grid {
-      display:grid;
-      gap:1.5rem;
-    }
-    .grid-3 {grid-template-columns:repeat(auto-fit,minmax(250px,1fr));}
-    .card {
-      background:#f7f7f7;
-      padding:2rem;
-      border-radius:6px;
-      text-align:center;
-    }
-    .portfolio img {
-      width:100%;
-      height:auto;
-      border-radius:6px;
-      display:block;
-    }
-    form {
-      display:grid;
-      gap:1rem;
-      max-width:500px;
-      margin:auto;
-    }
-    input,textarea {
-      padding:0.75rem;
-      border:1px solid #ccc;
-      border-radius:4px;
-      font-size:1rem;
-      width:100%;
-    }
-    button {
-      background:#0077ff;
-      color:#fff;
-      border:none;
-      padding:0.75rem;
-      font-size:1rem;
-      border-radius:4px;
-      cursor:pointer;
-      transition:background 0.3s;
-    }
-    button:hover {background:#005ccc;}
-    footer {
-      text-align:center;
-      padding:2rem 1rem;
-      background:#111;
-      color:#fff;
-      font-size:0.9rem;
-    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Inter',sans-serif;line-height:1.6;color:#333;background:#fff;}
+    img{max-width:100%;display:block;border-radius:6px;}
+    a{text-decoration:none;color:inherit;}
+    h2{text-transform:uppercase;text-align:center;font-size:1.8rem;margin-bottom:2rem;position:relative;}
+    h2::after{content:"";display:block;width:60px;height:3px;background:#0077ff;margin:0.5rem auto;}
+
+    /* Header fixo */
+    header{background:#111;color:#fff;padding:1.5rem;text-align:center;position:fixed;top:0;left:0;width:100%;z-index:10;}
+    header h1{text-transform:lowercase;font-size:1.6rem;}
+    nav{margin-top:0.5rem;}
+    nav a{color:#fff;margin:0 0.8rem;font-weight:600;transition:color .3s;}
+    nav a:hover{color:#0077ff;}
+
+    /* Seções altura cheia */
+    section{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:4rem 1rem;}
+    #hero{text-align:center;}
+    #hero h2{font-size:2rem;margin-bottom:1rem;}
+    #hero p{font-size:1.1rem;max-width:700px;margin:auto;}
+    .cta{display:inline-block;margin-top:1.5rem;background:#0077ff;color:#fff;padding:0.9rem 1.8rem;border-radius:4px;font-weight:600;transition:background .3s;}
+    .cta:hover{background:#005ccc;}
+
+    .grid{display:grid;gap:1.5rem;}
+    .grid-3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
+    .card{background:#f7f7f7;padding:2rem;border-radius:6px;text-align:center;transition:transform .3s,box-shadow .3s;}
+    .card:hover{transform:translateY(-5px);box-shadow:0 8px 16px rgba(0,0,0,.1);}
+
+    .portfolio-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));}
+    .portfolio-grid img{cursor:pointer;transition:transform .3s;}
+    .portfolio-grid img:hover{transform:scale(1.05);}
+
+    #modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:100;}
+    #modal img{max-width:90%;max-height:90%;border-radius:8px;}
+
+    form{display:grid;gap:1rem;max-width:500px;width:100%;}
+    input,textarea{padding:0.8rem;border:1px solid #ccc;border-radius:4px;font-size:1rem;}
+    button{background:#0077ff;color:#fff;border:none;padding:0.9rem;font-size:1rem;border-radius:4px;cursor:pointer;transition:background .3s;}
+    button:hover{background:#005ccc;}
+
+    footer{background:#111;color:#fff;text-align:center;padding:2rem 1rem;font-size:0.9rem;}
+    .social{margin-top:1rem;}
+    .social a{margin:0 0.5rem;color:#fff;font-size:1.4rem;transition:color .3s;}
+    .social a:hover{color:#0077ff;}
+
+    /* Animações */
+    .fade-in{opacity:0;transform:translateY(30px);transition:all 0.8s ease;}
+    .fade-in.visible{opacity:1;transform:translateY(0);}
+    body{scroll-behavior:smooth;}
   </style>
 </head>
 <body>
 
   <header>
-    <h1>vinidimo Design</h1>
-    <p>Soluções em design gráfico e digital para empresas</p>
+    <h1>vinidimo</h1>
     <nav>
+      <a href="#hero">Início</a>
       <a href="#servicos">Serviços</a>
       <a href="#portfolio">Portfólio</a>
+      <a href="#sobre">Sobre</a>
       <a href="#contato">Contato</a>
     </nav>
   </header>
 
-  <section id="hero">
-    <h2>Design que gera impacto e resultados</h2>
-    <p>Identidade visual, materiais digitais e sites criados sob medida para destacar sua marca.</p>
-    <a href="#contato" class="cta">Peça um orçamento</a>
+  <section id="hero" class="fade-in">
+    <h2>Design que gera impacto</h2>
+    <p>Na <strong>vinidimo</strong>, transformamos ideias em projetos visuais marcantes. Criamos identidades visuais, materiais digitais e landing pages pensadas para atrair clientes e gerar resultados.</p>
+    <a href="#contato" class="cta">Solicite um orçamento</a>
   </section>
 
-  <section id="servicos">
-    <h2>Nossos Serviços</h2>
+  <section id="servicos" class="fade-in">
+    <h2>Serviços</h2>
     <div class="grid grid-3">
-      <div class="card"><h3>Identidade Visual</h3><p>Criação de logotipos e branding para fortalecer sua marca.</p></div>
-      <div class="card"><h3>Materiais Digitais</h3><p>Posts para redes sociais, apresentações e materiais gráficos.</p></div>
-      <div class="card"><h3>Sites e Landing Pages</h3><p>Projetos digitais responsivos e otimizados para conversão.</p></div>
+      <div class="card"><h3>Identidade Visual</h3><p>Logotipos, guias de marca e materiais que fortalecem sua empresa.</p></div>
+      <div class="card"><h3>Design Digital</h3><p>Posts para redes sociais, banners e artes para campanhas online.</p></div>
+      <div class="card"><h3>Apresentações</h3><p>Materiais institucionais criados para impressionar clientes e investidores.</p></div>
+      <div class="card"><h3>Landing Pages</h3><p>Páginas responsivas e focadas em conversão para suas campanhas.</p></div>
+      <div class="card"><h3>Materiais Impressos</h3><p>Cartões, folders e catálogos modernos e profissionais.</p></div>
+      <div class="card"><h3>Projetos Sob Medida</h3><p>Design gráfico adaptado às necessidades da sua marca.</p></div>
     </div>
   </section>
 
-  <section id="portfolio" class="portfolio">
+  <section id="portfolio" class="fade-in">
     <h2>Portfólio</h2>
-    <div class="grid grid-3">
-      <img src="img/projeto1.jpg" alt="Projeto de design 1">
-      <img src="img/projeto2.jpg" alt="Projeto de design 2">
-      <img src="img/projeto3.jpg" alt="Projeto de design 3">
+    <div class="portfolio-grid">
+      <img src="https://via.placeholder.com/400x300" alt="Projeto 1">
+      <img src="https://via.placeholder.com/400x300" alt="Projeto 2">
+      <img src="https://via.placeholder.com/400x300" alt="Projeto 3">
+      <img src="https://via.placeholder.com/400x300" alt="Projeto 4">
     </div>
   </section>
 
-  <section id="contato">
-    <h2>Entre em Contato</h2>
+  <section id="sobre" class="fade-in">
+    <h2>Sobre</h2>
+    <p>A <strong>vinidimo</strong> é um estúdio de design focado em soluções criativas para negócios que buscam se destacar. Atuamos em identidade visual, marketing digital e comunicação gráfica. Cada projeto é pensado para unir estética e estratégia, ajudando marcas a se conectarem melhor com seu público.</p>
+  </section>
+
+  <section id="contato" class="fade-in">
+    <h2>Contato</h2>
     <form action="https://formspree.io/f/{SEU_ID}" method="POST">
       <input type="text" name="name" placeholder="Seu nome" required>
       <input type="email" name="email" placeholder="Seu e-mail" required>
       <textarea name="message" rows="5" placeholder="Sua mensagem" required></textarea>
-      <button type="submit">Enviar</button>
+      <button type="submit">Enviar mensagem</button>
     </form>
   </section>
 
   <footer>
-    <p>© 2025 vinidimo Design · contato@vinidimo.com</p>
+    <p>© 2025 vinidimo — Todos os direitos reservados</p>
+    <div class="social">
+      <a href="https://instagram.com/vinidimo" target="_blank">📷</a>
+      <a href="https://behance.net/vinidimo" target="_blank">🎨</a>
+      <a href="https://linkedin.com/in/vini-dimo" target="_blank">💼</a>
+      <a href="mailto:contato@vinidimo.com">✉️</a>
+    </div>
   </footer>
 
+  <div id="modal"><img src="" alt="Imagem ampliada"></div>
+
+  <script>
+    // Scroll suave ao clicar nos links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+      anchor.addEventListener("click",function(e){
+        e.preventDefault();
+        document.querySelector(this.getAttribute("href")).scrollIntoView({behavior:"smooth"});
+      });
+    });
+
+    // Modal de imagens
+    const modal=document.getElementById("modal");
+    const modalImg=modal.querySelector("img");
+    document.querySelectorAll(".portfolio-grid img").forEach(img=>{
+      img.addEventListener("click",()=>{
+        modal.style.display="flex";
+        modalImg.src=img.src;
+      });
+    });
+    modal.addEventListener("click",()=>{modal.style.display="none";});
+
+    // Animação de entrada com Intersection Observer
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },{threshold:0.2});
+
+    document.querySelectorAll(".fade-in").forEach(el=>observer.observe(el));
+  </script>
 </body>
 </html>
-
