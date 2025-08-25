@@ -3,157 +3,210 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="vinidimo — estúdio de design gráfico e digital. Criamos identidades visuais, materiais para redes sociais, sites e landing pages otimizadas para empresas e profissionais.">
+  <meta name="description" content="vinidimo — estúdio de design gráfico e digital. Identidade visual, materiais para redes sociais, sites e landing pages otimizadas.">
   <title>vinidimo | Estúdio de design gráfico e digital</title>
+  <!-- Favicon genérico -->
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/3/3c/Transparent_1x1.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
+    :root{--brand:#00aaff;--bg-hero:#fff;--bg-servicos:#f9f9f9;}
+    html,body{height:100%;}
     body{font-family:'Inter',sans-serif;line-height:1.7;color:#222;background:#fff;scroll-behavior:smooth;}
     h1,h2,h3{margin-bottom:1rem;}
     a{text-decoration:none;color:inherit;}
     img{display:block;max-width:100%;}
+    .container{max-width:1400px;margin:auto;padding:0 1rem;}
 
-    /* Header */
-    header{background:rgba(0,0,0,.7);backdrop-filter:blur(6px);color:#fff;padding:1rem 2rem;position:fixed;top:0;left:0;width:100%;z-index:10;display:flex;justify-content:space-between;align-items:center;}
+    /* HEADER */
+    header{background:rgba(0,0,0,.7);backdrop-filter:blur(6px);color:#fff;position:fixed;top:0;left:0;width:100%;z-index:10;}
+    header .container{display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;}
     header h1{text-transform:lowercase;font-size:1.5rem;}
-    nav a{color:#fff;margin:0 1rem;position:relative;padding-bottom:5px;}
-    nav a.active::after, nav a:hover::after{
-      content:"";position:absolute;bottom:0;left:0;width:100%;height:2px;background:#00aaff;
-    }
+    nav{display:flex;gap:1.5rem;}
+    nav a{color:#fff;position:relative;padding-bottom:6px;font-weight:600;}
+    nav a::after{content:"";position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--brand);transition:width .25s ease;}
+    nav a:hover::after,nav a.active::after{width:100%;}
 
-    /* Seções */
-    section{min-height:100vh;padding:6rem 2rem;display:flex;flex-direction:column;justify-content:center;}
+    /* SEÇÕES */
+    section{min-height:100vh;padding:6rem 1rem;display:flex;flex-direction:column;justify-content:center;}
     section h2{text-transform:uppercase;font-size:2rem;text-align:center;margin-bottom:2rem;}
-    section h2::after{content:"";display:block;width:60px;height:3px;background:#00aaff;margin:0.5rem auto;}
+    section h2::after{content:"";display:block;width:60px;height:3px;background:var(--brand);margin:0.5rem auto;}
 
-    /* Hero dividido */
-    #hero{flex-direction:row;align-items:center;gap:2rem;}
-    #hero .hero-img{flex:1;}
-    #hero .hero-img img{width:100%;border-radius:8px;transform:scale(1);transition:transform 6s ease;}
-    #hero:hover .hero-img img{transform:scale(1.1);}
+    /* HERO */
+    #hero{background:var(--bg-hero);}
+    #hero .container{display:flex;flex-direction:row;align-items:center;gap:2rem;}
+    #hero .hero-img{flex:1;overflow:hidden;border-radius:8px;}
+    #hero .hero-img img{width:100%;height:auto;object-fit:cover;transform:scale(1);transition:transform 10s ease;}
+    #hero:hover .hero-img img{transform:scale(1.08);}
     #hero .hero-text{flex:1;}
-    #hero h2{font-size:2.5rem;text-align:left;}
+    #hero h2{font-size:2.6rem;text-align:left;}
     #hero p{font-size:1.2rem;margin-bottom:1.5rem;text-align:left;}
-    .cta{display:inline-block;background:#00aaff;color:#fff;padding:1rem 2rem;border-radius:4px;font-weight:600;transition:background .3s;}
+    .cta{display:inline-block;background:var(--brand);color:#fff;padding:1rem 2rem;border-radius:4px;font-weight:600;transition:background .25s;}
     .cta:hover{background:#0088cc;}
 
-    /* Serviços */
-    .grid{display:grid;gap:2rem;}
+    /* SERVIÇOS */
+    #servicos{background:var(--bg-servicos);}
+    #servicos .grid{display:grid;gap:2rem;}
     .grid-3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
-    .card{background:#f7f7f7;padding:2rem;border-radius:6px;text-align:center;transition:transform .3s,box-shadow .3s;}
+    .card{background:#fff;padding:2rem;border-radius:6px;text-align:center;transition:transform .3s,box-shadow .3s;}
     .card:hover{transform:translateY(-5px);box-shadow:0 8px 16px rgba(0,0,0,.1);}
     .card h3{margin-bottom:1rem;}
 
-    /* Galeria estilo masonry */
+    /* PORTFÓLIO MASONRY */
     #portfolio{padding:4rem 1rem;}
-    .masonry{column-count:3;column-gap:5px;}
-    .masonry img{width:100%;margin-bottom:5px;border-radius:6px;transition:transform .4s;cursor:pointer;}
-    .masonry img:hover{transform:scale(1.05);}
+    .masonry{column-count:3;column-gap:6px;}
+    .masonry img{width:100%;margin-bottom:6px;border-radius:6px;transition:transform .35s;cursor:pointer;}
+    .masonry img:hover{transform:scale(1.045);}
 
-    /* Carrossel */
-    #carousel{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:100;}
+    /* CARROSSEL */
+    #carousel{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:100;}
     #carousel img{max-width:90%;max-height:70%;margin-bottom:1rem;}
-    #carousel p{color:#fff;font-size:1rem;margin-bottom:1rem;}
-    .carousel-controls{display:flex;gap:1.5rem;}
-    .carousel-controls button{background:#00aaff;border:none;padding:0.7rem 1rem;color:#fff;font-size:1rem;border-radius:4px;cursor:pointer;}
+    #carousel p{color:#fff;font-size:1rem;margin-bottom:1rem;text-align:center;max-width:900px;}
+    .carousel-controls{display:flex;gap:1.2rem;}
+    .carousel-controls button{background:var(--brand);border:none;padding:0.7rem 1rem;color:#fff;font-size:1rem;border-radius:4px;cursor:pointer;}
     .carousel-controls button:hover{background:#0088cc;}
 
-    /* Sobre com fundo */
-    #sobre{background:url('https://picsum.photos/1920/1080?grayscale') center/cover no-repeat;color:#fff;position:relative;}
-    #sobre::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);}
-    #sobre>*{position:relative;z-index:1;}
-    #sobre p{max-width:800px;margin:auto;font-size:1.2rem;}
+    /* SEÇÕES COM FUNDO */
+    .bg{position:relative;color:#fff;overflow:hidden;}
+    .bg::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.6);z-index:1;}
+    .bg-content{position:relative;z-index:2;text-align:center;}
+    .bg .bg-inner{position:relative;max-width:1000px;margin:auto;}
+    .bg .bg-img{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1);transition:transform 18s ease;z-index:0;}
+    .bg:hover .bg-img{transform:scale(1.08);}
+    .bg p{font-size:1.2rem;max-width:800px;margin:0.5rem auto 0;}
 
-    /* Contato */
-    #contato{background:url('https://picsum.photos/1920/1080?blur=3') center/cover no-repeat;color:#fff;position:relative;}
-    #contato::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);}
-    #contato>*{position:relative;z-index:1;}
-    form{display:grid;gap:1rem;max-width:500px;width:100%;margin:auto;}
-    input,textarea{padding:0.9rem;border:1px solid #ccc;border-radius:4px;font-size:1rem;}
-    button{background:#00aaff;color:#fff;border:none;padding:1rem;font-size:1rem;border-radius:4px;cursor:pointer;transition:background .3s;}
-    button:hover{background:#0088cc;}
+    /* FORM CONTATO LARGO */
+    .form-wrap{width:min(100%,900px);margin:1rem auto 0;}
+    form{display:grid;gap:1rem;width:100%;}
+    input,textarea{padding:1rem;border:1px solid #ccc;border-radius:4px;font-size:1.05rem;width:100%;}
+    button[type="submit"]{background:var(--brand);color:#fff;border:none;padding:1rem;font-size:1rem;border-radius:4px;cursor:pointer;transition:background .25s;}
+    button[type="submit"]:hover{background:#0088cc;}
+    @media (min-width:880px){
+      form.two-col{grid-template-columns:1fr 1fr;}
+      form.two-col textarea{grid-column:1 / -1;}
+    }
 
-    /* Footer */
+    /* FOOTER */
     footer{background:#111;color:#fff;text-align:center;padding:2rem 1rem;font-size:0.9rem;}
-    .social{margin-top:1rem;display:flex;justify-content:center;gap:1rem;}
-    .social img{width:24px;height:24px;filter:invert(1);transition:opacity .3s;}
+    .social{margin-top:1rem;display:flex;justify-content:center;gap:1.5rem;}
+    .social img{width:24px;height:24px;filter:invert(1);transition:opacity .25s;}
     .social img:hover{opacity:.6;}
 
-    /* Fade-in */
-    .fade-in{opacity:0;transform:translateY(30px);transition:all 1s ease;}
+    /* FADE-IN */
+    .fade-in{opacity:0;transform:translateY(30px);transition:all 0.9s ease;}
     .fade-in.visible{opacity:1;transform:translateY(0);}
+
+    form button[type="submit"] {
+      width: 100%;
+      grid-column: 1 / -1;
+    }
+
   </style>
 </head>
 <body>
 
+  <!-- HEADER -->
   <header>
-    <h1>vinidimo</h1>
-    <nav>
-      <a href="#hero" class="active">Início</a>
-      <a href="#servicos">Serviços</a>
-      <a href="#portfolio">Portfólio</a>
-      <a href="#sobre">Sobre</a>
-      <a href="#contato">Contato</a>
-    </nav>
+    <div class="container">
+      <h1>vinidimo</h1>
+      <nav>
+        <a href="#hero" class="active">Início</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#portfolio">Portfólio</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
   </header>
 
-  <section id="hero" class="fade-in">
-    <div class="hero-img"><img src="https://picsum.photos/600/800" alt="Mockup de design"></div>
-    <div class="hero-text">
-      <h2>Design que transforma marcas</h2>
-      <p>Na <strong>vinidimo</strong> criamos projetos completos em design gráfico e digital. Do logotipo ao site, oferecemos soluções visuais que unem clareza, modernidade e impacto para fortalecer marcas e gerar resultados.</p>
-      <a href="#contato" class="cta">Comece seu projeto</a>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-img">
+        <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1100&h=1400&q=80" alt="Mockup e estação de trabalho criativa">
+      </div>
+      <div class="hero-text">
+        <h2>Design que transforma marcas</h2>
+        <p>Na <strong>vinidimo</strong> criamos projetos completos em design gráfico e digital. Do logotipo ao site, oferecemos soluções visuais que unem clareza, modernidade e impacto para fortalecer marcas e gerar resultados.</p>
+        <a href="#contato" class="cta">Comece seu projeto</a>
+      </div>
     </div>
   </section>
 
-  <section id="servicos" class="fade-in">
-    <h2>Serviços</h2>
-    <div class="grid grid-3">
-      <div class="card"><h3>Identidade Visual</h3><p>Logotipos, paletas de cores e guias de estilo consistentes.</p></div>
-      <div class="card"><h3>Design Digital</h3><p>Posts para redes sociais, banners e campanhas online.</p></div>
-      <div class="card"><h3>Landing Pages</h3><p>Páginas responsivas, otimizadas para SEO e conversão.</p></div>
-      <div class="card"><h3>Apresentações</h3><p>Materiais para impressionar clientes e investidores.</p></div>
-      <div class="card"><h3>Materiais Impressos</h3><p>Cartões, catálogos e folders profissionais.</p></div>
-      <div class="card"><h3>Projetos Sob Medida</h3><p>Soluções exclusivas para necessidades específicas.</p></div>
+  <!-- SERVIÇOS -->
+  <section id="servicos">
+    <div class="container fade-in">
+      <h2>Serviços</h2>
+      <div class="grid grid-3">
+        <div class="card"><h3>Identidade Visual</h3><p>Logotipos, guias de marca e paletas de cores consistentes.</p></div>
+        <div class="card"><h3>Design Digital</h3><p>Posts para redes sociais, banners e campanhas online.</p></div>
+        <div class="card"><h3>Landing Pages</h3><p>Páginas responsivas, otimizadas para SEO e conversão.</p></div>
+        <div class="card"><h3>Apresentações</h3><p>Materiais que impressionam clientes e investidores.</p></div>
+        <div class="card"><h3>Materiais Impressos</h3><p>Cartões, folders e catálogos profissionais.</p></div>
+        <div class="card"><h3>Projetos Sob Medida</h3><p>Soluções exclusivas para necessidades específicas.</p></div>
+      </div>
     </div>
   </section>
 
-  <section id="portfolio" class="fade-in">
-    <h2>Portfólio</h2>
-    <div class="masonry">
-      <img src="https://picsum.photos/500/300?random=1" alt="Projeto 1" data-caption="Identidade visual para startup">
-      <img src="https://picsum.photos/400/500?random=2" alt="Projeto 2" data-caption="Campanha digital para e-commerce">
-      <img src="https://picsum.photos/300/400?random=3" alt="Projeto 3" data-caption="Apresentação para empresa de tecnologia">
-      <img src="https://picsum.photos/600/350?random=4" alt="Projeto 4" data-caption="Landing page para agência de viagens">
+  <!-- PORTFÓLIO -->
+  <section id="portfolio">
+    <div class="container fade-in">
+      <h2>Portfólio</h2>
+      <div class="masonry">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&h=600&q=80" alt="Projeto 1" data-caption="Identidade visual para startup">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=700&h=950&q=80" alt="Projeto 2" data-caption="Campanha digital para e-commerce">
+        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&h=900&q=80" alt="Projeto 3" data-caption="Apresentação para empresa de tecnologia">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1000&h=600&q=80" alt="Projeto 4" data-caption="Landing page para agência de viagens">
+        <img src="https://images.unsplash.com/photo-1529336953121-b1d49ab3a2c5?auto=format&fit=crop&w=800&h=800&q=80" alt="Projeto 5" data-caption="Material impresso institucional">
+        <img src="https://images.unsplash.com/photo-1487014679447-9f8336841d58?auto=format&fit=crop&w=900&h=600&q=80" alt="Projeto 6" data-caption="Design digital para redes sociais">
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=700&h=1000&q=80" alt="Projeto 7" data-caption="Campanha criativa multicanal">
+        <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=900&h=600&q=80" alt="Projeto 8" data-caption="Website responsivo para startup">
+        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&h=1100&q=80" alt="Projeto 9" data-caption="Catálogo de produtos">
+      </div>
     </div>
   </section>
 
-  <section id="sobre" class="fade-in">
-    <h2>Sobre</h2>
-    <p><strong>vinidimo</strong> é um estúdio de design gráfico e digital. Trabalhamos com marcas que desejam se destacar no mercado, oferecendo soluções visuais estratégicas que unem simplicidade, modernidade e impacto. Nosso foco é transformar ideias em experiências visuais que conectam empresas e pessoas.</p>
+  <!-- SOBRE (BG DIFERENTE) -->
+  <section id="sobre" class="bg">
+    <div class="bg-img" style="background-image:url('https://images.unsplash.com/photo-1508830524289-0adcbe822b40?auto=format&fit=crop&w=1600&q=80');"></div>
+    <div class="bg-content">
+      <div class="container bg-inner fade-in">
+        <h2>Sobre</h2>
+        <p><strong>vinidimo</strong> é um estúdio de design gráfico e digital. Trabalhamos com marcas que desejam se destacar, oferecendo soluções visuais estratégicas que unem simplicidade, modernidade e impacto.</p>
+      </div>
+    </div>
   </section>
 
-  <section id="contato" class="fade-in">
-    <h2>Contato</h2>
-    <form action="https://formspree.io/f/{SEU_ID}" method="POST">
-      <input type="text" name="name" placeholder="Seu nome" required>
-      <input type="email" name="email" placeholder="Seu e-mail" required>
-      <textarea name="message" rows="5" placeholder="Sua mensagem" required></textarea>
-      <button type="submit">Enviar mensagem</button>
-    </form>
+  <!-- CONTATO (BG DIFERENTE) -->
+  <section id="contato" class="bg">
+    <div class="bg-img" style="background-image:url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=80');"></div>
+    <div class="bg-content">
+      <div class="container bg-inner fade-in">
+        <h2>Contato</h2>
+        <div class="form-wrap">
+          <form class="two-col" action="https://formspree.io/f/{SEU_ID}" method="POST">
+            <input type="text" name="name" placeholder="Seu nome" required>
+            <input type="email" name="email" placeholder="Seu e-mail" required>
+            <textarea name="message" rows="6" placeholder="Sua mensagem" required></textarea>
+            <button type="submit">Enviar mensagem</button>
+          </form>
+        </div>
+      </div>
+    </div>
   </section>
 
+  <!-- FOOTER -->
   <footer>
     <p>© 2025 vinidimo — Todos os direitos reservados</p>
     <div class="social">
       <a href="https://instagram.com/vinidimo" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram"></a>
       <a href="https://behance.net/vinidimo" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/behance.svg" alt="Behance"></a>
-      <a href="https://linkedin.com/in/vini-dimo" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/linkedin.svg" alt="LinkedIn"></a>
+      <a href="https://www.linkedin.com/company/vini-dimo/" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/linkedin.svg" alt="LinkedIn"></a>
       <a href="mailto:contato@vinidimo.com"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/gmail.svg" alt="Email"></a>
     </div>
   </footer>
 
-  <!-- Carrossel -->
+  <!-- CARROSSEL -->
   <div id="carousel">
     <img src="" alt="Imagem do portfólio">
     <p id="caption"></p>
@@ -165,48 +218,42 @@
   </div>
 
   <script>
-    // Fade-in ao rolar
-    const observer=new IntersectionObserver(entries=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target);}
-      });
+    // Fade-in on view
+    const io=new IntersectionObserver(es=>{
+      es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target);}});
     },{threshold:0.2});
-    document.querySelectorAll(".fade-in").forEach(el=>observer.observe(el));
+    document.querySelectorAll(".fade-in").forEach(el=>io.observe(el));
 
-    // Menu ativo conforme scroll
-    const sections=document.querySelectorAll("section");
-    const navLinks=document.querySelectorAll("nav a");
+    // Menu ativo + scroll suave
+    const sections=[...document.querySelectorAll("section")];
+    const links=[...document.querySelectorAll("nav a")];
+    links.forEach(a=>{
+      a.addEventListener("click",e=>{
+        e.preventDefault();
+        document.querySelector(a.getAttribute("href")).scrollIntoView({behavior:"smooth"});
+      });
+    });
     window.addEventListener("scroll",()=>{
       let current="";
-      sections.forEach(sec=>{
-        const top=window.scrollY;
-        const offset=sec.offsetTop-100;
-        const height=sec.offsetHeight;
-        if(top>=offset && top<offset+height){current=sec.getAttribute("id");}
+      const top=window.scrollY;
+      sections.forEach(s=>{
+        const offset=s.offsetTop-160, h=s.offsetHeight;
+        if(top>=offset && top<offset+h) current=s.id;
       });
-      navLinks.forEach(a=>{
-        a.classList.remove("active");
-        if(a.getAttribute("href").includes(current)){a.classList.add("active");}
-      });
+      links.forEach(a=>{a.classList.toggle("active", a.getAttribute("href").includes(current));});
     });
 
     // Carrossel
     const carousel=document.getElementById("carousel");
-    const carouselImg=carousel.querySelector("img");
+    const cImg=carousel.querySelector("img");
     const caption=document.getElementById("caption");
-    const imgs=[...document.querySelectorAll(".masonry img")];
-    let index=0;
-
-    function openCarousel(i){
-      index=i;
-      carousel.style.display="flex";
-      carouselImg.src=imgs[i].src;
-      caption.textContent=imgs[i].dataset.caption||"";
-    }
-    imgs.forEach((img,i)=>{img.addEventListener("click",()=>openCarousel(i));});
+    const thumbs=[...document.querySelectorAll(".masonry img")];
+    let idx=0;
+    function openC(i){idx=i;carousel.style.display="flex";cImg.src=thumbs[i].src;caption.textContent=thumbs[i].dataset.caption||"";}
+    thumbs.forEach((img,i)=>img.addEventListener("click",()=>openC(i)));
     document.getElementById("close").onclick=()=>carousel.style.display="none";
-    document.getElementById("prev").onclick=()=>{index=(index-1+imgs.length)%imgs.length;openCarousel(index);};
-    document.getElementById("next").onclick=()=>{index=(index+1)%imgs.length;openCarousel(index);};
+    document.getElementById("prev").onclick=()=>openC((idx-1+thumbs.length)%thumbs.length);
+    document.getElementById("next").onclick=()=>openC((idx+1)%thumbs.length);
   </script>
 </body>
 </html>
