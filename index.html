@@ -42,9 +42,9 @@
     .overlay-section>.container,.overlay-section .bg-content{position:relative;z-index:2;}
     #hero .container{display:flex;flex-direction:row;align-items:center;gap:3rem;flex-wrap:wrap;}
     .hero-slideshow{flex:1;position:relative;height:500px;overflow:hidden;border-radius:8px;}
-    .hero-slideshow img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1);transition:opacity 1s ease;}
-    .hero-slideshow img.active{opacity:1;animation:zoom 14s linear forwards;z-index:1;}
-    @keyframes zoom{from{transform:scale(1);}to{transform:scale(1.15);}}
+    .hero-slideshow img {position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1);transition:opacity 1s ease;}
+    .hero-slideshow img.active {opacity:1;z-index:1;animation:zoom 16s ease-in-out infinite alternate;}
+    @keyframes zoom {from { transform:scale(1);}to{ transform:scale(1.15);}}
     #hero .hero-text{flex:1;}
     #hero h2{font-size:2.6rem;text-align:left;}
     #hero p{font-size:1.2rem;margin-bottom:1.5rem;text-align:left;}
@@ -207,7 +207,7 @@ navLinks.forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open')
 
 // Hero slideshow
 const slides=document.querySelectorAll(".hero-slideshow img");
-if(slides.length){let current=0;setInterval(()=>{slides[current].classList.remove("active");current=(current+1)%slides.length;slides[current].classList.add("active");},12000);}
+if(slides.length){let current=0;setInterval(()=>{slides[current].classList.remove("active");current=(current+1)%slides.length;slides[current].classList.add("active");},8000);}
 
 // WhatsApp form
 document.getElementById("whatsForm").addEventListener("submit",function(e){e.preventDefault();const nome=document.getElementById("nome").value;const email=document.getElementById("email").value;const mensagem=document.getElementById("mensagem").value;const texto=`Olá, meu nome é ${nome} (${email}).%0A${mensagem}`;window.open(`https://wa.me/5511945144513?text=${texto}`,'_blank');});
