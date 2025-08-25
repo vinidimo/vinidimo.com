@@ -5,20 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="vinidimo — estúdio de design gráfico e digital. Identidade visual, materiais para redes sociais, sites e landing pages otimizadas.">
   <title>vinidimo | Estúdio de design gráfico e digital</title>
-  <!-- Favicon genérico -->
   <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/3/3c/Transparent_1x1.png" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
     :root{--brand:#00aaff;--bg-hero:#fff;--bg-servicos:#f9f9f9;}
     html,body{height:100%;}
-    body{font-family:'Inter',sans-serif;line-height:1.7;color:#222;background:#fff;scroll-behavior:smooth;}
+    body{font-family:'Montserrat',sans-serif;line-height:1.7;color:#222;background:#fff;scroll-behavior:smooth;overflow-x:hidden;}
     h1,h2,h3{margin-bottom:1rem;}
     a{text-decoration:none;color:inherit;}
     img{display:block;max-width:100%;}
     .container{max-width:1400px;margin:auto;padding:0 1rem;}
 
-    /* HEADER */
+    /* ===== Header ===== */
     header{background:rgba(0,0,0,.7);backdrop-filter:blur(6px);color:#fff;position:fixed;top:0;left:0;width:100%;z-index:10;}
     header .container{display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;}
     header h1{text-transform:lowercase;font-size:1.5rem;}
@@ -26,15 +25,25 @@
     nav a{color:#fff;position:relative;padding-bottom:6px;font-weight:600;}
     nav a::after{content:"";position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--brand);transition:width .25s ease;}
     nav a:hover::after,nav a.active::after{width:100%;}
+    .hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;cursor:pointer;}
+    .hamburger span{display:block;height:3px;background:#fff;border-radius:2px;transition:all .3s;}
+    .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+    .hamburger.active span:nth-child(2){opacity:0;}
+    .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(6px,-6px);}
+    @media(max-width:900px){
+      nav{position:fixed;top:60px;left:0;width:100%;background:#111;flex-direction:column;align-items:center;gap:1.5rem;padding:2rem 0;display:none;}
+      nav.open{display:flex;}
+      .hamburger{display:flex;}
+    }
 
-    /* SEÇÕES */
+    /* ===== Seções ===== */
     section{min-height:100vh;padding:6rem 1rem;display:flex;flex-direction:column;justify-content:center;}
     section h2{text-transform:uppercase;font-size:2rem;text-align:center;margin-bottom:2rem;}
     section h2::after{content:"";display:block;width:60px;height:3px;background:var(--brand);margin:0.5rem auto;}
 
-    /* HERO */
+    /* ===== Hero ===== */
     #hero{background:var(--bg-hero);}
-    #hero .container{display:flex;flex-direction:row;align-items:center;gap:2rem;}
+    #hero .container{display:flex;flex-direction:row;align-items:center;gap:3rem;flex-wrap:wrap;}
     #hero .hero-img{flex:1;overflow:hidden;border-radius:8px;}
     #hero .hero-img img{width:100%;height:auto;object-fit:cover;transform:scale(1);transition:transform 10s ease;}
     #hero:hover .hero-img img{transform:scale(1.08);}
@@ -44,7 +53,7 @@
     .cta{display:inline-block;background:var(--brand);color:#fff;padding:1rem 2rem;border-radius:4px;font-weight:600;transition:background .25s;}
     .cta:hover{background:#0088cc;}
 
-    /* SERVIÇOS */
+    /* ===== Serviços ===== */
     #servicos{background:var(--bg-servicos);}
     #servicos .grid{display:grid;gap:2rem;}
     .grid-3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
@@ -52,13 +61,17 @@
     .card:hover{transform:translateY(-5px);box-shadow:0 8px 16px rgba(0,0,0,.1);}
     .card h3{margin-bottom:1rem;}
 
-    /* PORTFÓLIO MASONRY */
+    /* ===== Portfólio ===== */
     #portfolio{padding:4rem 1rem;}
     .masonry{column-count:3;column-gap:6px;}
     .masonry img{width:100%;margin-bottom:6px;border-radius:6px;transition:transform .35s;cursor:pointer;}
     .masonry img:hover{transform:scale(1.045);}
+    @media(max-width:900px){
+      .masonry{column-count:1;column-gap:0;}
+      .masonry img{width:100%;height:auto;margin:0 0 6px 0;border-radius:6px;object-fit:cover;}
+    }
 
-    /* CARROSSEL */
+    /* ===== Lightbox (Portfólio) ===== */
     #carousel{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:100;}
     #carousel img{max-width:90%;max-height:70%;margin-bottom:1rem;}
     #carousel p{color:#fff;font-size:1rem;margin-bottom:1rem;text-align:center;max-width:900px;}
@@ -66,7 +79,7 @@
     .carousel-controls button{background:var(--brand);border:none;padding:0.7rem 1rem;color:#fff;font-size:1rem;border-radius:4px;cursor:pointer;}
     .carousel-controls button:hover{background:#0088cc;}
 
-    /* SEÇÕES COM FUNDO */
+    /* ===== Seções com fundo (Sobre/Contato) ===== */
     .bg{position:relative;color:#fff;overflow:hidden;}
     .bg::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.6);z-index:1;}
     .bg-content{position:relative;z-index:2;text-align:center;}
@@ -75,37 +88,28 @@
     .bg:hover .bg-img{transform:scale(1.08);}
     .bg p{font-size:1.2rem;max-width:800px;margin:0.5rem auto 0;}
 
-    /* FORM CONTATO LARGO */
+    /* ===== Formulário ===== */
     .form-wrap{width:min(100%,900px);margin:1rem auto 0;}
     form{display:grid;gap:1rem;width:100%;}
     input,textarea{padding:1rem;border:1px solid #ccc;border-radius:4px;font-size:1.05rem;width:100%;}
-    button[type="submit"]{background:var(--brand);color:#fff;border:none;padding:1rem;font-size:1rem;border-radius:4px;cursor:pointer;transition:background .25s;}
-    button[type="submit"]:hover{background:#0088cc;}
-    @media (min-width:880px){
-      form.two-col{grid-template-columns:1fr 1fr;}
-      form.two-col textarea{grid-column:1 / -1;}
-    }
+    form button[type="submit"]{width:100%;grid-column:1 / -1;background:var(--brand);color:#fff;border:none;padding:1rem;font-size:1rem;border-radius:4px;cursor:pointer;transition:background .25s;}
+    form button[type="submit"]:hover{background:#0088cc;}
+    @media(min-width:880px){form.two-col{grid-template-columns:1fr 1fr;}form.two-col textarea{grid-column:1 / -1;}}
 
-    /* FOOTER */
+    /* ===== Footer ===== */
     footer{background:#111;color:#fff;text-align:center;padding:2rem 1rem;font-size:0.9rem;}
     .social{margin-top:1rem;display:flex;justify-content:center;gap:1.5rem;}
     .social img{width:24px;height:24px;filter:invert(1);transition:opacity .25s;}
     .social img:hover{opacity:.6;}
 
-    /* FADE-IN */
+    /* ===== Animação Fade-in ===== */
     .fade-in{opacity:0;transform:translateY(30px);transition:all 0.9s ease;}
     .fade-in.visible{opacity:1;transform:translateY(0);}
-
-    form button[type="submit"] {
-      width: 100%;
-      grid-column: 1 / -1;
-    }
-
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
+  <!-- Header -->
   <header>
     <div class="container">
       <h1>vinidimo</h1>
@@ -116,10 +120,13 @@
         <a href="#sobre">Sobre</a>
         <a href="#contato">Contato</a>
       </nav>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
     </div>
   </header>
 
-  <!-- HERO -->
+  <!-- Hero -->
   <section id="hero">
     <div class="container">
       <div class="hero-img">
@@ -133,7 +140,7 @@
     </div>
   </section>
 
-  <!-- SERVIÇOS -->
+  <!-- Serviços -->
   <section id="servicos">
     <div class="container fade-in">
       <h2>Serviços</h2>
@@ -148,7 +155,7 @@
     </div>
   </section>
 
-  <!-- PORTFÓLIO -->
+  <!-- Portfólio -->
   <section id="portfolio">
     <div class="container fade-in">
       <h2>Portfólio</h2>
@@ -166,7 +173,7 @@
     </div>
   </section>
 
-  <!-- SOBRE (BG DIFERENTE) -->
+  <!-- Sobre -->
   <section id="sobre" class="bg">
     <div class="bg-img" style="background-image:url('https://images.unsplash.com/photo-1508830524289-0adcbe822b40?auto=format&fit=crop&w=1600&q=80');"></div>
     <div class="bg-content">
@@ -177,7 +184,7 @@
     </div>
   </section>
 
-  <!-- CONTATO (BG DIFERENTE) -->
+  <!-- Contato -->
   <section id="contato" class="bg">
     <div class="bg-img" style="background-image:url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=80');"></div>
     <div class="bg-content">
@@ -195,7 +202,7 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- Footer -->
   <footer>
     <p>© 2025 vinidimo — Todos os direitos reservados</p>
     <div class="social">
@@ -206,25 +213,24 @@
     </div>
   </footer>
 
-  <!-- CARROSSEL -->
+  <!-- Lightbox do portfólio -->
   <div id="carousel">
     <img src="" alt="Imagem do portfólio">
     <p id="caption"></p>
     <div class="carousel-controls">
       <button id="prev">◀</button>
       <button id="next">▶</button>
-      <button id="close">✖</button>
     </div>
   </div>
 
   <script>
-    // Fade-in on view
+    // Fade-in observer
     const io=new IntersectionObserver(es=>{
       es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target);}});
     },{threshold:0.2});
     document.querySelectorAll(".fade-in").forEach(el=>io.observe(el));
 
-    // Menu ativo + scroll suave
+    // Scroll suave + menu ativo
     const sections=[...document.querySelectorAll("section")];
     const links=[...document.querySelectorAll("nav a")];
     links.forEach(a=>{
@@ -243,17 +249,35 @@
       links.forEach(a=>{a.classList.toggle("active", a.getAttribute("href").includes(current));});
     });
 
-    // Carrossel
+    // Menu hambúrguer
+    const hamburger=document.getElementById("hamburger");
+    const nav=document.querySelector("header nav");
+    hamburger.addEventListener("click",()=>{
+      hamburger.classList.toggle("active");
+      nav.classList.toggle("open");
+    });
+
+    // Lightbox do portfólio
     const carousel=document.getElementById("carousel");
     const cImg=carousel.querySelector("img");
     const caption=document.getElementById("caption");
     const thumbs=[...document.querySelectorAll(".masonry img")];
     let idx=0;
     function openC(i){idx=i;carousel.style.display="flex";cImg.src=thumbs[i].src;caption.textContent=thumbs[i].dataset.caption||"";}
+    function closeC(){carousel.style.display="none";}
+    function nextC(){openC((idx+1)%thumbs.length);}
+    function prevC(){openC((idx-1+thumbs.length)%thumbs.length);}
     thumbs.forEach((img,i)=>img.addEventListener("click",()=>openC(i)));
-    document.getElementById("close").onclick=()=>carousel.style.display="none";
-    document.getElementById("prev").onclick=()=>openC((idx-1+thumbs.length)%thumbs.length);
-    document.getElementById("next").onclick=()=>openC((idx+1)%thumbs.length);
+    carousel.addEventListener("click",e=>{if(e.target===carousel) closeC();});
+    document.addEventListener("keydown",e=>{
+      if(carousel.style.display==="flex"){
+        if(e.key==="Escape") closeC();
+        if(e.key==="ArrowRight") nextC();
+        if(e.key==="ArrowLeft") prevC();
+      }
+    });
+    document.getElementById("prev").onclick=()=>prevC();
+    document.getElementById("next").onclick=()=>nextC();
   </script>
 </body>
 </html>
