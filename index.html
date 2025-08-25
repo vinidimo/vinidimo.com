@@ -226,8 +226,31 @@ document.addEventListener("keydown",e=>{if(carousel.style.display==="flex"){if(e
 const btn=document.getElementById("showMoreBtn");
 if(btn){btn.addEventListener("click",()=>{document.querySelectorAll(".projeto.extra").forEach(p=>p.style.display="block");btn.style.display="none";});}
 
-// Zoom backgrounds
-window.addEventListener("scroll",()=>{document.querySelectorAll(".bg-img").forEach(el=>{const rect=el.parentElement.getBoundingClientRect();if(rect.top<window.innerHeight&&rect.bottom>0){const scrollPercent=(window.innerHeight-rect.top)/(window.innerHeight+rect.height);const scale=1+scrollPercent*0.2;el.style.transform=`scale(${scale})`;}});});
+// Zoom backgrounds suave
+const bgImgs = document.querySelectorAll(".bg-img");
+const targetScales = new WeakMap();
+const currentScales = new WeakMap();
+
+function updateBgZoom(){
+  bgImgs.forEach(el=>{
+    const rect=el.parentElement.getBoundingClientRect();
+    let target=1;
+    if(rect.top<window.innerHeight&&rect.bottom>0){
+      const scrollPercent=(window.innerHeight-rect.top)/(window.innerHeight+rect.height);
+      target=1+scrollPercent*0.2;
+    }
+    // guarda valores
+    targetScales.set(el,target);
+    if(!currentScales.has(el)) currentScales.set(el,1);
+    // suavização: lerp 0.1
+    const current=currentScales.get(el);
+    const next=current+(target-current)*0.1;
+    currentScales.set(el,next);
+    el.style.transform=`scale(${next})`;
+  });
+  requestAnimationFrame(updateBgZoom);
+}
+requestAnimationFrame(updateBgZoom);
 
 // Pré-carregamento de imagens do lightbox
 document.querySelectorAll(".projeto").forEach(proj=>{const imgs=JSON.parse(proj.dataset.images);imgs.forEach(src=>{const i=new Image();i.src=src;});});
