@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="vinidimo — estúdio de design gráfico e digital. Identidade visual, materiais para redes sociais, sites e landing pages otimizadas.">
-  <title>vinidimo | Estúdio de design gráfico e digital</title>
+  <meta name="description" content="vinidimo — design gráfico para empresas e pessoas físicas. Logos, identidade visual, ilustrações, redes sociais, sites e artes sob medida.">
+  <title>vinidimo | Design gráfico e digital</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2300aaff'/%3E%3Cpath d='M18 22 L32 44 L46 22' stroke='%23fff' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
@@ -44,28 +44,24 @@
     /* Hero */
     #hero{background:var(--bg-hero);}
     #hero .container{display:flex;flex-direction:row;align-items:center;gap:3rem;flex-wrap:wrap;}
-    #hero .hero-img{flex:1;overflow:hidden;border-radius:8px;}
-    #hero .hero-img img{width:100%;height:auto;object-fit:cover;transform:scale(1);transition:transform 10s ease;}
-    #hero:hover .hero-img img{transform:scale(1.08);}
+    #hero .hero-slideshow{flex:1;position:relative;height:500px;overflow:hidden;border-radius:8px;}
+    #hero .hero-slideshow img{
+      position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+      opacity:0;transform:scale(1);transition:opacity 1s ease, transform 12s linear;
+    }
+    #hero .hero-slideshow img.active{opacity:1;transform:scale(1.12);}
     #hero .hero-text{flex:1;}
     #hero h2{font-size:2.6rem;text-align:left;}
     #hero p{font-size:1.2rem;margin-bottom:1.5rem;text-align:left;}
     .cta{display:inline-block;background:var(--brand);color:#fff;padding:1rem 2rem;border-radius:4px;font-weight:600;transition:background .25s;}
     .cta:hover{background:#0088cc;}
 
-    /* Serviços (imagem de fundo + overlay) */
+    /* Serviços (imagem fundo) */
     #servicos{
       background:url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
-      color:#fff;
-      position:relative;
+      color:#fff;position:relative;
     }
-    #servicos::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:rgba(0,0,0,0.6);
-      z-index:0;
-    }
+    #servicos::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,0.6);z-index:0;}
     #servicos .container{position:relative;z-index:1;}
     .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;}
     .card{background:#fff;color:#222;padding:2rem;border-radius:6px;text-align:center;transition:transform .3s,box-shadow .3s;}
@@ -74,21 +70,16 @@
 
     /* Portfólio */
     #portfolio{padding:4rem 1rem;}
+    #portfolio p{text-align:center;max-width:800px;margin:0 auto 2rem;}
     .masonry{column-count:3;column-gap:6px;}
     .masonry img{width:100%;margin-bottom:6px;border-radius:6px;transition:transform .35s;cursor:pointer;}
     .masonry img:hover{transform:scale(1.045);}
+    .show-more{text-align:center;margin-top:1rem;}
+    .show-more button{background:var(--brand);color:#fff;border:none;padding:0.8rem 1.5rem;border-radius:4px;cursor:pointer;font-weight:600;}
     @media(max-width:900px){
       .masonry{column-count:1;column-gap:0;}
       .masonry img{width:100%;height:auto;margin:0 0 6px 0;border-radius:6px;object-fit:cover;}
     }
-
-    /* Lightbox */
-    #carousel{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:100;}
-    #carousel img{max-width:90%;max-height:70%;margin-bottom:1rem;}
-    #carousel p{color:#fff;font-size:1rem;margin-bottom:1rem;text-align:center;max-width:900px;}
-    .carousel-controls{position:absolute;top:50%;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:0 2rem;transform:translateY(-50%);pointer-events:none;}
-    .carousel-controls button{pointer-events:auto;background:rgba(0,0,0,0.6);border:none;padding:0.8rem 1.2rem;color:#fff;font-size:1.2rem;border-radius:50%;cursor:pointer;transition:background .25s;}
-    .carousel-controls button:hover{background:rgba(0,0,0,0.85);}
 
     /* Sobre */
     #sobre{position:relative;color:#fff;overflow:hidden;}
@@ -96,7 +87,7 @@
     #sobre .bg-content{position:relative;z-index:2;text-align:center;}
     #sobre .bg-img{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0;}
 
-    /* Contato (cinza) */
+    /* Contato */
     #contato{background:var(--bg-servicos);color:#222;}
     .form-wrap{width:min(100%,900px);margin:1rem auto 0;}
     form{display:grid;gap:1rem;width:100%;}
@@ -136,13 +127,15 @@
   <!-- Hero -->
   <section id="hero">
     <div class="container">
-      <div class="hero-img">
-        <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1100&h=1400&q=80" alt="Mockup criativo">
+      <div class="hero-slideshow">
+        <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1200&q=80" class="active" alt="Design 1">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80" alt="Design 2">
+        <img src="https://images.unsplash.com/photo-1508830524289-0adcbe822b40?auto=format&fit=crop&w=1200&q=80" alt="Design 3">
       </div>
       <div class="hero-text">
-        <h2>Design que transforma marcas</h2>
-        <p>Na <strong>vinidimo</strong> criamos projetos completos em design gráfico e digital. Do logotipo ao site, oferecemos soluções visuais que unem clareza, modernidade e impacto para fortalecer marcas e gerar resultados.</p>
-        <a href="#contato" class="cta">Comece seu projeto</a>
+        <h2>Criamos design para empresas e pessoas que querem se destacar</h2>
+        <p>Na <strong>vinidimo</strong> você encontra soluções criativas para qualquer necessidade visual: do logotipo pessoal à identidade completa da sua empresa, passando por artes para redes sociais, ilustrações vetoriais, adesivos, apresentações e sites.</p>
+        <a href="#contato" class="cta">Peça seu orçamento agora</a>
       </div>
     </div>
   </section>
@@ -150,14 +143,14 @@
   <!-- Serviços -->
   <section id="servicos">
     <div class="container fade-in">
-      <h2>Serviços</h2>
+      <h2>O que podemos criar juntos</h2>
       <div class="grid-3">
-        <div class="card"><h3>Identidade Visual</h3><p>Logotipos, guias de marca e paletas de cores consistentes.</p></div>
-        <div class="card"><h3>Design Digital</h3><p>Posts para redes sociais, banners e campanhas online.</p></div>
-        <div class="card"><h3>Landing Pages</h3><p>Páginas responsivas, otimizadas para SEO e conversão.</p></div>
-        <div class="card"><h3>Apresentações</h3><p>Materiais que impressionam clientes e investidores.</p></div>
-        <div class="card"><h3>Materiais Impressos</h3><p>Cartões, folders e catálogos profissionais.</p></div>
-        <div class="card"><h3>Projetos Sob Medida</h3><p>Soluções exclusivas para necessidades específicas.</p></div>
+        <div class="card"><h3>Identidade visual completa</h3><p>Logos, marcas pessoais, cartões, papelaria e tudo para comunicar quem você é.</p></div>
+        <div class="card"><h3>Design digital e social media</h3><p>Artes para Instagram, Facebook, LinkedIn, anúncios e campanhas online.</p></div>
+        <div class="card"><h3>Ilustração e vetorização</h3><p>Criação e vetor de ilustrações, caricaturas, ícones, adesivos e estampas.</p></div>
+        <div class="card"><h3>Materiais impressos</h3><p>Cartazes, flyers, folders, adesivos, embalagens e muito mais.</p></div>
+        <div class="card"><h3>Landing pages e sites</h3><p>Páginas responsivas, otimizadas para SEO e conversão, prontas para atrair clientes.</p></div>
+        <div class="card"><h3>Projetos sob medida</h3><p>Tem uma ideia diferente? Conte pra gente e criamos do zero, personalizado para você.</p></div>
       </div>
     </div>
   </section>
@@ -165,13 +158,30 @@
   <!-- Portfólio -->
   <section id="portfolio">
     <div class="container fade-in">
-      <h2>Portfólio</h2>
-      <div class="masonry">
-        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&h=600&q=80" alt="Projeto 1" data-caption="Identidade visual para startup">
-        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=700&h=950&q=80" alt="Projeto 2" data-caption="Campanha digital para e-commerce">
-        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&h=900&q=80" alt="Projeto 3" data-caption="Apresentação para empresa de tecnologia">
-        <!-- demais imagens -->
+      <h2>De logos a sites: veja o que já criamos</h2>
+      <p>Cada projeto é único. Aqui você encontra exemplos de logotipos, identidades, artes digitais, materiais impressos e landing pages que já ajudaram clientes a tirarem suas ideias do papel.</p>
+      <div class="masonry" id="portfolioGrid">
+        <!-- 9 primeiras imagens -->
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80" alt="Projeto 1">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=700&q=80" alt="Projeto 2">
+        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&q=80" alt="Projeto 3">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1000&q=80" alt="Projeto 4">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80" alt="Projeto 5">
+        <img src="https://images.unsplash.com/photo-1487014679447-9f8336841d58?auto=format&fit=crop&w=900&q=80" alt="Projeto 6">
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=700&q=80" alt="Projeto 7">
+        <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=900&q=80" alt="Projeto 8">
+        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80" alt="Projeto 9">
+
+        <!-- extras -->
+        <img class="extra" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=700&q=80" alt="Projeto extra 1" style="display:none;">
+        <img class="extra" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80" alt="Projeto extra 2" style="display:none;">
+        <img class="extra" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80" alt="Projeto extra 3" style="display:none;">
+        <img class="extra" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80" alt="Projeto extra 4" style="display:none;">
+        <img class="extra" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80" alt="Projeto extra 5" style="display:none;">
+        <img class="extra" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80" alt="Projeto extra 6" style="display:none;">
+        <img class="extra" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80" alt="Projeto extra 7" style="display:none;">
       </div>
+      <div class="show-more"><button id="showMoreBtn">Mostrar mais</button></div>
     </div>
   </section>
 
@@ -180,8 +190,9 @@
     <div class="bg-img" style="background-image:url('https://images.unsplash.com/photo-1508830524289-0adcbe822b40?auto=format&fit=crop&w=1600&q=80');"></div>
     <div class="bg-content">
       <div class="container bg-inner fade-in">
-        <h2>Sobre</h2>
-        <p><strong>vinidimo</strong> é um estúdio de design gráfico e digital. Trabalhamos com marcas que desejam se destacar, oferecendo soluções visuais estratégicas que unem simplicidade, modernidade e impacto.</p>
+        <h2>Quem Somos?</h2>
+        <p>A <strong>vinidimo</strong> nasceu para simplificar o acesso ao design. Nosso propósito é entregar qualidade profissional em qualquer tipo de projeto: desde o estudante que precisa de uma arte personalizada, até empresas que querem uma identidade visual forte para crescer.</p>
+        <p>Você fala sua ideia, nós traduzimos em design.</p>
       </div>
     </div>
   </section>
@@ -189,13 +200,14 @@
   <!-- Contato -->
   <section id="contato">
     <div class="container fade-in">
-      <h2>Contato</h2>
+      <h2>Vamos conversar?</h2>
+      <p>Quer criar sua marca, sua arte ou seu site? Manda uma mensagem no WhatsApp e vamos transformar sua ideia em realidade.</p>
       <div class="form-wrap">
         <form class="two-col" id="whatsForm">
           <input type="text" id="nome" placeholder="Seu nome" required>
           <input type="email" id="email" placeholder="Seu e-mail" required>
           <textarea id="mensagem" rows="6" placeholder="Sua mensagem" required></textarea>
-          <button type="submit">Enviar via WhatsApp</button>
+          <button type="submit">Falar no WhatsApp</button>
         </form>
       </div>
     </div>
@@ -213,41 +225,12 @@
     </div>
   </footer>
 
-  <!-- Lightbox -->
-  <div id="carousel">
-    <img src="" alt="Imagem do portfólio">
-    <p id="caption"></p>
-    <div class="carousel-controls">
-      <button id="prev">◀</button>
-      <button id="next">▶</button>
-    </div>
-  </div>
-
   <script>
     // Fade-in
     const io=new IntersectionObserver(es=>{
       es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target);}});
     },{threshold:0.2});
     document.querySelectorAll(".fade-in").forEach(el=>io.observe(el));
-
-    // Scroll suave + menu ativo
-    const sections=[...document.querySelectorAll("section")];
-    const links=[...document.querySelectorAll("nav a")];
-    links.forEach(a=>{
-      a.addEventListener("click",e=>{
-        e.preventDefault();
-        document.querySelector(a.getAttribute("href")).scrollIntoView({behavior:"smooth"});
-      });
-    });
-    window.addEventListener("scroll",()=>{
-      let current="";
-      const top=window.scrollY;
-      sections.forEach(s=>{
-        const offset=s.offsetTop-160, h=s.offsetHeight;
-        if(top>=offset && top<offset+h) current=s.id;
-      });
-      links.forEach(a=>{a.classList.toggle("active", a.getAttribute("href").includes(current));});
-    });
 
     // Menu hambúrguer
     const hamburger=document.getElementById("hamburger");
@@ -257,27 +240,12 @@
       nav.classList.toggle("open");
     });
 
-    // Lightbox
-    const carousel=document.getElementById("carousel");
-    const cImg=carousel.querySelector("img");
-    const caption=document.getElementById("caption");
-    const thumbs=[...document.querySelectorAll(".masonry img")];
-    let idx=0;
-    function openC(i){idx=i;carousel.style.display="flex";cImg.src=thumbs[i].src;caption.textContent=thumbs[i].dataset.caption||"";}
-    function closeC(){carousel.style.display="none";}
-    function nextC(){openC((idx+1)%thumbs.length);}
-    function prevC(){openC((idx-1+thumbs.length)%thumbs.length);}
-    thumbs.forEach((img,i)=>img.addEventListener("click",()=>openC(i)));
-    carousel.addEventListener("click",e=>{if(e.target===carousel) closeC();});
-    document.addEventListener("keydown",e=>{
-      if(carousel.style.display==="flex"){
-        if(e.key==="Escape") closeC();
-        if(e.key==="ArrowRight") nextC();
-        if(e.key==="ArrowLeft") prevC();
-      }
+    // Portfólio "Mostrar mais"
+    const btn=document.getElementById("showMoreBtn");
+    btn.addEventListener("click",()=>{
+      document.querySelectorAll(".masonry .extra").forEach(img=>img.style.display="block");
+      btn.style.display="none";
     });
-    document.getElementById("prev").onclick=()=>prevC();
-    document.getElementById("next").onclick=()=>nextC();
 
     // Formulário → WhatsApp
     document.getElementById("whatsForm").addEventListener("submit",function(e){
@@ -289,6 +257,15 @@
       const url=`https://wa.me/5511945144513?text=${texto}`;
       window.open(url,'_blank');
     });
+
+    // Hero slideshow
+    const slides=document.querySelectorAll(".hero-slideshow img");
+    let current=0;
+    setInterval(()=>{
+      slides[current].classList.remove("active");
+      current=(current+1)%slides.length;
+      slides[current].classList.add("active");
+    },12000);
   </script>
 </body>
 </html>
