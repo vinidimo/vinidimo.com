@@ -42,9 +42,9 @@
     .overlay-section>.container,.overlay-section .bg-content{position:relative;z-index:2;}
     #hero .container{display:flex;flex-direction:row;align-items:center;gap:3rem;flex-wrap:wrap;}
     .hero-slideshow{flex:1;position:relative;height:500px;overflow:hidden;border-radius:8px;}
-    .hero-slideshow img {position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1);transition:opacity 1s ease;}
-    .hero-slideshow img.active {opacity:1;z-index:1;animation:zoom 16s ease-in-out infinite alternate;}
-    @keyframes zoom {from { transform:scale(1);}to{ transform:scale(1.15);}}
+    .hero-slideshow img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1);transition:opacity 1s ease;}
+    .hero-slideshow img.active{opacity:1;z-index:1;animation:zoom 16s ease-in-out infinite alternate;}
+    @keyframes zoom{from{transform:scale(1);}to{transform:scale(1.15);}}
     #hero .hero-text{flex:1;}
     #hero h2{font-size:2.6rem;text-align:left;}
     #hero p{font-size:1.2rem;margin-bottom:1.5rem;text-align:left;}
@@ -101,7 +101,7 @@
 <section id="hero">
   <div class="container">
     <div class="hero-slideshow">
-      <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1200&q=80" class="active">
+      <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1200&q=80" class="active" fetchpriority="high">
       <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80">
       <img src="https://images.unsplash.com/photo-1508830524289-0adcbe822b40?auto=format&fit=crop&w=1200&q=80">
     </div>
@@ -133,11 +133,11 @@
     <h2>De logos a sites: veja o que já criamos</h2>
     <p>Cada projeto é único. Aqui você encontra exemplos de logotipos, identidades, artes digitais, materiais impressos e landing pages.</p>
     <div class="masonry">
-      <div class="projeto" data-images='["https://picsum.photos/id/1018/1200/800","https://picsum.photos/id/1015/1200/800"]' data-title="Identidade Visual"><img src="https://picsum.photos/id/1018/600/400"></div>
-      <div class="projeto" data-images='["https://picsum.photos/id/1025/1200/800","https://picsum.photos/id/1024/1200/800"]' data-title="Website"><img src="https://picsum.photos/id/1025/600/400"></div>
-      <div class="projeto" data-images='["https://picsum.photos/id/1035/1200/800","https://picsum.photos/id/1036/1200/800"]' data-title="Social Media"><img src="https://picsum.photos/id/1035/600/400"></div>
-      <div class="projeto extra" data-images='["https://picsum.photos/id/1041/1200/800","https://picsum.photos/id/1042/1200/800"]' data-title="Campanha Impressa" style="display:none;"><img src="https://picsum.photos/id/1041/600/400"></div>
-      <div class="projeto extra" data-images='["https://picsum.photos/id/1051/1200/800","https://picsum.photos/id/1052/1200/800"]' data-title="Apresentação" style="display:none;"><img src="https://picsum.photos/id/1051/600/400"></div>
+      <div class="projeto" data-images='["https://picsum.photos/id/1018/1200/800","https://picsum.photos/id/1015/1200/800"]' data-title="Identidade Visual"><img src="https://picsum.photos/id/1018/600/400" loading="lazy" decoding="async"></div>
+      <div class="projeto" data-images='["https://picsum.photos/id/1025/1200/800","https://picsum.photos/id/1024/1200/800"]' data-title="Website"><img src="https://picsum.photos/id/1025/600/400" loading="lazy" decoding="async"></div>
+      <div class="projeto" data-images='["https://picsum.photos/id/1035/1200/800","https://picsum.photos/id/1036/1200/800"]' data-title="Social Media"><img src="https://picsum.photos/id/1035/600/400" loading="lazy" decoding="async"></div>
+      <div class="projeto extra" data-images='["https://picsum.photos/id/1041/1200/800","https://picsum.photos/id/1042/1200/800"]' data-title="Campanha Impressa" style="display:none;"><img src="https://picsum.photos/id/1041/600/400" loading="lazy" decoding="async"></div>
+      <div class="projeto extra" data-images='["https://picsum.photos/id/1051/1200/800","https://picsum.photos/id/1052/1200/800"]' data-title="Apresentação" style="display:none;"><img src="https://picsum.photos/id/1051/600/400" loading="lazy" decoding="async"></div>
     </div>
     <div class="show-more"><button id="showMoreBtn">Mostrar mais</button></div>
   </div>
@@ -171,11 +171,11 @@
 <footer>
   <p>© 2025 vinidimo — Todos os direitos reservados</p>
   <div class="social">
-    <a href="https://instagram.com/vinidimo" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg"></a>
-    <a href="https://behance.net/vinidimo" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/behance.svg"></a>
-    <a href="https://www.linkedin.com/company/vini-dimo/" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/linkedin.svg"></a>
-    <a href="mailto:contato@vinidimo.com"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/gmail.svg"></a>
-    <a href="https://wa.me/5511945144513" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg"></a>
+    <a href="https://instagram.com/vinidimo" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram"></a>
+    <a href="https://behance.net/vinidimo" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/behance.svg" alt="Behance"></a>
+    <a href="https://www.linkedin.com/company/vini-dimo/" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/linkedin.svg" alt="LinkedIn"></a>
+    <a href="mailto:contato@vinidimo.com"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/gmail.svg" alt="E-mail"></a>
+    <a href="https://wa.me/5511945144513" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" alt="WhatsApp"></a>
   </div>
 </footer>
 
@@ -228,6 +228,9 @@ if(btn){btn.addEventListener("click",()=>{document.querySelectorAll(".projeto.ex
 
 // Zoom backgrounds
 window.addEventListener("scroll",()=>{document.querySelectorAll(".bg-img").forEach(el=>{const rect=el.parentElement.getBoundingClientRect();if(rect.top<window.innerHeight&&rect.bottom>0){const scrollPercent=(window.innerHeight-rect.top)/(window.innerHeight+rect.height);const scale=1+scrollPercent*0.2;el.style.transform=`scale(${scale})`;}});});
+
+// Pré-carregamento de imagens do lightbox
+document.querySelectorAll(".projeto").forEach(proj=>{const imgs=JSON.parse(proj.dataset.images);imgs.forEach(src=>{const i=new Image();i.src=src;});});
 </script>
 </body>
 </html>
