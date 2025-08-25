@@ -76,9 +76,30 @@
     #carousel{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:100;}
     #carousel img{max-width:90%;max-height:70%;margin-bottom:1rem;}
     #carousel p{color:#fff;font-size:1rem;margin-bottom:1rem;text-align:center;max-width:900px;}
-    .carousel-controls{display:flex;gap:1.2rem;}
-    .carousel-controls button{background:var(--brand);border:none;padding:0.7rem 1rem;color:#fff;font-size:1rem;border-radius:4px;cursor:pointer;}
-    .carousel-controls button:hover{background:#0088cc;}
+    .carousel-controls{
+      position:absolute;
+      top:50%;
+      left:0;
+      right:0;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:0 2rem;
+      transform:translateY(-50%);
+      pointer-events:none; /* evita atrapalhar clique fora */
+    }
+    .carousel-controls button{
+      pointer-events:auto; /* reativa clique só nos botões */
+      background:rgba(0,0,0,0.6);
+      border:none;
+      padding:0.8rem 1.2rem;
+      color:#fff;
+      font-size:1.2rem;
+      border-radius:50%;
+      cursor:pointer;
+      transition:background .25s;
+    }
+    .carousel-controls button:hover{background:rgba(0,0,0,0.85);}
 
     /* ===== Seções com fundo (Sobre/Contato) ===== */
     .bg{position:relative;color:#fff;overflow:hidden;}
@@ -282,4 +303,3 @@
   </script>
 </body>
 </html>
-
