@@ -115,24 +115,41 @@
     }
 
     .hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: space-between;
+      position: relative;
       width: 28px;
       height: 20px;
+      display: none;
+      /* <--- escondido no desktop */
+      justify-content: center;
+      align-items: center;
       cursor: pointer;
     }
 
     .hamburger span {
-      display: block;
+      position: absolute;
+      width: 100%;
       height: 3px;
       background: #fff;
       border-radius: 2px;
       transition: all .3s;
     }
 
+    .hamburger span:nth-child(1) {
+      top: 0;
+    }
+
+    .hamburger span:nth-child(2) {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .hamburger span:nth-child(3) {
+      bottom: 0;
+    }
+
     .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
+      transform: rotate(45deg);
+      top: 50%;
     }
 
     .hamburger.active span:nth-child(2) {
@@ -140,7 +157,8 @@
     }
 
     .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
+      transform: rotate(-45deg);
+      top: 50%;
     }
 
     @media(max-width:900px) {
@@ -661,7 +679,7 @@
   </section>
 
   <footer>
-    <p>© 2025 vinidimo — Todos os direitos reservados</p>
+    <p>© <span id="year"></span> vinidimo — Todos os direitos reservados</p>
     <div class="social">
       <a href="https://instagram.com/vinidimo" target="_blank"><img
           src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram"></a>
@@ -673,6 +691,8 @@
           alt="E-mail"></a>
       <a href="https://wa.me/5511945144513" target="_blank"><img
           src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" alt="WhatsApp"></a>
+      <a href="https://www.youtube.com/@dimovinicius" target="_blank"><img
+          src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/youtube.svg" alt="YouTube"></a>
     </div>
   </footer>
 
@@ -734,7 +754,28 @@
       requestAnimationFrame(updateBgZoom);
     }
     requestAnimationFrame(updateBgZoom);
+
+    // Scroll spy para ativar underline conforme rolagem
+    const navLinks = [...document.querySelectorAll('header nav a')];
+    const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    const headerH = document.querySelector('header').offsetHeight;
+
+    function setActive() {
+      const pos = window.scrollY + headerH + 1;
+      let current = sections[0];
+      for (const sec of sections) {
+        if (sec.offsetTop <= pos) current = sec;
+      }
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+      });
+    }
+
+    window.addEventListener('scroll', () => requestAnimationFrame(setActive));
+    window.addEventListener('load', setActive);
+
+    // Atualiza ano do rodapé
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
-
 </html>
