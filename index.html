@@ -776,6 +776,15 @@
 
     // Atualiza ano do rodapé
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Fecha o menu ao clicar em qualquer link do menu
+    document.querySelectorAll("header nav a").forEach(link => {
+      link.addEventListener("click", () => {
+        nav.classList.remove("open");
+        hamburger.classList.remove("active");
+      });
+    });
   </script>
 </body>
+
 </html>
