@@ -1,259 +1,736 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="vinidimo — design gráfico para empresas e pessoas físicas. Logos, identidade visual, ilustrações, redes sociais, sites e artes sob medida.">
+  <meta name="description"
+    content="vinidimo — design gráfico para empresas e pessoas físicas. Logos, identidade visual, ilustrações, redes sociais, sites e artes sob medida.">
   <title>vinidimo | Design gráfico e digital</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2300aaff'/%3E%3Cpath d='M18 22 L32 44 L46 22' stroke='%23fff' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2300aaff'/%3E%3Cpath d='M18 22 L32 44 L46 22' stroke='%23fff' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Preload imagens de fundo críticas -->
+  <link rel="preload" as="image"
+    href="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=80">
+  <link rel="preload" as="image"
+    href="https://images.unsplash.com/photo-1508830524289-0adcbe822b40?auto=format&fit=crop&w=1600&q=80">
+
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;}
-    :root{--brand:#00aaff;}
-    body{font-family:'Montserrat',sans-serif;line-height:1.7;color:#222;background:#fff;scroll-behavior:smooth;overflow-x:hidden;}
-    h1,h2,h3{margin-bottom:1rem;}
-    a{text-decoration:none;color:inherit;}
-    img{display:block;max-width:100%;}
-    .container{max-width:1400px;margin:auto;padding:0 1rem;}
-    header{background:rgba(0,0,0,.7);backdrop-filter:blur(6px);color:#fff;position:fixed;top:0;left:0;width:100%;z-index:10;}
-    header .container{display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;}
-    header h1{text-transform:lowercase;font-size:1.5rem;}
-    nav{display:flex;gap:1.5rem;}
-    nav a{color:#fff;position:relative;padding-bottom:6px;font-weight:600;}
-    nav a::after{content:"";position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--brand);transition:width .25s ease;}
-    nav a:hover::after,nav a.active::after{width:100%;}
-    .hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;cursor:pointer;}
-    .hamburger span{display:block;height:3px;background:#fff;border-radius:2px;transition:all .3s;}
-    .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
-    .hamburger.active span:nth-child(2){opacity:0;}
-    .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(6px,-6px);}
-    @media(max-width:900px){
-      nav{position:fixed;top:60px;left:0;width:100%;background:#111;flex-direction:column;align-items:center;gap:1.2rem;overflow:hidden;max-height:0;opacity:0;transform:translateY(-8px);padding:0;transition:max-height .4s ease,opacity .25s ease,transform .25s ease,padding .25s ease;}
-      nav.open{max-height:260px;opacity:1;transform:translateY(0);padding:1rem 0 1.2rem;}
-      .hamburger{display:flex;}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    section{min-height:100vh;padding:6rem 1rem;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
-    section h2{text-transform:uppercase;font-size:2rem;margin-bottom:2rem;text-align:center;}
-    section h2::after{content:"";display:block;width:60px;height:3px;background:var(--brand);margin:0.5rem auto;}
-    section p{text-align:center;max-width:800px;margin:0 auto 1rem;}
-    .bg-img{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1);transition:transform 0.2s linear;z-index:0;}
-    .overlay-section{color:#fff;}
-    .overlay-section::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.55);backdrop-filter:saturate(80%) brightness(85%);pointer-events:none;z-index:1;}
-    .overlay-section>.container,.overlay-section .bg-content{position:relative;z-index:2;}
-    #hero .container{display:flex;flex-direction:row;align-items:center;gap:3rem;flex-wrap:wrap;}
-    .hero-slideshow{flex:1;position:relative;height:500px;overflow:hidden;border-radius:8px;}
-    .hero-slideshow img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1);transition:opacity 1s ease;}
-    .hero-slideshow img.active{opacity:1;z-index:1;animation:zoom 16s ease-in-out infinite alternate;}
-    @keyframes zoom{from{transform:scale(1);}to{transform:scale(1.15);}}
-    #hero .hero-text{flex:1;}
-    #hero h2{font-size:2.6rem;text-align:left;}
-    #hero p{font-size:1.2rem;margin-bottom:1.5rem;text-align:left;}
-    .cta{display:inline-block;background:var(--brand);color:#fff;padding:1rem 2rem;border-radius:4px;font-weight:600;transition:background .25s;}
-    .cta:hover{background:#0088cc;}
-    @media(max-width:900px){.hero-slideshow{display:none;}#hero .container{gap:1.5rem;}}
-    .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;}
-    .card{background:#fff;color:#222;padding:2rem;border-radius:6px;text-align:center;transition:transform .3s,box-shadow .3s;}
-    .card:hover{transform:translateY(-5px);box-shadow:0 8px 16px rgba(0,0,0,.1);}
-    #portfolio{padding:4rem 1rem;}
-    .masonry{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
-    .projeto img{width:100%;border-radius:6px;cursor:pointer;transition:transform .3s;}
-    .projeto img:hover{transform:scale(1.04);}
-    .show-more{text-align:center;margin-top:1rem;}
-    .show-more button{background:var(--brand);color:#fff;border:none;padding:0.8rem 1.5rem;border-radius:4px;cursor:pointer;font-weight:600;}
-    @media(max-width:900px){.masonry{grid-template-columns:1fr;}}
-    #carousel{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:100;}
-    #carousel img{max-width:90%;max-height:70%;margin-bottom:1rem;}
-    #carousel p{color:#fff;font-size:1rem;margin-bottom:1rem;text-align:center;max-width:900px;}
-    .carousel-controls{position:absolute;top:50%;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:0 2rem;transform:translateY(-50%);pointer-events:none;}
-    .carousel-controls button{pointer-events:auto;background:rgba(0,0,0,0.6);border:none;padding:0.8rem 1.2rem;color:#fff;font-size:1.2rem;border-radius:50%;cursor:pointer;transition:background .25s;}
-    .carousel-controls button:hover{background:rgba(0,0,0,0.85);}
-    #contato{background:#f9f9f9;color:#222;}
-    .form-wrap{width:min(100%,900px);margin:1rem auto 0;}
-    form{display:grid;gap:1rem;width:100%;}
-    input,textarea{padding:1rem;border:1px solid #ccc;border-radius:4px;font-size:1.05rem;width:100%;font-family:inherit;}
-    form button[type="submit"]{width:100%;grid-column:1 / -1;background:var(--brand);color:#fff;border:none;padding:1rem;font-size:1rem;border-radius:4px;cursor:pointer;transition:background .25s;}
-    form button[type="submit"]:hover{background:#0088cc;}
-    @media(min-width:880px){form.two-col{grid-template-columns:1fr 1fr;}form.two-col textarea{grid-column:1 / -1;}}
-    footer{background:#111;color:#fff;text-align:center;padding:2rem 1rem;font-size:0.9rem;}
-    .social{margin-top:1rem;display:flex;justify-content:center;gap:1.5rem;}
-    .social img{width:24px;height:24px;filter:invert(1);transition:opacity .25s;}
-    .social img:hover{opacity:.6;}
-    .fade-in{opacity:0;transform:translateY(30px);transition:all 0.9s ease;}
-    .fade-in.visible{opacity:1;transform:translateY(0);}
+
+    :root {
+      --brand: #00aaff;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      line-height: 1.7;
+      color: #222;
+      background: #fff;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin-bottom: 1rem;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: auto;
+      padding: 0 1rem;
+    }
+
+    header {
+      background: rgba(0, 0, 0, .7);
+      backdrop-filter: blur(6px);
+      color: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+    }
+
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+
+    header h1 {
+      text-transform: lowercase;
+      font-size: 1.5rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: #fff;
+      position: relative;
+      padding-bottom: 6px;
+      font-weight: 600;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--brand);
+      transition: width .25s ease;
+    }
+
+    nav a:hover::after,
+    nav a.active::after {
+      width: 100%;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      display: block;
+      height: 3px;
+      background: #fff;
+      border-radius: 2px;
+      transition: all .3s;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    @media(max-width:900px) {
+      nav {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: #111;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.2rem;
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+        transform: translateY(-8px);
+        padding: 0;
+        transition: max-height .4s ease, opacity .25s ease, transform .25s ease, padding .25s ease;
+      }
+
+      nav.open {
+        max-height: 260px;
+        opacity: 1;
+        transform: translateY(0);
+        padding: 1rem 0 1.2rem;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 6rem 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    section h2 {
+      text-transform: uppercase;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    section h2::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--brand);
+      margin: 0.5rem auto;
+    }
+
+    section p {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 1rem;
+    }
+
+    .bg-img {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transform: scale(1);
+      transition: transform 0.2s linear;
+      z-index: 0;
+      will-change: transform;
+    }
+
+    /* desabilita zoom em celulares */
+    @media(max-width:900px) {
+      .bg-img {
+        transform: none !important;
+      }
+    }
+
+    .overlay-section {
+      color: #fff;
+    }
+
+    .overlay-section::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, .55);
+      backdrop-filter: saturate(80%) brightness(85%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .overlay-section>.container,
+    .overlay-section .bg-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    #hero .container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-slideshow {
+      flex: 1;
+      position: relative;
+      height: 500px;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    .hero-slideshow img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1);
+      transition: opacity 1s ease;
+    }
+
+    .hero-slideshow img.active {
+      opacity: 1;
+      z-index: 1;
+      animation: zoom 16s ease-in-out infinite alternate;
+    }
+
+    @keyframes zoom {
+      from {
+        transform: scale(1);
+      }
+
+      to {
+        transform: scale(1.15);
+      }
+    }
+
+    #hero .hero-text {
+      flex: 1;
+    }
+
+    #hero h2 {
+      font-size: 2.6rem;
+      text-align: left;
+    }
+
+    #hero p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    .cta {
+      display: inline-block;
+      background: var(--brand);
+      color: #fff;
+      padding: 1rem 2rem;
+      border-radius: 4px;
+      font-weight: 600;
+      transition: background .25s;
+    }
+
+    .cta:hover {
+      background: #0088cc;
+    }
+
+    @media(max-width:900px) {
+      .hero-slideshow {
+        display: none;
+      }
+
+      #hero .container {
+        gap: 1.5rem;
+      }
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: #fff;
+      color: #222;
+      padding: 2rem;
+      border-radius: 6px;
+      text-align: center;
+      transition: transform .3s, box-shadow .3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, .1);
+    }
+
+    #portfolio {
+      padding: 4rem 1rem;
+    }
+
+    .masonry {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .projeto img {
+      width: 100%;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform .3s;
+    }
+
+    .projeto img:hover {
+      transform: scale(1.04);
+    }
+
+    .show-more {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .show-more button {
+      background: var(--brand);
+      color: #fff;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    @media(max-width:900px) {
+      .masonry {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    #carousel {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .9);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    #carousel img {
+      max-width: 90%;
+      max-height: 70%;
+      margin-bottom: 1rem;
+    }
+
+    #carousel p {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      max-width: 900px;
+    }
+
+    .carousel-controls {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .carousel-controls button {
+      pointer-events: auto;
+      background: rgba(0, 0, 0, 0.6);
+      border: none;
+      padding: 0.8rem 1.2rem;
+      color: #fff;
+      font-size: 1.2rem;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background .25s;
+    }
+
+    .carousel-controls button:hover {
+      background: rgba(0, 0, 0, 0.85);
+    }
+
+    #contato {
+      background: #f9f9f9;
+      color: #222;
+    }
+
+    .form-wrap {
+      width: min(100%, 900px);
+      margin: 1rem auto 0;
+    }
+
+    form {
+      display: grid;
+      gap: 1rem;
+      width: 100%;
+    }
+
+    input,
+    textarea {
+      padding: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1.05rem;
+      width: 100%;
+      font-family: inherit;
+    }
+
+    form button[type="submit"] {
+      width: 100%;
+      grid-column: 1 / -1;
+      background: var(--brand);
+      color: #fff;
+      border: none;
+      padding: 1rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background .25s;
+    }
+
+    form button[type="submit"]:hover {
+      background: #0088cc;
+    }
+
+    @media(min-width:880px) {
+      form.two-col {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      form.two-col textarea {
+        grid-column: 1 / -1;
+      }
+    }
+
+    footer {
+      background: #111;
+      color: #fff;
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .social {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .social img {
+      width: 24px;
+      height: 24px;
+      filter: invert(1);
+      transition: opacity .25s;
+    }
+
+    .social img:hover {
+      opacity: .6;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.9s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
+
 <body>
 
-<header>
-  <div class="container">
-    <h1>vinidimo</h1>
-    <nav>
-      <a href="#hero" class="active">Início</a>
-      <a href="#servicos">Serviços</a>
-      <a href="#portfolio">Portfólio</a>
-      <a href="#sobre">Sobre</a>
-      <a href="#contato">Contato</a>
-    </nav>
-    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
-  </div>
-</header>
-
-<section id="hero">
-  <div class="container">
-    <div class="hero-slideshow">
-      <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1200&q=80" class="active" fetchpriority="high">
-      <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80">
-      <img src="https://images.unsplash.com/photo-1508830524289-0adcbe822b40?auto=format&fit=crop&w=1200&q=80">
+  <header>
+    <div class="container">
+      <h1>vinidimo</h1>
+      <nav>
+        <a href="#hero" class="active">Início</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#portfolio">Portfólio</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#contato">Contato</a>
+      </nav>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
     </div>
-    <div class="hero-text">
-      <h2>Criamos design para empresas e pessoas que querem se destacar</h2>
-      <p>Na <strong>vinidimo</strong> você encontra soluções criativas para qualquer necessidade visual: do logotipo pessoal à identidade completa da sua empresa, passando por artes para redes sociais, ilustrações vetoriais, adesivos, apresentações e sites.</p>
-      <a href="#contato" class="cta">Peça seu orçamento agora</a>
+  </header>
+
+  <section id="hero">
+    <div class="container">
+      <div class="hero-slideshow">
+        <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1200&q=80"
+          class="active" fetchpriority="high">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80">
+        <img src="https://images.unsplash.com/photo-1508830524289-0adcbe822b40?auto=format&fit=crop&w=1200&q=80">
+      </div>
+      <div class="hero-text">
+        <h2>Criamos design para empresas e pessoas que querem se destacar</h2>
+        <p>Na <strong>vinidimo</strong> você encontra soluções criativas para qualquer necessidade visual: do logotipo
+          pessoal à identidade completa da sua empresa, passando por artes para redes sociais, ilustrações vetoriais,
+          adesivos, apresentações e sites.</p>
+        <a href="#contato" class="cta">Peça seu orçamento agora</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="servicos" class="overlay-section">
+    <div class="bg-img"
+      style="background-image:url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=80');">
+    </div>
+    <div class="container fade-in">
+      <h2>O que podemos criar juntos</h2>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Identidade visual completa</h3>
+          <p>Logos, marcas pessoais, cartões, papelaria e tudo para comunicar quem você é.</p>
+        </div>
+        <div class="card">
+          <h3>Design digital e social media</h3>
+          <p>Artes para Instagram, Facebook, LinkedIn, anúncios e campanhas online.</p>
+        </div>
+        <div class="card">
+          <h3>Ilustração e vetorização</h3>
+          <p>Criação e vetor de ilustrações, caricaturas, ícones, adesivos e estampas.</p>
+        </div>
+        <div class="card">
+          <h3>Materiais impressos</h3>
+          <p>Cartazes, flyers, folders, adesivos, embalagens e muito mais.</p>
+        </div>
+        <div class="card">
+          <h3>Landing pages e sites</h3>
+          <p>Páginas responsivas, otimizadas para SEO e conversão, prontas para atrair clientes.</p>
+        </div>
+        <div class="card">
+          <h3>Projetos sob medida</h3>
+          <p>Tem uma ideia diferente? Conte pra gente e criamos do zero, personalizado para você.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="portfolio">
+    <div class="container fade-in">
+      <h2>De logos a sites: veja o que já criamos</h2>
+      <p>Cada projeto é único. Aqui você encontra exemplos de logotipos, identidades, artes digitais, materiais
+        impressos e landing pages.</p>
+      <div class="masonry">
+        <div class="projeto"
+          data-images='["https://vinidimo.com/assets/c557c4183354369.Y3JvcCwyNTU2LDIwMDAsMzczLDA.png"]'
+          data-title="Lavazul Logo"><img
+            src="https://vinidimo.com/assets/c557c4183354369.Y3JvcCwyNTU2LDIwMDAsMzczLDA.png" loading="lazy"
+            decoding="async"></div>
+        <div class="projeto"
+          data-images='["https://vinidimo.com/assets/e355b9183353967.Y3JvcCw0MDQsMzE2LDcyMyw0Mjc.png"]'
+          data-title="Dimo Street Lettering"><img
+            src="https://vinidimo.com/assets/e355b9183353967.Y3JvcCw0MDQsMzE2LDcyMyw0Mjc.png" loading="lazy"
+            decoding="async"></div>
+        <div class="projeto"
+          data-images='["https://vinidimo.com/assets/1635a7150952763.65dbe403c776a.jpg","https://vinidimo.com/assets/f4d996150952763.65da36780f8a2.jpg","https://vinidimo.com/assets/71a0fd150952763.65da3678102e6.jpg"]'
+          data-title="Lou's Tavern"><img src="https://vinidimo.com/assets/1635a7150952763.65dbe403c776a.jpg"
+            loading="lazy" decoding="async"></div>
+        <div class="projeto extra"
+          data-images='["https://vinidimo.com/assets/2df658150953009.660d6fcc11cac.jpg","https://vinidimo.com/assets/57d989150953009.6303ab8e4f4e4.jpg","https://vinidimo.com/assets/7cfdd4150953009.660d6fcc12ad6.jpg","https://vinidimo.com/assets/867ebf150953009.660d6fcc13fed.jpg","https://vinidimo.com/assets/a2ffbb150953009.660d6fcb0c192.jpg"]'
+          data-title="Vans Sticker" style="display:none;"><img
+            src="https://vinidimo.com/assets/867ebf150953009.660d6fcc13fed.jpg" loading="lazy" decoding="async"></div>
+      </div>
+      <div class="show-more"><button id="showMoreBtn">Mostrar mais</button></div>
+    </div>
+  </section>
+
+  <section id="sobre" class="overlay-section">
+    <div class="bg-img"
+      style="background-image:url('https://images.unsplash.com/photo-1508830524289-0adcbe822b40?auto=format&fit=crop&w=1600&q=80');">
+    </div>
+    <div class="bg-content">
+      <div class="container bg-inner fade-in">
+        <h2>Quem Somos</h2>
+        <p>A <strong>vinidimo</strong> nasceu para simplificar o acesso ao design. Nosso propósito é entregar qualidade
+          profissional em qualquer tipo de projeto.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato">
+    <div class="container fade-in">
+      <h2>Vamos conversar?</h2>
+      <p>Quer criar sua marca, sua arte ou seu site? Manda uma mensagem no WhatsApp e vamos transformar sua ideia em
+        realidade.</p>
+      <div class="form-wrap">
+        <form class="two-col" id="whatsForm">
+          <input type="text" id="nome" placeholder="Seu nome" required>
+          <input type="email" id="email" placeholder="Seu e-mail" required>
+          <textarea id="mensagem" rows="6" placeholder="Explique sua ideia" required></textarea>
+          <button type="submit">Falar no WhatsApp</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 vinidimo — Todos os direitos reservados</p>
+    <div class="social">
+      <a href="https://instagram.com/vinidimo" target="_blank"><img
+          src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram"></a>
+      <a href="https://behance.net/vinidimo" target="_blank"><img
+          src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/behance.svg" alt="Behance"></a>
+      <a href="https://www.linkedin.com/company/vini-dimo/" target="_blank"><img
+          src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/linkedin.svg" alt="LinkedIn"></a>
+      <a href="mailto:contato@vinidimo.com"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/gmail.svg"
+          alt="E-mail"></a>
+      <a href="https://wa.me/5511945144513" target="_blank"><img
+          src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" alt="WhatsApp"></a>
+    </div>
+  </footer>
+
+  <div id="carousel">
+    <img src="" alt="">
+    <p id="caption"></p>
+    <div class="carousel-controls">
+      <button id="prev">◀</button>
+      <button id="next">▶</button>
     </div>
   </div>
-</section>
 
-<section id="servicos" class="overlay-section">
-  <div class="bg-img" style="background-image:url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=80');"></div>
-  <div class="container fade-in">
-    <h2>O que podemos criar juntos</h2>
-    <div class="grid-3">
-      <div class="card"><h3>Identidade visual completa</h3><p>Logos, marcas pessoais, cartões, papelaria e tudo para comunicar quem você é.</p></div>
-      <div class="card"><h3>Design digital e social media</h3><p>Artes para Instagram, Facebook, LinkedIn, anúncios e campanhas online.</p></div>
-      <div class="card"><h3>Ilustração e vetorização</h3><p>Criação e vetor de ilustrações, caricaturas, ícones, adesivos e estampas.</p></div>
-      <div class="card"><h3>Materiais impressos</h3><p>Cartazes, flyers, folders, adesivos, embalagens e muito mais.</p></div>
-      <div class="card"><h3>Landing pages e sites</h3><p>Páginas responsivas, otimizadas para SEO e conversão, prontas para atrair clientes.</p></div>
-      <div class="card"><h3>Projetos sob medida</h3><p>Tem uma ideia diferente? Conte pra gente e criamos do zero, personalizado para você.</p></div>
-    </div>
-  </div>
-</section>
+  <script>
+    const io = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }) }, { threshold: 0.2 });
+    document.querySelectorAll(".fade-in").forEach(el => io.observe(el));
 
-<section id="portfolio">
-  <div class="container fade-in">
-    <h2>De logos a sites: veja o que já criamos</h2>
-    <p>Cada projeto é único. Aqui você encontra exemplos de logotipos, identidades, artes digitais, materiais impressos e landing pages.</p>
-    <div class="masonry">
-      <div class="projeto" data-images='["https://vinidimo.com/assets/c557c4183354369.Y3JvcCwyNTU2LDIwMDAsMzczLDA.png","https://picsum.photos/id/1015/1200/800"]' data-title="Lavazul Logo"><img src="https://vinidimo.com/assets/c557c4183354369.Y3JvcCwyNTU2LDIwMDAsMzczLDA.png" loading="lazy" decoding="async"></div>
-      <div class="projeto" data-images='["https://vinidimo.com/assets/e355b9183353967.Y3JvcCw0MDQsMzE2LDcyMyw0Mjc.png","https://picsum.photos/id/1024/1200/800"]' data-title="Dimo Street Lettering"><img src="https://vinidimo.com/assets/e355b9183353967.Y3JvcCw0MDQsMzE2LDcyMyw0Mjc.png" loading="lazy" decoding="async"></div>
-      <div class="projeto" data-images='["https://vinidimo.com/assets/1635a7150952763.65dbe403c776a.jpg","https://vinidimo.com/assets/f4d996150952763.65da36780f8a2.jpg","https://vinidimo.com/assets/71a0fd150952763.65da3678102e6.jpg"]' data-title="Lou's Tavern"><img src="https://vinidimo.com/assets/1635a7150952763.65dbe403c776a.jpg" loading="lazy" decoding="async"></div>
-      <div class="projeto extra" data-images='["https://vinidimo.com/assets/2df658150953009.660d6fcc11cac.jpg","https://vinidimo.com/assets/57d989150953009.6303ab8e4f4e4.jpg","https://vinidimo.com/assets/7cfdd4150953009.660d6fcc12ad6.jpg","https://vinidimo.com/assets/867ebf150953009.660d6fcc13fed.jpg","https://vinidimo.com/assets/a2ffbb150953009.660d6fcb0c192.jpg"]' data-title="Vans Sticker" style="display:none;"><img src="https://vinidimo.com/assets/867ebf150953009.660d6fcc13fed.jpg" loading="lazy" decoding="async"></div>
-    </div>
-    <div class="show-more"><button id="showMoreBtn">Mostrar mais</button></div>
-  </div>
-</section>
+    const hamburger = document.getElementById("hamburger");
+    const nav = document.querySelector("header nav");
+    hamburger.addEventListener("click", () => { hamburger.classList.toggle("active"); nav.classList.toggle("open"); });
 
-<section id="sobre" class="overlay-section">
-  <div class="bg-img" style="background-image:url('https://images.unsplash.com/photo-1508830524289-0adcbe822b40?auto=format&fit=crop&w=1600&q=80');"></div>
-  <div class="bg-content">
-    <div class="container bg-inner fade-in">
-      <h2>Quem Somos</h2>
-      <p>A <strong>vinidimo</strong> nasceu para simplificar o acesso ao design. Nosso propósito é entregar qualidade profissional em qualquer tipo de projeto.</p>
-    </div>
-  </div>
-</section>
+    // Hero slideshow
+    const slides = document.querySelectorAll(".hero-slideshow img");
+    if (slides.length) { let current = 0; setInterval(() => { slides[current].classList.remove("active"); current = (current + 1) % slides.length; slides[current].classList.add("active"); }, 8000); }
 
-<section id="contato">
-  <div class="container fade-in">
-    <h2>Vamos conversar?</h2>
-    <p>Quer criar sua marca, sua arte ou seu site? Manda uma mensagem no WhatsApp e vamos transformar sua ideia em realidade.</p>
-    <div class="form-wrap">
-      <form class="two-col" id="whatsForm">
-        <input type="text" id="nome" placeholder="Seu nome" required>
-        <input type="email" id="email" placeholder="Seu e-mail" required>
-        <textarea id="mensagem" rows="6" placeholder="Explique sua ideia" required></textarea>
-        <button type="submit">Falar no WhatsApp</button>
-      </form>
-    </div>
-  </div>
-</section>
+    // WhatsApp form
+    document.getElementById("whatsForm").addEventListener("submit", function (e) { e.preventDefault(); const nome = document.getElementById("nome").value; const email = document.getElementById("email").value; const mensagem = document.getElementById("mensagem").value; const texto = `Olá, meu nome é ${nome} (${email}).%0A${mensagem}`; window.open(`https://wa.me/5511945144513?text=${texto}`, '_blank'); });
 
-<footer>
-  <p>© 2025 vinidimo — Todos os direitos reservados</p>
-  <div class="social">
-    <a href="https://instagram.com/vinidimo" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram"></a>
-    <a href="https://behance.net/vinidimo" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/behance.svg" alt="Behance"></a>
-    <a href="https://www.linkedin.com/company/vini-dimo/" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/linkedin.svg" alt="LinkedIn"></a>
-    <a href="mailto:contato@vinidimo.com"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/gmail.svg" alt="E-mail"></a>
-    <a href="https://wa.me/5511945144513" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" alt="WhatsApp"></a>
-  </div>
-</footer>
+    // Lightbox
+    const carousel = document.getElementById("carousel"); const cImg = carousel.querySelector("img"); const caption = document.getElementById("caption"); let projectImages = []; let idx = 0;
+    function openProject(images, title) { projectImages = images; idx = 0; cImg.src = projectImages[idx]; caption.textContent = title || ""; carousel.style.display = "flex"; }
+    function nextC() { idx = (idx + 1) % projectImages.length; cImg.src = projectImages[idx]; }
+    function prevC() { idx = (idx - 1 + projectImages.length) % projectImages.length; cImg.src = projectImages[idx]; }
+    document.querySelectorAll(".projeto").forEach(proj => { proj.addEventListener("click", () => { const imgs = JSON.parse(proj.dataset.images); const title = proj.dataset.title; openProject(imgs, title); }); });
+    document.getElementById("prev").onclick = () => prevC(); document.getElementById("next").onclick = () => nextC();
+    carousel.addEventListener("click", e => { if (e.target === carousel) carousel.style.display = "none"; });
+    document.addEventListener("keydown", e => { if (carousel.style.display === "flex") { if (e.key === "Escape") carousel.style.display = "none"; if (e.key === "ArrowRight") nextC(); if (e.key === "ArrowLeft") prevC(); } });
 
-<div id="carousel">
-  <img src="" alt="">
-  <p id="caption"></p>
-  <div class="carousel-controls">
-    <button id="prev">◀</button>
-    <button id="next">▶</button>
-  </div>
-</div>
+    // Mostrar mais portfolio
+    const btn = document.getElementById("showMoreBtn");
+    if (btn) { btn.addEventListener("click", () => { document.querySelectorAll(".projeto.extra").forEach(p => p.style.display = "block"); btn.style.display = "none"; }); }
 
-<script>
-const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target);}})},{threshold:0.2});
-document.querySelectorAll(".fade-in").forEach(el=>io.observe(el));
-
-const hamburger=document.getElementById("hamburger");
-const nav=document.querySelector("header nav");
-hamburger.addEventListener("click",()=>{hamburger.classList.toggle("active");nav.classList.toggle("open");});
-
-// Scroll spy
-const navLinks=[...document.querySelectorAll('header nav a')];
-const sections=navLinks.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
-const headerH=document.querySelector('header').offsetHeight;
-function setActive(){const pos=window.scrollY+headerH+1;let current=sections[0];for(const sec of sections)if(sec.offsetTop<=pos)current=sec;navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current.id));}
-window.addEventListener('scroll',()=>requestAnimationFrame(setActive));
-window.addEventListener('load',setActive);
-navLinks.forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');hamburger.classList.remove('active');}));
-
-// Hero slideshow
-const slides=document.querySelectorAll(".hero-slideshow img");
-if(slides.length){let current=0;setInterval(()=>{slides[current].classList.remove("active");current=(current+1)%slides.length;slides[current].classList.add("active");},8000);}
-
-// WhatsApp form
-document.getElementById("whatsForm").addEventListener("submit",function(e){e.preventDefault();const nome=document.getElementById("nome").value;const email=document.getElementById("email").value;const mensagem=document.getElementById("mensagem").value;const texto=`Olá, meu nome é ${nome} (${email}).%0A${mensagem}`;window.open(`https://wa.me/5511945144513?text=${texto}`,'_blank');});
-
-// Lightbox
-const carousel=document.getElementById("carousel");const cImg=carousel.querySelector("img");const caption=document.getElementById("caption");let projectImages=[];let idx=0;
-function openProject(images,title){projectImages=images;idx=0;cImg.src=projectImages[idx];caption.textContent=title||"";carousel.style.display="flex";}
-function nextC(){idx=(idx+1)%projectImages.length;cImg.src=projectImages[idx];}
-function prevC(){idx=(idx-1+projectImages.length)%projectImages.length;cImg.src=projectImages[idx];}
-document.querySelectorAll(".projeto").forEach(proj=>{proj.addEventListener("click",()=>{const imgs=JSON.parse(proj.dataset.images);const title=proj.dataset.title;openProject(imgs,title);});});
-document.getElementById("prev").onclick=()=>prevC();document.getElementById("next").onclick=()=>nextC();
-carousel.addEventListener("click",e=>{if(e.target===carousel)carousel.style.display="none";});
-document.addEventListener("keydown",e=>{if(carousel.style.display==="flex"){if(e.key==="Escape")carousel.style.display="none";if(e.key==="ArrowRight")nextC();if(e.key==="ArrowLeft")prevC();}});
-
-// Mostrar mais portfolio
-const btn=document.getElementById("showMoreBtn");
-if(btn){btn.addEventListener("click",()=>{document.querySelectorAll(".projeto.extra").forEach(p=>p.style.display="block");btn.style.display="none";});}
-
-// Zoom backgrounds suave
-const bgImgs = document.querySelectorAll(".bg-img");
-const targetScales = new WeakMap();
-const currentScales = new WeakMap();
-
-function updateBgZoom(){
-  bgImgs.forEach(el=>{
-    const rect=el.parentElement.getBoundingClientRect();
-    let target=1;
-    if(rect.top<window.innerHeight&&rect.bottom>0){
-      const scrollPercent=(window.innerHeight-rect.top)/(window.innerHeight+rect.height);
-      target=1+scrollPercent*0.2;
+    // Zoom backgrounds suave
+    const bgImgs = document.querySelectorAll(".bg-img");
+    const currentScales = new WeakMap();
+    function updateBgZoom() {
+      bgImgs.forEach(el => {
+        const rect = el.parentElement.getBoundingClientRect();
+        let target = 1;
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          const scrollPercent = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+          target = 1 + scrollPercent * 0.2;
+        }
+        if (!currentScales.has(el)) currentScales.set(el, 1);
+        const current = currentScales.get(el);
+        const next = current + (target - current) * 0.1;
+        currentScales.set(el, next);
+        el.style.transform = `scale(${next})`;
+      });
+      requestAnimationFrame(updateBgZoom);
     }
-    // guarda valores
-    targetScales.set(el,target);
-    if(!currentScales.has(el)) currentScales.set(el,1);
-    // suavização: lerp 0.1
-    const current=currentScales.get(el);
-    const next=current+(target-current)*0.1;
-    currentScales.set(el,next);
-    el.style.transform=`scale(${next})`;
-  });
-  requestAnimationFrame(updateBgZoom);
-}
-requestAnimationFrame(updateBgZoom);
-
-// Pré-carregamento de imagens do lightbox
-document.querySelectorAll(".projeto").forEach(proj=>{const imgs=JSON.parse(proj.dataset.images);imgs.forEach(src=>{const i=new Image();i.src=src;});});
-</script>
+    requestAnimationFrame(updateBgZoom);
+  </script>
 </body>
-</html>
 
+</html>
