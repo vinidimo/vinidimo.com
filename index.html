@@ -11,7 +11,6 @@
     href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2300aaff'/%3E%3Cpath d='M18 22 L32 44 L46 22' stroke='%23fff' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- Preload imagens de fundo críticas -->
   <link rel="preload" as="image"
     href="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=80">
   <link rel="preload" as="image"
@@ -119,7 +118,6 @@
       width: 28px;
       height: 20px;
       display: none;
-      /* <--- escondido no desktop */
       justify-content: center;
       align-items: center;
       cursor: pointer;
@@ -548,6 +546,139 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    .infinite-carousel {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .infinite-carousel .carousel-viewport {
+      display: flex;
+      will-change: transform;
+    }
+
+    .infinite-carousel .slide {
+      flex: 0 0 calc(33.33% - 10px);
+      margin-right: 10px;
+    }
+
+    .infinite-carousel .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 6px;
+      display: block;
+    }
+
+    @media(max-width: 900px) {
+      .infinite-carousel .slide {
+        flex: 0 0 calc(50% - 10px);
+      }
+    }
+
+    @media(max-width: 600px) {
+      .infinite-carousel .slide {
+        flex: 0 0 100%;
+        margin-right: 0;
+      }
+    }
+
+    .slide {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .slide-hover {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity .3s;
+      border-radius: 6px;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .slide:hover .slide-hover {
+      opacity: 1;
+    }
+
+    .carousel-control-previous,
+    .carousel-control-next {
+      display: block;
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      cursor: pointer;
+      background: rgba(0, 0, 0, .6);
+      color: #fff;
+      line-height: 40px;
+      font-size: 18px;
+      text-align: center;
+      border-radius: 50%;
+    }
+
+    .carousel-control-previous {
+      left: 10px;
+    }
+
+    .carousel-control-next {
+      right: 10px;
+    }
+
+    #projectLightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+    }
+
+    #projectLightbox .lightbox-content {
+      max-width: 90%;
+      text-align: center;
+      color: #fff;
+      position: relative;
+    }
+
+    #projectLightbox img {
+      max-width: 80vw;
+      max-height: 70vh;
+      margin: 1rem 0;
+      border-radius: 6px;
+    }
+
+    #projectLightbox .proj-control {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.6);
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      padding: .5rem 1rem;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    #projectLightbox .proj-prev {
+      left: 20px;
+    }
+
+    #projectLightbox .proj-next {
+      right: 20px;
+    }
   </style>
 </head>
 
@@ -625,27 +756,49 @@
       <h2>De logos a sites: veja o que já criamos</h2>
       <p>Cada projeto é único. Aqui você encontra exemplos de logotipos, identidades, artes digitais, materiais
         impressos e landing pages.</p>
-      <div class="masonry">
-        <div class="projeto"
-          data-images='["https://vinidimo.com/assets/c557c4183354369.Y3JvcCwyNTU2LDIwMDAsMzczLDA.png"]'
-          data-title="Lavazul Logo"><img
-            src="https://vinidimo.com/assets/c557c4183354369.Y3JvcCwyNTU2LDIwMDAsMzczLDA.png" loading="lazy"
-            decoding="async"></div>
-        <div class="projeto"
-          data-images='["https://vinidimo.com/assets/e355b9183353967.Y3JvcCw0MDQsMzE2LDcyMyw0Mjc.png"]'
-          data-title="Dimo Street Lettering"><img
-            src="https://vinidimo.com/assets/e355b9183353967.Y3JvcCw0MDQsMzE2LDcyMyw0Mjc.png" loading="lazy"
-            decoding="async"></div>
-        <div class="projeto"
-          data-images='["https://vinidimo.com/assets/1635a7150952763.65dbe403c776a.jpg","https://vinidimo.com/assets/f4d996150952763.65da36780f8a2.jpg","https://vinidimo.com/assets/71a0fd150952763.65da3678102e6.jpg"]'
-          data-title="Lou's Tavern"><img src="https://vinidimo.com/assets/1635a7150952763.65dbe403c776a.jpg"
-            loading="lazy" decoding="async"></div>
-        <div class="projeto extra"
-          data-images='["https://vinidimo.com/assets/2df658150953009.660d6fcc11cac.jpg","https://vinidimo.com/assets/57d989150953009.6303ab8e4f4e4.jpg","https://vinidimo.com/assets/7cfdd4150953009.660d6fcc12ad6.jpg","https://vinidimo.com/assets/867ebf150953009.660d6fcc13fed.jpg","https://vinidimo.com/assets/a2ffbb150953009.660d6fcb0c192.jpg"]'
-          data-title="Vans Sticker" style="display:none;"><img
-            src="https://vinidimo.com/assets/867ebf150953009.660d6fcc13fed.jpg" loading="lazy" decoding="async"></div>
+
+      <div class="infinite-carousel">
+        <div class="carousel-viewport">
+          <div class="slide" data-title="Lou's Tavern"
+            data-caption="Logo criado com base na ''Lou's Tavern'' do filme Clube da Luta" data-images='[
+       "https://vinidimo.com/assets/1635a7150952763.65dbe403c776a.jpg",
+       "https://vinidimo.com/assets/f4d996150952763.65da36780f8a2.jpg",
+       "https://vinidimo.com/assets/71a0fd150952763.65da3678102e6.jpg"
+     ]'>
+            <img src="https://vinidimo.com/assets/1635a7150952763.65dbe403c776a.jpg" alt="Lou's Tavern">
+            <div class="slide-hover"><span>Lou's Tavern</span></div>
+          </div>
+
+          <div class="slide" data-title="Lavazul Logo" data-caption="Identidade visual criada para Lavazul" data-images='[
+       "https://vinidimo.com/assets/c557c4183354369.Y3JvcCwyNTU2LDIwMDAsMzczLDA.png"
+     ]'>
+            <img src="https://vinidimo.com/assets/c557c4183354369.Y3JvcCwyNTU2LDIwMDAsMzczLDA.png" alt="Lavazul Logo">
+            <div class="slide-hover"><span>Lavazul Logo</span></div>
+          </div>
+
+          <div class="slide" data-title="Dimo Street Lettering"
+            data-caption="Marca Street Lettering para aplicação em camisetas, bonés e adesivos." data-images='[
+     "https://vinidimo.com/assets/e355b9183353967.Y3JvcCw0MDQsMzE2LDcyMyw0Mjc.png"
+     ]'>
+            <img src="https://vinidimo.com/assets/e355b9183353967.Y3JvcCw0MDQsMzE2LDcyMyw0Mjc.png"
+              alt="Dimo Street Lettering">
+            <div class="slide-hover"><span>Dimo Street Lettering</span></div>
+          </div>
+
+          <div class="slide" data-title="Vans Sticker"
+            data-caption="Ilustração de tênis da Vans para aplicação em adesivos e acessórios." data-images='[
+     "https://vinidimo.com/assets/867ebf150953009.660d6fcc13fed.jpg",
+     "https://vinidimo.com/assets/2df658150953009.660d6fcc11cac.jpg",
+     "https://vinidimo.com/assets/7cfdd4150953009.660d6fcc12ad6.jpg"
+     ]'>
+            <img src="https://vinidimo.com/assets/867ebf150953009.660d6fcc13fed.jpg" alt="Vans Sticker">
+            <div class="slide-hover"><span>Vans Sticker</span></div>
+          </div>
+
+        </div>
+        <a class="carousel-control-previous">◀</a>
+        <a class="carousel-control-next">▶</a>
       </div>
-      <div class="show-more"><button id="showMoreBtn">Mostrar mais</button></div>
     </div>
   </section>
 
@@ -696,13 +849,15 @@
     </div>
   </footer>
 
-  <div id="carousel">
-    <img src="" alt="">
-    <p id="caption"></p>
-    <div class="carousel-controls">
-      <button id="prev">◀</button>
-      <button id="next">▶</button>
+  <div id="projectLightbox" style="display:none;">
+    <div class="lightbox-content">
+      <h2 id="projectTitle"></h2>
+      <img id="projectImg" src="" alt="">
+      <p id="projectCaption"></p>
     </div>
+
+    <button class="proj-control proj-prev">◀</button>
+    <button class="proj-control proj-next">▶</button>
   </div>
 
   <script>
@@ -782,6 +937,113 @@
       link.addEventListener("click", () => {
         nav.classList.remove("open");
         hamburger.classList.remove("active");
+      });
+    });
+  </script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    $(function () {
+      const $viewport = $(".infinite-carousel .carousel-viewport");
+      const $slides = $viewport.children().clone();
+
+      // duplica slides para criar loop
+      $viewport.append($slides);
+
+      let slideWidth = $viewport.children().first().outerWidth(true);
+      let totalSlides = $viewport.children().length;
+      let current = 0;
+      let animating = false;
+
+      function moveTo(index, animate = true) {
+        if (animate) {
+          $viewport.css("transition", "transform 0.6s ease");
+        } else {
+          $viewport.css("transition", "none");
+        }
+        $viewport.css("transform", `translateX(${-index * slideWidth}px)`);
+      }
+
+      function next() {
+        if (animating) return;
+        animating = true;
+        current++;
+        moveTo(current, true);
+        $viewport.one("transitionend", function () {
+          if (current >= totalSlides / 2) {
+            current = 0;
+            moveTo(current, false);
+          }
+          animating = false;
+        });
+      }
+
+      function prev() {
+        if (animating) return;
+        animating = true;
+        current--;
+        moveTo(current, true);
+        $viewport.one("transitionend", function () {
+          if (current < 0) {
+            current = totalSlides / 2 - 1;
+            moveTo(current, false);
+          }
+          animating = false;
+        });
+      }
+
+      // botões
+      $(".carousel-control-next").on("click", e => { e.preventDefault(); next(); });
+      $(".carousel-control-previous").on("click", e => { e.preventDefault(); prev(); });
+
+      // autoplay
+      setInterval(next, 4000);
+
+      moveTo(current, false);
+    });
+    $(function () {
+      let currentProject = { images: [], index: 0 };
+
+      // abre projeto
+      $(".infinite-carousel .slide").on("click", function () {
+        const imgs = JSON.parse($(this).attr("data-images") || "[]");
+        const title = $(this).data("title") || "";
+        const caption = $(this).data("caption") || "";
+
+        if (!imgs.length) return;
+
+        currentProject.images = imgs;
+        currentProject.index = 0;
+
+        $("#projectTitle").text(title);
+        $("#projectCaption").text(caption);
+        $("#projectImg").attr("src", imgs[0]);
+
+        $("#projectLightbox").fadeIn();
+      });
+
+      // troca imagem
+      function showImage(i) {
+        currentProject.index = (i + currentProject.images.length) % currentProject.images.length;
+        $("#projectImg").attr("src", currentProject.images[currentProject.index]);
+      }
+
+      $(".proj-next").on("click", () => showImage(currentProject.index + 1));
+      $(".proj-prev").on("click", () => showImage(currentProject.index - 1));
+
+      // fecha ao clicar fora
+      $("#projectLightbox").on("click", function (e) {
+        if (e.target.id === "projectLightbox") {
+          $("#projectLightbox").fadeOut();
+        }
+      });
+
+      // teclado
+      $(document).on("keydown", function (e) {
+        if ($("#projectLightbox").is(":visible")) {
+          if (e.key === "Escape") $("#projectLightbox").fadeOut();
+          if (e.key === "ArrowRight") showImage(currentProject.index + 1);
+          if (e.key === "ArrowLeft") showImage(currentProject.index - 1);
+        }
       });
     });
   </script>
