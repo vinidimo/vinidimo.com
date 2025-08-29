@@ -903,7 +903,26 @@
       $(".carousel-control-previous").on("click", e => { e.preventDefault(); prev(); });
 
       // autoplay
-      setInterval(next, 4000);
+      let autoPlayTimer;
+      function scheduleAutoPlay() {
+        clearTimeout(autoPlayTimer);
+        autoPlayTimer = setTimeout(() => {
+          next();
+          scheduleAutoPlay();
+        }, 4000);
+      }
+      $(".carousel-control-next").on("click", e => {
+        e.preventDefault();
+        next();
+        scheduleAutoPlay();
+      });
+      $(".carousel-control-previous").on("click", e => {
+        e.preventDefault();
+        prev();
+        scheduleAutoPlay();
+      });
+      scheduleAutoPlay();
+
 
       moveTo(current, false);
     });
