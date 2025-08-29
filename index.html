@@ -364,33 +364,6 @@
             padding: 4rem 1rem;
         }
 
-        .masonry {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-        }
-
-        .show-more {
-            text-align: center;
-            margin-top: 1rem;
-        }
-
-        .show-more button {
-            background: var(--brand);
-            color: #fff;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        @media(max-width:900px) {
-            .masonry {
-                grid-template-columns: 1fr;
-            }
-        }
-
         .carousel-controls button:hover {
             background: rgba(0, 0, 0, 0.85);
         }
@@ -485,6 +458,12 @@
             transform: translateY(0);
         }
 
+        .infinite-carousel,
+        .infinite-carousel * {
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
         .infinite-carousel {
             position: relative;
             overflow: hidden;
@@ -536,7 +515,7 @@
             justify-content: center;
             opacity: 0;
             transition: opacity .3s;
-            border-radius: 6px;
+            border-radius: 0px;
             text-align: center;
             padding: 10px;
         }
@@ -598,7 +577,6 @@
             max-width: 80vw;
             max-height: 80vh;
             margin: 1rem auto;
-            /* centraliza horizontalmente */
             display: block;
         }
 
@@ -708,18 +686,18 @@
                 <div class="carousel-viewport">
                     <div class="slide" data-title="Lou's Tavern"
                         data-caption="Logo criado com base na ''Lou's Tavern'' do filme Clube da Luta" data-images='[
-       "https://vinidimo.com/assets/1635a7150952763.65dbe403c776a.jpg",
-       "https://vinidimo.com/assets/f4d996150952763.65da36780f8a2.jpg",
-       "https://vinidimo.com/assets/71a0fd150952763.65da3678102e6.jpg"
-     ]'>
+                        "https://vinidimo.com/assets/1635a7150952763.65dbe403c776a.jpg",
+                        "https://vinidimo.com/assets/f4d996150952763.65da36780f8a2.jpg",
+                        "https://vinidimo.com/assets/71a0fd150952763.65da3678102e6.jpg"
+                        ]'>
                         <img src="https://vinidimo.com/assets/1635a7150952763.65dbe403c776a.jpg" alt="Lou's Tavern">
                         <div class="slide-hover"><span>Lou's Tavern</span></div>
                     </div>
 
                     <div class="slide" data-title="Lavazul Logo" data-caption="Identidade visual criada para Lavazul"
                         data-images='[
-       "https://vinidimo.com/assets/c557c4183354369.Y3JvcCwyNTU2LDIwMDAsMzczLDA.png"
-     ]'>
+                        "https://vinidimo.com/assets/c557c4183354369.Y3JvcCwyNTU2LDIwMDAsMzczLDA.png"
+                        ]'>
                         <img src="https://vinidimo.com/assets/c557c4183354369.Y3JvcCwyNTU2LDIwMDAsMzczLDA.png"
                             alt="Lavazul Logo">
                         <div class="slide-hover"><span>Lavazul Logo</span></div>
@@ -728,8 +706,8 @@
                     <div class="slide" data-title="Dimo Street Lettering"
                         data-caption="Marca Street Lettering para aplicação em camisetas, bonés e adesivos."
                         data-images='[
-     "https://vinidimo.com/assets/e355b9183353967.Y3JvcCw0MDQsMzE2LDcyMyw0Mjc.png"
-     ]'>
+                        "https://vinidimo.com/assets/e355b9183353967.Y3JvcCw0MDQsMzE2LDcyMyw0Mjc.png"
+                        ]'>
                         <img src="https://vinidimo.com/assets/e355b9183353967.Y3JvcCw0MDQsMzE2LDcyMyw0Mjc.png"
                             alt="Dimo Street Lettering">
                         <div class="slide-hover"><span>Dimo Street Lettering</span></div>
@@ -737,10 +715,10 @@
 
                     <div class="slide" data-title="Vans Sticker"
                         data-caption="Ilustração de tênis da Vans para aplicação em adesivos e acessórios." data-images='[
-     "https://vinidimo.com/assets/867ebf150953009.660d6fcc13fed.jpg",
-     "https://vinidimo.com/assets/2df658150953009.660d6fcc11cac.jpg",
-     "https://vinidimo.com/assets/7cfdd4150953009.660d6fcc12ad6.jpg"
-     ]'>
+                        "https://vinidimo.com/assets/867ebf150953009.660d6fcc13fed.jpg",
+                        "https://vinidimo.com/assets/2df658150953009.660d6fcc11cac.jpg",
+                        "https://vinidimo.com/assets/7cfdd4150953009.660d6fcc12ad6.jpg"
+                        ]'>
                         <img src="https://vinidimo.com/assets/867ebf150953009.660d6fcc13fed.jpg" alt="Vans Sticker">
                         <div class="slide-hover"><span>Vans Sticker</span></div>
                     </div>
@@ -838,12 +816,12 @@
 
                 if (rect.top < window.innerHeight && rect.bottom > 0) {
                     const scrollPercent = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-                    target = 1 + scrollPercent * 0.25; // até 25% de zoom
+                    target = 1 + scrollPercent * 0.25;
                 }
 
                 if (!currentScales.has(el)) currentScales.set(el, 1);
                 const current = currentScales.get(el);
-                const next = current + (target - current) * 0.08; // suavização
+                const next = current + (target - current) * 0.08;
                 currentScales.set(el, next);
 
                 el.style.transform = `scale(${next})`;
@@ -860,7 +838,6 @@
             const $viewport = $(".infinite-carousel .carousel-viewport");
             const $slides = $viewport.children().clone();
 
-            // duplica slides para criar loop
             $viewport.append($slides);
 
             function updateSlideWidth() {
@@ -909,6 +886,39 @@
                     animating = false;
                 });
             }
+
+            // Suporte a arrastar (touch + mouse)
+            let startX = 0;
+            let isDragging = false;
+
+            function onDragStart(e) {
+                isDragging = true;
+                startX = e.type.includes("mouse") ? e.pageX : e.touches[0].pageX;
+            }
+
+            function onDragEnd(e) {
+                if (!isDragging) return;
+                isDragging = false;
+                const endX = e.type.includes("mouse") ? e.pageX : e.changedTouches[0].pageX;
+                const diff = endX - startX;
+
+                if (Math.abs(diff) > 50) { // mínimo de 50px para considerar swipe
+                    if (diff > 0) {
+                        prev();
+                    } else {
+                        next();
+                    }
+                    scheduleAutoPlay(); // reseta autoplay
+                }
+            }
+
+            // eventos mobile
+            $viewport.on("touchstart", onDragStart);
+            $viewport.on("touchend", onDragEnd);
+
+            // eventos desktop
+            $viewport.on("mousedown", onDragStart);
+            $viewport.on("mouseup", onDragEnd);
 
             // botões
             $(".carousel-control-next").on("click", e => { e.preventDefault(); next(); });
