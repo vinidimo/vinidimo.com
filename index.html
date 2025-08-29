@@ -1021,7 +1021,11 @@
         });
 
         // swipe carrossel
-        enableSwipe($viewport, next, prev);
+        enableSwipe($viewport,
+            () => { next(); scheduleAutoPlay(); },
+            () => { prev(); scheduleAutoPlay(); }
+        );
+
 
         moveTo(current, false);
 
