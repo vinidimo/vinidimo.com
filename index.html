@@ -891,11 +891,39 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         $(function () {
+            /* ========================
+               FUNÇÃO SWIPE GENÉRICA
+            ======================== */
+            function enableSwipe($el, onSwipeLeft, onSwipeRight) {
+                let startX = 0, isDragging = false;
+
+                function onStart(e) {
+                    isDragging = true;
+                    startX = e.type.includes("mouse") ? e.pageX : e.touches[0].pageX;
+                }
+                function onEnd(e) {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    const endX = e.type.includes("mouse") ? e.pageX : e.changedTouches[0].pageX;
+                    const diff = endX - startX;
+                    if (Math.abs(diff) > 50) { // mínimo 50px
+                        if (diff > 0) onSwipeRight();
+                        else onSwipeLeft();
+                    }
+                }
+
+                $el.on("touchstart mousedown", onStart);
+                $el.on("touchend mouseup", onEnd);
+            }
+
+            /* ========================
+               INFINITE CAROUSEL
+            ======================== */
             const $viewport = $(".infinite-carousel .carousel-viewport");
             const $slides = $viewport.children().clone();
-
             $viewport.append($slides);
 
+            let slideWidth;
             function updateSlideWidth() {
                 slideWidth = $viewport.children().first()[0].getBoundingClientRect().width;
             }
@@ -907,11 +935,7 @@
             let animating = false;
 
             function moveTo(index, animate = true) {
-                if (animate) {
-                    $viewport.css("transition", "transform 0.6s ease");
-                } else {
-                    $viewport.css("transition", "none");
-                }
+                $viewport.css("transition", animate ? "transform 0.6s ease" : "none");
                 $viewport.css("transform", `translateX(${-index * slideWidth}px)`);
             }
 
@@ -943,43 +967,6 @@
                 });
             }
 
-            // Suporte a arrastar (touch + mouse)
-            let startX = 0;
-            let isDragging = false;
-
-            function onDragStart(e) {
-                isDragging = true;
-                startX = e.type.includes("mouse") ? e.pageX : e.touches[0].pageX;
-            }
-
-            function onDragEnd(e) {
-                if (!isDragging) return;
-                isDragging = false;
-                const endX = e.type.includes("mouse") ? e.pageX : e.changedTouches[0].pageX;
-                const diff = endX - startX;
-
-                if (Math.abs(diff) > 50) { // 50px minimo p considerar swipe
-                    if (diff > 0) {
-                        prev();
-                    } else {
-                        next();
-                    }
-                    scheduleAutoPlay(); // reseta autoplay
-                }
-            }
-
-            // eventos mobile
-            $viewport.on("touchstart", onDragStart);
-            $viewport.on("touchend", onDragEnd);
-
-            // eventos desktop
-            $viewport.on("mousedown", onDragStart);
-            $viewport.on("mouseup", onDragEnd);
-
-            // botões
-            $(".carousel-control-next").on("click", e => { e.preventDefault(); next(); });
-            $(".carousel-control-previous").on("click", e => { e.preventDefault(); prev(); });
-
             // autoplay
             let autoPlayTimer;
             function scheduleAutoPlay() {
@@ -989,34 +976,34 @@
                     scheduleAutoPlay();
                 }, 4000);
             }
-            $(".carousel-control-next").on("click", e => {
-                e.preventDefault();
-                next();
-                scheduleAutoPlay();
-            });
-            $(".carousel-control-previous").on("click", e => {
-                e.preventDefault();
-                prev();
-                scheduleAutoPlay();
-            });
             scheduleAutoPlay();
 
+            // botões
+            $(".carousel-control-next").on("click", e => {
+                e.preventDefault(); next(); scheduleAutoPlay();
+            });
+            $(".carousel-control-previous").on("click", e => {
+                e.preventDefault(); prev(); scheduleAutoPlay();
+            });
+
+            // swipe carrossel
+            enableSwipe($viewport, next, prev);
+
             moveTo(current, false);
-        });
-        $(function () {
+
+            /* ========================
+               LIGHTBOX
+            ======================== */
             let currentProject = { images: [], index: 0 };
 
-            // abre projeto
             $(".infinite-carousel .slide").on("click", function () {
                 const imgs = JSON.parse($(this).attr("data-images") || "[]");
                 const title = $(this).data("title") || "";
                 const caption = $(this).data("caption") || "";
-
                 if (!imgs.length) return;
 
                 currentProject.images = imgs;
                 currentProject.index = 0;
-
                 $("#projectTitle").text(title);
                 $("#projectCaption").text(caption);
                 $("#projectImg").attr("src", imgs[0]);
@@ -1024,7 +1011,6 @@
                 $("#projectLightbox").fadeIn();
             });
 
-            // troca imagem
             function showImage(i) {
                 currentProject.index = (i + currentProject.images.length) % currentProject.images.length;
                 $("#projectImg").attr("src", currentProject.images[currentProject.index]);
@@ -1033,14 +1019,10 @@
             $(".proj-next").on("click", () => showImage(currentProject.index + 1));
             $(".proj-prev").on("click", () => showImage(currentProject.index - 1));
 
-            // fecha ao clicar fora
             $("#projectLightbox").on("click", function (e) {
-                if (e.target.id === "projectLightbox") {
-                    $("#projectLightbox").fadeOut();
-                }
+                if (e.target.id === "projectLightbox") $("#projectLightbox").fadeOut();
             });
 
-            // teclado
             $(document).on("keydown", function (e) {
                 if ($("#projectLightbox").is(":visible")) {
                     if (e.key === "Escape") $("#projectLightbox").fadeOut();
@@ -1048,6 +1030,12 @@
                     if (e.key === "ArrowLeft") showImage(currentProject.index - 1);
                 }
             });
+
+            // swipe lightbox
+            enableSwipe($("#projectLightbox"),
+                () => showImage(currentProject.index + 1),
+                () => showImage(currentProject.index - 1)
+            );
         });
     </script>
     <script>
@@ -1080,6 +1068,7 @@
             window.addEventListener("load", setActive);
         });
     </script>
+
 </body>
 
 </html>
