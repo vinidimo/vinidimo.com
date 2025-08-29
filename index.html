@@ -854,10 +854,6 @@
             });
         });
 
-        // Hero slideshow
-        const slides = document.querySelectorAll(".hero-slideshow img");
-        if (slides.length) { let current = 0; setInterval(() => { slides[current].classList.remove("active"); current = (current + 1) % slides.length; slides[current].classList.add("active"); }, 8000); }
-
         // WhatsApp form
         document.getElementById("whatsForm").addEventListener("submit", function (e) { e.preventDefault(); const nome = document.getElementById("nome").value; const email = document.getElementById("email").value; const mensagem = document.getElementById("mensagem").value; const texto = `Olá, meu nome é ${nome} (${email}).%0A${mensagem}`; window.open(`https://wa.me/5511945144513?text=${texto}`, '_blank'); });
     </script>
@@ -889,154 +885,191 @@
         requestAnimationFrame(updateBgZoom);
     </script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
     <script>
+        /* ========================
+           FUNÇÃO SWIPE GENÉRICA
+        ======================== */
+        function enableSwipe($el, onSwipeLeft, onSwipeRight) {
+            let startX = 0, isDragging = false;
+
+            function onStart(e) {
+                isDragging = true;
+                startX = e.type.includes("mouse") ? e.pageX : e.touches[0].pageX;
+            }
+            function onEnd(e) {
+                if (!isDragging) return;
+                isDragging = false;
+                const endX = e.type.includes("mouse") ? e.pageX : e.changedTouches[0].pageX;
+                const diff = endX - startX;
+                if (Math.abs(diff) > 50) { // mínimo 50px
+                    if (diff > 0) onSwipeRight();
+                    else onSwipeLeft();
+                }
+            }
+
+            $el.on("touchstart mousedown", onStart);
+            $el.on("touchend mouseup", onEnd);
+        }
+    </script>
+
+    <script>
+        /* ========================
+           HERO SLIDESHOW COM SWIPE
+        ======================== */
         $(function () {
-            /* ========================
-               FUNÇÃO SWIPE GENÉRICA
-            ======================== */
-            function enableSwipe($el, onSwipeLeft, onSwipeRight) {
-                let startX = 0, isDragging = false;
+            const $heroSlides = $(".hero-slideshow img");
+            let heroCurrent = 0;
+            let heroTimer;
 
-                function onStart(e) {
-                    isDragging = true;
-                    startX = e.type.includes("mouse") ? e.pageX : e.touches[0].pageX;
-                }
-                function onEnd(e) {
-                    if (!isDragging) return;
-                    isDragging = false;
-                    const endX = e.type.includes("mouse") ? e.pageX : e.changedTouches[0].pageX;
-                    const diff = endX - startX;
-                    if (Math.abs(diff) > 50) { // mínimo 50px
-                        if (diff > 0) onSwipeRight();
-                        else onSwipeLeft();
-                    }
-                }
-
-                $el.on("touchstart mousedown", onStart);
-                $el.on("touchend mouseup", onEnd);
+            function showHero(i) {
+                $heroSlides.removeClass("active");
+                heroCurrent = (i + $heroSlides.length) % $heroSlides.length;
+                $heroSlides.eq(heroCurrent).addClass("active");
             }
 
-            /* ========================
-               INFINITE CAROUSEL
-            ======================== */
-            const $viewport = $(".infinite-carousel .carousel-viewport");
-            const $slides = $viewport.children().clone();
-            $viewport.append($slides);
-
-            let slideWidth;
-            function updateSlideWidth() {
-                slideWidth = $viewport.children().first()[0].getBoundingClientRect().width;
-            }
-            $(window).on("resize", updateSlideWidth);
-            updateSlideWidth();
-
-            let totalSlides = $viewport.children().length;
-            let current = 0;
-            let animating = false;
-
-            function moveTo(index, animate = true) {
-                $viewport.css("transition", animate ? "transform 0.6s ease" : "none");
-                $viewport.css("transform", `translateX(${-index * slideWidth}px)`);
-            }
-
-            function next() {
-                if (animating) return;
-                animating = true;
-                current++;
-                moveTo(current, true);
-                $viewport.one("transitionend", function () {
-                    if (current >= totalSlides / 2) {
-                        current = 0;
-                        moveTo(current, false);
-                    }
-                    animating = false;
-                });
-            }
-
-            function prev() {
-                if (animating) return;
-                animating = true;
-                current--;
-                moveTo(current, true);
-                $viewport.one("transitionend", function () {
-                    if (current < 0) {
-                        current = totalSlides / 2 - 1;
-                        moveTo(current, false);
-                    }
-                    animating = false;
-                });
-            }
+            function heroNext() { showHero(heroCurrent + 1); }
+            function heroPrev() { showHero(heroCurrent - 1); }
 
             // autoplay
-            let autoPlayTimer;
-            function scheduleAutoPlay() {
-                clearTimeout(autoPlayTimer);
-                autoPlayTimer = setTimeout(() => {
-                    next();
-                    scheduleAutoPlay();
-                }, 4000);
+            function startHeroAuto() {
+                clearInterval(heroTimer);
+                heroTimer = setInterval(heroNext, 8000);
             }
-            scheduleAutoPlay();
+            startHeroAuto();
 
-            // botões
-            $(".carousel-control-next").on("click", e => {
-                e.preventDefault(); next(); scheduleAutoPlay();
-            });
-            $(".carousel-control-previous").on("click", e => {
-                e.preventDefault(); prev(); scheduleAutoPlay();
-            });
+            // bloquear arrastar
+            $heroSlides.attr("draggable", "false").on("dragstart", e => e.preventDefault());
 
-            // swipe carrossel
-            enableSwipe($viewport, next, prev);
-
-            moveTo(current, false);
-
-            /* ========================
-               LIGHTBOX
-            ======================== */
-            let currentProject = { images: [], index: 0 };
-
-            $(".infinite-carousel .slide").on("click", function () {
-                const imgs = JSON.parse($(this).attr("data-images") || "[]");
-                const title = $(this).data("title") || "";
-                const caption = $(this).data("caption") || "";
-                if (!imgs.length) return;
-
-                currentProject.images = imgs;
-                currentProject.index = 0;
-                $("#projectTitle").text(title);
-                $("#projectCaption").text(caption);
-                $("#projectImg").attr("src", imgs[0]);
-
-                $("#projectLightbox").fadeIn();
-            });
-
-            function showImage(i) {
-                currentProject.index = (i + currentProject.images.length) % currentProject.images.length;
-                $("#projectImg").attr("src", currentProject.images[currentProject.index]);
-            }
-
-            $(".proj-next").on("click", () => showImage(currentProject.index + 1));
-            $(".proj-prev").on("click", () => showImage(currentProject.index - 1));
-
-            $("#projectLightbox").on("click", function (e) {
-                if (e.target.id === "projectLightbox") $("#projectLightbox").fadeOut();
-            });
-
-            $(document).on("keydown", function (e) {
-                if ($("#projectLightbox").is(":visible")) {
-                    if (e.key === "Escape") $("#projectLightbox").fadeOut();
-                    if (e.key === "ArrowRight") showImage(currentProject.index + 1);
-                    if (e.key === "ArrowLeft") showImage(currentProject.index - 1);
-                }
-            });
-
-            // swipe lightbox
-            enableSwipe($("#projectLightbox"),
-                () => showImage(currentProject.index + 1),
-                () => showImage(currentProject.index - 1)
+            // swipe
+            enableSwipe($(".hero-slideshow"),
+                () => { heroNext(); startHeroAuto(); },
+                () => { heroPrev(); startHeroAuto(); }
             );
         });
+    </script>
+
+    <script>
+        /* ========================
+           INFINITE CAROUSEL
+        ======================== */
+        const $viewport = $(".infinite-carousel .carousel-viewport");
+        const $slides = $viewport.children().clone();
+        $viewport.append($slides);
+
+        let slideWidth;
+        function updateSlideWidth() {
+            slideWidth = $viewport.children().first()[0].getBoundingClientRect().width;
+        }
+        $(window).on("resize", updateSlideWidth);
+        updateSlideWidth();
+
+        let totalSlides = $viewport.children().length;
+        let current = 0;
+        let animating = false;
+
+        function moveTo(index, animate = true) {
+            $viewport.css("transition", animate ? "transform 0.6s ease" : "none");
+            $viewport.css("transform", `translateX(${-index * slideWidth}px)`);
+        }
+
+        function next() {
+            if (animating) return;
+            animating = true;
+            current++;
+            moveTo(current, true);
+            $viewport.one("transitionend", function () {
+                if (current >= totalSlides / 2) {
+                    current = 0;
+                    moveTo(current, false);
+                }
+                animating = false;
+            });
+        }
+
+        function prev() {
+            if (animating) return;
+            animating = true;
+            current--;
+            moveTo(current, true);
+            $viewport.one("transitionend", function () {
+                if (current < 0) {
+                    current = totalSlides / 2 - 1;
+                    moveTo(current, false);
+                }
+                animating = false;
+            });
+        }
+
+        // autoplay
+        let autoPlayTimer;
+        function scheduleAutoPlay() {
+            clearTimeout(autoPlayTimer);
+            autoPlayTimer = setTimeout(() => {
+                next();
+                scheduleAutoPlay();
+            }, 4000);
+        }
+        scheduleAutoPlay();
+
+        // botões
+        $(".carousel-control-next").on("click", e => {
+            e.preventDefault(); next(); scheduleAutoPlay();
+        });
+        $(".carousel-control-previous").on("click", e => {
+            e.preventDefault(); prev(); scheduleAutoPlay();
+        });
+
+        // swipe carrossel
+        enableSwipe($viewport, next, prev);
+
+        moveTo(current, false);
+
+        /* ========================
+           LIGHTBOX
+        ======================== */
+        let currentProject = { images: [], index: 0 };
+
+        $(".infinite-carousel .slide").on("click", function () {
+            const imgs = JSON.parse($(this).attr("data-images") || "[]");
+            const title = $(this).data("title") || "";
+            const caption = $(this).data("caption") || "";
+            if (!imgs.length) return;
+
+            currentProject.images = imgs;
+            currentProject.index = 0;
+            $("#projectTitle").text(title);
+            $("#projectCaption").text(caption);
+            $("#projectImg").attr("src", imgs[0]);
+
+            $("#projectLightbox").fadeIn();
+        });
+
+        function showImage(i) {
+            currentProject.index = (i + currentProject.images.length) % currentProject.images.length;
+            $("#projectImg").attr("src", currentProject.images[currentProject.index]);
+        }
+
+        $(".proj-next").on("click", () => showImage(currentProject.index + 1));
+        $(".proj-prev").on("click", () => showImage(currentProject.index - 1));
+
+        $("#projectLightbox").on("click", function (e) {
+            if (e.target.id === "projectLightbox") $("#projectLightbox").fadeOut();
+        });
+
+        $(document).on("keydown", function (e) {
+            if ($("#projectLightbox").is(":visible")) {
+                if (e.key === "Escape") $("#projectLightbox").fadeOut();
+                if (e.key === "ArrowRight") showImage(currentProject.index + 1);
+                if (e.key === "ArrowLeft") showImage(currentProject.index - 1);
+            }
+        });
+
+        // swipe lightbox
+        enableSwipe($("#projectLightbox"),
+            () => showImage(currentProject.index + 1),
+            () => showImage(currentProject.index - 1)
+        );
     </script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -1068,7 +1101,6 @@
             window.addEventListener("load", setActive);
         });
     </script>
-
 </body>
 
 </html>
