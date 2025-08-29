@@ -550,6 +550,13 @@
             right: 10px;
         }
 
+        /* impede seleção e arraste dentro do lightbox */
+        #projectLightbox,
+        #projectLightbox * {
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
         #projectLightbox {
             position: fixed;
             inset: 0;
@@ -993,6 +1000,42 @@
                     if (e.key === "ArrowLeft") showImage(currentProject.index - 1);
                 }
             });
+        });
+
+
+        $(function () {
+            let startX = 0;
+            let isDragging = false;
+
+            function onDragStart(e) {
+                isDragging = true;
+                startX = e.type.includes("mouse") ? e.pageX : e.touches[0].pageX;
+            }
+
+            function onDragEnd(e) {
+                if (!isDragging) return;
+                isDragging = false;
+                const endX = e.type.includes("mouse") ? e.pageX : e.changedTouches[0].pageX;
+                const diff = endX - startX;
+
+                if (Math.abs(diff) > 50) { // mínimo 50px para considerar swipe
+                    if (diff > 0) {
+                        // swipe para direita → imagem anterior
+                        $(".proj-prev").trigger("click");
+                    } else {
+                        // swipe para esquerda → próxima imagem
+                        $(".proj-next").trigger("click");
+                    }
+                }
+            }
+
+            // eventos mobile
+            $("#projectLightbox").on("touchstart", onDragStart);
+            $("#projectLightbox").on("touchend", onDragEnd);
+
+            // eventos desktop
+            $("#projectLightbox").on("mousedown", onDragStart);
+            $("#projectLightbox").on("mouseup", onDragEnd);
         });
     </script>
     <script>
