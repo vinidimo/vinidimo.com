@@ -227,7 +227,6 @@
       background-size: cover;
       background-position: center;
       transform: scale(1);
-      transition: transform 0.2s linear;
       z-index: 0;
       will-change: transform;
     }
@@ -371,17 +370,6 @@
       gap: 6px;
     }
 
-    .projeto img {
-      width: 100%;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: transform .3s;
-    }
-
-    .projeto img:hover {
-      transform: scale(1.04);
-    }
-
     .show-more {
       text-align: center;
       margin-top: 1rem;
@@ -401,56 +389,6 @@
       .masonry {
         grid-template-columns: 1fr;
       }
-    }
-
-    #carousel {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, .9);
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-    }
-
-    #carousel img {
-      max-width: 90%;
-      max-height: 70%;
-      margin-bottom: 1rem;
-    }
-
-    #carousel p {
-      color: #fff;
-      font-size: 1rem;
-      margin-bottom: 1rem;
-      text-align: center;
-      max-width: 900px;
-    }
-
-    .carousel-controls {
-      position: absolute;
-      top: 50%;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 2rem;
-      transform: translateY(-50%);
-      pointer-events: none;
-    }
-
-    .carousel-controls button {
-      pointer-events: auto;
-      background: rgba(0, 0, 0, 0.6);
-      border: none;
-      padding: 0.8rem 1.2rem;
-      color: #fff;
-      font-size: 1.2rem;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: background .25s;
     }
 
     .carousel-controls button:hover {
@@ -647,20 +585,27 @@
 
     #projectLightbox .lightbox-content {
       max-width: 90%;
+      max-height: 90%;
       text-align: center;
       color: #fff;
       position: relative;
     }
 
+    #projectLightbox h2,
+    #projectLightbox p {
+      margin: 0.5rem 0;
+    }
+
     #projectLightbox img {
       max-width: 80vw;
-      max-height: 70vh;
-      margin: 1rem 0;
-      border-radius: 6px;
+      max-height: 80vh;
+      margin: 1rem auto;
+      /* centraliza horizontalmente */
+      display: block;
     }
 
     #projectLightbox .proj-control {
-      position: fixed;
+      position: absolute;
       top: 50%;
       transform: translateY(-50%);
       background: rgba(0, 0, 0, 0.6);
@@ -874,71 +819,33 @@
 
     // WhatsApp form
     document.getElementById("whatsForm").addEventListener("submit", function (e) { e.preventDefault(); const nome = document.getElementById("nome").value; const email = document.getElementById("email").value; const mensagem = document.getElementById("mensagem").value; const texto = `Olá, meu nome é ${nome} (${email}).%0A${mensagem}`; window.open(`https://wa.me/5511945144513?text=${texto}`, '_blank'); });
-
-    // Lightbox
-    const carousel = document.getElementById("carousel"); const cImg = carousel.querySelector("img"); const caption = document.getElementById("caption"); let projectImages = []; let idx = 0;
-    function openProject(images, title) { projectImages = images; idx = 0; cImg.src = projectImages[idx]; caption.textContent = title || ""; carousel.style.display = "flex"; }
-    function nextC() { idx = (idx + 1) % projectImages.length; cImg.src = projectImages[idx]; }
-    function prevC() { idx = (idx - 1 + projectImages.length) % projectImages.length; cImg.src = projectImages[idx]; }
-    document.querySelectorAll(".projeto").forEach(proj => { proj.addEventListener("click", () => { const imgs = JSON.parse(proj.dataset.images); const title = proj.dataset.title; openProject(imgs, title); }); });
-    document.getElementById("prev").onclick = () => prevC(); document.getElementById("next").onclick = () => nextC();
-    carousel.addEventListener("click", e => { if (e.target === carousel) carousel.style.display = "none"; });
-    document.addEventListener("keydown", e => { if (carousel.style.display === "flex") { if (e.key === "Escape") carousel.style.display = "none"; if (e.key === "ArrowRight") nextC(); if (e.key === "ArrowLeft") prevC(); } });
-
-    // Mostrar mais portfolio
-    const btn = document.getElementById("showMoreBtn");
-    if (btn) { btn.addEventListener("click", () => { document.querySelectorAll(".projeto.extra").forEach(p => p.style.display = "block"); btn.style.display = "none"; }); }
-
-    // Zoom backgrounds suave
+  </script>
+  <script>
     const bgImgs = document.querySelectorAll(".bg-img");
     const currentScales = new WeakMap();
+
     function updateBgZoom() {
       bgImgs.forEach(el => {
-        const rect = el.parentElement.getBoundingClientRect();
+        const rect = el.getBoundingClientRect();
         let target = 1;
+
         if (rect.top < window.innerHeight && rect.bottom > 0) {
           const scrollPercent = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-          target = 1 + scrollPercent * 0.2;
+          target = 1 + scrollPercent * 0.25; // até 25% de zoom
         }
+
         if (!currentScales.has(el)) currentScales.set(el, 1);
         const current = currentScales.get(el);
-        const next = current + (target - current) * 0.1;
+        const next = current + (target - current) * 0.08; // suavização
         currentScales.set(el, next);
+
         el.style.transform = `scale(${next})`;
       });
+
       requestAnimationFrame(updateBgZoom);
     }
+
     requestAnimationFrame(updateBgZoom);
-
-    // Scroll spy para ativar underline conforme rolagem
-    const navLinks = [...document.querySelectorAll('header nav a')];
-    const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-    const headerH = document.querySelector('header').offsetHeight;
-
-    function setActive() {
-      const pos = window.scrollY + headerH + 1;
-      let current = sections[0];
-      for (const sec of sections) {
-        if (sec.offsetTop <= pos) current = sec;
-      }
-      navLinks.forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
-      });
-    }
-
-    window.addEventListener('scroll', () => requestAnimationFrame(setActive));
-    window.addEventListener('load', setActive);
-
-    // Atualiza ano do rodapé
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Fecha o menu ao clicar em qualquer link do menu
-    document.querySelectorAll("header nav a").forEach(link => {
-      link.addEventListener("click", () => {
-        nav.classList.remove("open");
-        hamburger.classList.remove("active");
-      });
-    });
   </script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script>
@@ -1045,6 +952,36 @@
           if (e.key === "ArrowLeft") showImage(currentProject.index - 1);
         }
       });
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const navLinks = [...document.querySelectorAll("header nav a")];
+      const sections = navLinks
+        .map(a => document.querySelector(a.getAttribute("href")))
+        .filter(Boolean);
+      const headerH = document.querySelector("header").offsetHeight;
+
+      function setActive() {
+        const pos = window.scrollY + headerH + 5;
+        let current = sections[0];
+
+        for (const sec of sections) {
+          const top = sec.offsetTop;
+          const bottom = top + sec.offsetHeight;
+          if (pos >= top && pos < bottom) {
+            current = sec;
+            break;
+          }
+        }
+
+        navLinks.forEach(a =>
+          a.classList.toggle("active", a.getAttribute("href") === "#" + current.id)
+        );
+      }
+
+      window.addEventListener("scroll", setActive);
+      window.addEventListener("load", setActive);
     });
   </script>
 </body>
