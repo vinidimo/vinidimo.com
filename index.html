@@ -7,8 +7,7 @@
     <meta name="description"
         content="vinidimo — design gráfico para empresas e pessoas físicas. Logos, identidade visual, ilustrações, redes sociais, sites e artes sob medida.">
     <title>vinidimo | Design gráfico e digital</title>
-    <link rel="icon"
-        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2300aaff'/%3E%3Cpath d='M18 22 L32 44 L46 22' stroke='%23fff' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="https://vinidimo.com/assets/logo.svg">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
     <link rel="preload" as="image"
@@ -84,6 +83,17 @@
         header h1 {
             text-transform: lowercase;
             font-size: 1.5rem;
+        }
+
+        header h1.brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        header h1.brand img {
+            width: 28px;
+            height: 28px;
         }
 
         nav {
@@ -613,7 +623,10 @@
 <body>
     <header>
         <div class="container">
-            <h1>vinidimo</h1>
+            <h1 class="brand">
+                <img src="https://vinidimo.com/assets/logo.svg" alt="vinidimo">
+                vinidimo
+            </h1>
             <nav>
                 <a href="#hero" class="active">Início</a>
                 <a href="#servicos">Serviços</a>
@@ -1108,3 +1121,4 @@
 </body>
 
 </html>
+
