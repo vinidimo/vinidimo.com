@@ -92,6 +92,7 @@
             display: flex;
             align-items: center;
             gap: 0.6rem;
+            padding-top: 8px;
         }
 
         header h1.brand img {
@@ -272,20 +273,29 @@
             z-index: 2;
         }
 
+        #hero {
+            min-height: 100vh;
+            display: block;
+        }
+
         #hero .container {
-            display: flex;
-            flex-direction: row;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             align-items: center;
             gap: 3rem;
-            flex-wrap: wrap;
+            height: 100vh;
         }
 
         .hero-slideshow {
-            flex: 1;
             position: relative;
-            height: 500px;
+            height: 520px;
+            max-height: 70vh;
+            border-radius: 24px;
             overflow: hidden;
-            border-radius: 8px;
+        }
+
+        #hero .hero-text {
+            align-items: flex-start;
         }
 
         .hero-slideshow img {
@@ -322,6 +332,11 @@
         #hero h2 {
             font-size: 2.6rem;
             text-align: left;
+        }
+
+        #hero h2::after {
+            margin-left: 0;
+            margin-right: auto;
         }
 
         #hero p {
@@ -735,6 +750,20 @@
                         ]'>
                         <img src="https://vinidimo.com/assets/projects/loustavern-1654601.jpg" alt="Lou's Tavern">
                         <div class="slide-hover"><span>Lou's Tavern</span></div>
+                    </div>
+
+                    <div class="slide" data-title="Landing Page Antecipação FGTS"
+                        data-caption="Projeto e prototipação de Landing Page para o produto Antecipação do FGTS"
+                        data-images='[
+                        "https://vinidimo.com/assets/projects/fgtslp-1897264871201.webp",
+                        "https://vinidimo.com/assets/projects/fgtslp-1897264871202.webp",
+                        "https://vinidimo.com/assets/projects/fgtslp-1897264871203.webp",
+                        "https://vinidimo.com/assets/projects/fgtslp-1897264871204.webp",
+                        "https://vinidimo.com/assets/projects/fgtslp-1897264871205.webp"
+                        ]'>
+                        <img src="https://vinidimo.com/assets/projects/fgtslp-1897264871201.webp"
+                            alt="Landing Page Antecipação FGTS">
+                        <div class="slide-hover"><span>Landing Page Antecipação FGTS</span></div>
                     </div>
 
                     <div class="slide" data-title="Lavazul Logo" data-caption="Identidade visual criada para Lavazul"
