@@ -1027,7 +1027,6 @@
         /* ========================
            INFINITE CAROUSEL — FIXO
         ======================== */
-
         const $carousel = $(".infinite-carousel");
         const $viewport = $carousel.find(".carousel-viewport");
 
@@ -1062,6 +1061,10 @@
                 next();
                 startAuto();
             }, 4000);
+        }
+
+        function stopAuto() {
+            clearTimeout(autoPlayTimer);
         }
 
         function next() {
@@ -1110,6 +1113,9 @@
             () => { next(); startAuto(); },
             () => { prev(); startAuto(); }
         );
+
+        $carousel.on("mouseenter", stopAuto);
+        $carousel.on("mouseleave", startAuto);
 
         window.addEventListener("load", () => {
             calculate();
