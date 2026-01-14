@@ -300,7 +300,10 @@
 
         #hero {
             min-height: 100vh;
-            display: block;
+            display: flex;
+            align-items: center;
+            padding-top: calc(6rem + 80px);
+            padding-bottom: 6rem;
         }
 
         #hero .container {
@@ -308,7 +311,7 @@
             grid-template-columns: 1fr 1fr;
             align-items: center;
             gap: 3rem;
-            height: 100vh;
+            height: auto;
         }
 
         .hero-slideshow {
