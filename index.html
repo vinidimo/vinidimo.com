@@ -69,6 +69,36 @@
             left: 0;
             width: 100%;
             z-index: 10;
+            transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .35);
+        }
+
+        header .container {
+            transition: padding 0.3s ease;
+        }
+
+        header.scrolled .container {
+            padding: 0.6rem 2rem;
+        }
+
+        header h1.brand img {
+            transition: transform 0.3s ease;
+        }
+
+        header.scrolled h1.brand img {
+            transform: scale(0.85);
+        }
+
+        nav a {
+            transition: color .25s ease;
+        }
+
+        nav a:hover {
+            color: var(--brand);
         }
 
         header .container {
@@ -662,10 +692,11 @@
     <section id="hero">
         <div class="container">
             <div class="hero-slideshow">
-                <img src="https://vinidimo.com/assets/projects/photo-1503602642458-232111445657.webp" class="active"
-                    fetchpriority="high">
-                <img src="https://vinidimo.com/assets/projects/photo-1498050108023-c5249f4df085.webp">
-                <img src="https://vinidimo.com/assets/projects/photo-1508830524289-0adcbe822b40.webp">
+                <img src="https://vinidimo.com/assets/content/c2n9382nv359832.webp" class="active" fetchpriority="high">
+                <img src="https://vinidimo.com/assets/content/cj29835723v5892fjas29.webp">
+                <img src="https://vinidimo.com/assets/content/mc2037b2n059g23.webp">
+                <img src="https://vinidimo.com/assets/content/n2983c42n938c44.webp">
+                <img src="https://vinidimo.com/assets/content/vn29523v59823yn5v792.webp">
             </div>
             <div class="hero-text">
                 <h2>vinidimo – Estúdio de Design e Marketing Independente</h2>
@@ -679,7 +710,7 @@
 
     <section id="servicos" class="overlay-section">
         <div class="bg-img"
-            style="background-image:url('https://vinidimo.com/assets/projects/photo-1498050108023-c5249f4df085.webp');">
+            style="background-image:url('https://vinidimo.com/assets/content/photo-1498050108023-c5249f4df085.webp');">
         </div>
         <div class="container fade-in">
             <h2>O que podemos criar juntos</h2>
@@ -837,7 +868,7 @@
 
     <section id="sobre" class="overlay-section">
         <div class="bg-img"
-            style="background-image:url('https://vinidimo.com/assets/projects/photo-1508830524289-0adcbe822b40.webp');">
+            style="background-image:url('https://vinidimo.com/assets/content/photo-1508830524289-0adcbe822b40.webp');">
         </div>
         <div class="bg-content">
             <div class="container bg-inner fade-in">
@@ -909,7 +940,19 @@
         <button class="proj-control proj-prev">◀</button>
         <button class="proj-control proj-next">▶</button>
     </div>
+    <script>
+        const header = document.querySelector("header");
 
+        function onScrollHeader() {
+            if (window.scrollY > 40) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        }
+
+        window.addEventListener("scroll", onScrollHeader);
+    </script>
     <script>
         const io = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }) }, { threshold: 0.2 });
         document.querySelectorAll(".fade-in").forEach(el => io.observe(el));
@@ -955,7 +998,6 @@
         requestAnimationFrame(updateBgZoom);
     </script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
     <script>
         /* ========================
            FUNÇÃO SWIPE GENÉRICA
@@ -982,7 +1024,6 @@
             $el.on("touchend mouseup", onEnd);
         }
     </script>
-
     <script>
         /* ========================
            HERO SLIDESHOW COM SWIPE
@@ -1001,24 +1042,20 @@
             function heroNext() { showHero(heroCurrent + 1); }
             function heroPrev() { showHero(heroCurrent - 1); }
 
-            // autoplay
             function startHeroAuto() {
                 clearInterval(heroTimer);
                 heroTimer = setInterval(heroNext, 8000);
             }
             startHeroAuto();
 
-            // bloquear arrastar
             $heroSlides.attr("draggable", "false").on("dragstart", e => e.preventDefault());
 
-            // swipe
             enableSwipe($(".hero-slideshow"),
                 () => { heroNext(); startHeroAuto(); },
                 () => { heroPrev(); startHeroAuto(); }
             );
         });
     </script>
-
     <script>
         /* ========================
            INFINITE CAROUSEL — FIXO
@@ -1123,8 +1160,6 @@
             window.__carouselResize = setTimeout(calculate, 120);
         });
     </script>
-
-
     <script>
         /* ========================
             LIGHTBOX
