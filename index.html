@@ -271,7 +271,6 @@
             will-change: transform;
         }
 
-        /* desabilita zoom em celulares */
         @media(max-width:900px) {
             .bg-img {
                 transform: none !important;
@@ -343,16 +342,6 @@
             z-index: 1;
         }
 
-        @keyframes zoom {
-            from {
-                transform: scale(1);
-            }
-
-            to {
-                transform: scale(1.15);
-            }
-        }
-
         #hero .hero-text {
             flex: 1;
         }
@@ -373,6 +362,62 @@
             text-align: left;
         }
 
+        @media (max-width: 900px) {
+            #hero {
+                padding-top: calc(4rem + 60px);
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            #hero .container {
+                grid-template-columns: 1fr;
+                padding-left: 1.25rem;
+                padding-right: 1.25rem;
+            }
+
+            #hero h2 {
+                font-size: 1.9rem;
+                line-height: 1.25;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+                hyphens: none;
+                -webkit-hyphens: none;
+                -ms-hyphens: none;
+                word-break: normal;
+                overflow-wrap: break-word;
+            }
+
+            #hero h2::after {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            #hero p {
+                font-size: 1.05rem;
+                line-height: 1.6;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            #hero .cta {
+                margin: 0 auto;
+                display: block;
+                text-align: center;
+            }
+        }
+
+        @media(max-width:900px) {
+            .hero-slideshow {
+                display: none;
+            }
+
+            #hero .container {
+                gap: 1.5rem;
+            }
+        }
+
         .cta {
             display: inline-block;
             background: var(--brand);
@@ -387,13 +432,13 @@
             background: #0088cc;
         }
 
-        @media(max-width:900px) {
-            .hero-slideshow {
-                display: none;
+        @keyframes zoom {
+            from {
+                transform: scale(1);
             }
 
-            #hero .container {
-                gap: 1.5rem;
+            to {
+                transform: scale(1.15);
             }
         }
 
