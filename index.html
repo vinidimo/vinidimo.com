@@ -570,6 +570,7 @@
             position: relative;
             overflow: hidden;
             width: 100%;
+            touch-action: pan-y;
         }
 
         .infinite-carousel .carousel-viewport {
@@ -1054,24 +1055,39 @@
            FUNÇÃO SWIPE GENÉRICA
         ======================== */
         function enableSwipe($el, onSwipeLeft, onSwipeRight) {
-            let startX = 0, isDragging = false;
+            let startX = 0, startY = 0, isDragging = false;
 
             function onStart(e) {
                 isDragging = true;
-                startX = e.type.includes("mouse") ? e.pageX : e.touches[0].pageX;
+                const t = e.touches ? e.touches[0] : e;
+                startX = t.pageX;
+                startY = t.pageY;
             }
+
+            function onMove(e) {
+                if (!isDragging || !e.touches) return;
+                const t = e.touches[0];
+                const diffX = t.pageX - startX;
+                const diffY = t.pageY - startY;
+
+                if (Math.abs(diffX) > Math.abs(diffY)) {
+                    e.preventDefault();
+                }
+            }
+
             function onEnd(e) {
                 if (!isDragging) return;
                 isDragging = false;
-                const endX = e.type.includes("mouse") ? e.pageX : e.changedTouches[0].pageX;
-                const diff = endX - startX;
+                const t = e.changedTouches ? e.changedTouches[0] : e;
+                const diff = t.pageX - startX;
+
                 if (Math.abs(diff) > 50) {
-                    if (diff > 0) onSwipeRight();
-                    else onSwipeLeft();
+                    diff > 0 ? onSwipeRight() : onSwipeLeft();
                 }
             }
 
             $el.on("touchstart mousedown", onStart);
+            $el.on("touchmove", onMove);
             $el.on("touchend mouseup", onEnd);
         }
     </script>
@@ -1195,6 +1211,20 @@
 
         $carousel.on("mouseenter", stopAuto);
         $carousel.on("mouseleave", startAuto);
+
+        $(function () {
+            const $carousel = $(".infinite-carousel");
+            const $prevBtn = $(".carousel-control-previous");
+            const $nextBtn = $(".carousel-control-next");
+
+            if (window.matchMedia("(max-width: 900px)").matches) {
+                enableSwipe(
+                    $carousel,
+                    () => $nextBtn.trigger("click"), // swipe left
+                    () => $prevBtn.trigger("click")  // swipe right
+                );
+            }
+        });
     </script>
     <script>
         /* ========================
