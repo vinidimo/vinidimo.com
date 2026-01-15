@@ -695,7 +695,8 @@
     <section id="hero">
         <div class="container">
             <div class="hero-slideshow">
-                <img src="https://vinidimo.com/assets/content/v90q38rq928cq289fkqw.gif" class="active" fetchpriority="high">
+                <img src="https://vinidimo.com/assets/content/v90q38rq928cq289fkqw.gif" class="active"
+                    fetchpriority="high">
                 <img src="https://vinidimo.com/assets/content/cj29835723v5892fjas29.webp">
                 <img src="https://vinidimo.com/assets/content/vm9238572vn9382mr3.webp">
                 <img src="https://vinidimo.com/assets/content/mc2037b2n059g23.webp">
@@ -1063,7 +1064,7 @@
     </script>
     <script>
         /* ========================
-           INFINITE CAROUSEL — FIXO
+           INFINITE CAROUSEL — RESPONSIVO + CLIQUE RÁPIDO
         ======================== */
         const $carousel = $(".infinite-carousel");
         const $viewport = $carousel.find(".carousel-viewport");
@@ -1072,7 +1073,6 @@
         $viewport.append($originalSlides.clone());
 
         let current = 0;
-        let animating = false;
         let slideWidth = 0;
         let visibleSlides = 3;
         let autoPlayTimer;
@@ -1093,6 +1093,32 @@
             $viewport.css("transform", `translateX(${-index * slideWidth}px)`);
         }
 
+        function normalize() {
+            const max = $originalSlides.length;
+            if (current >= max) {
+                current -= max;
+                moveTo(current, false);
+            }
+            if (current < 0) {
+                current += max;
+                moveTo(current, false);
+            }
+        }
+
+        function next() {
+            current++;
+            moveTo(current, true);
+
+            // normaliza após a transição atual, sem bloquear novos cliques
+            setTimeout(normalize, 600);
+        }
+
+        function prev() {
+            current--;
+            moveTo(current, true);
+            setTimeout(normalize, 600);
+        }
+
         function startAuto() {
             clearTimeout(autoPlayTimer);
             autoPlayTimer = setTimeout(() => {
@@ -1103,36 +1129,6 @@
 
         function stopAuto() {
             clearTimeout(autoPlayTimer);
-        }
-
-        function next() {
-            if (animating) return;
-            animating = true;
-            current++;
-            moveTo(current, true);
-
-            setTimeout(() => {
-                if (current >= $originalSlides.length) {
-                    current = 0;
-                    moveTo(current, false);
-                }
-                animating = false;
-            }, 650);
-        }
-
-        function prev() {
-            if (animating) return;
-            animating = true;
-            current--;
-            moveTo(current, true);
-
-            setTimeout(() => {
-                if (current < 0) {
-                    current = $originalSlides.length - 1;
-                    moveTo(current, false);
-                }
-                animating = false;
-            }, 650);
         }
 
         $(".carousel-control-next").on("click", e => {
@@ -1147,23 +1143,13 @@
             startAuto();
         });
 
-        enableSwipe($viewport,
-            () => { next(); startAuto(); },
-            () => { prev(); startAuto(); }
-        );
+        $(window).on("resize", calculate);
+
+        calculate();
+        startAuto();
 
         $carousel.on("mouseenter", stopAuto);
         $carousel.on("mouseleave", startAuto);
-
-        window.addEventListener("load", () => {
-            calculate();
-            startAuto();
-        });
-
-        window.addEventListener("resize", () => {
-            clearTimeout(window.__carouselResize);
-            window.__carouselResize = setTimeout(calculate, 120);
-        });
     </script>
     <script>
         /* ========================
@@ -1245,5 +1231,3 @@
 </body>
 
 </html>
-
-
