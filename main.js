@@ -18,6 +18,7 @@ const lightboxImage = document.getElementById("projectImg");
 const lightboxTitle = document.getElementById("projectTitle");
 const lightboxCaption = document.getElementById("projectCaption");
 const lightboxCloseButton = document.querySelector(".lightbox-close");
+const lightboxIndicators = document.querySelector(".lightbox-indicators");
 const bgImages = [...document.querySelectorAll(".bg-img")];
 const currentScales = new WeakMap();
 const visibleBackgrounds = new Set();
@@ -438,7 +439,13 @@ function openLightbox(projectIndex) {
         return;
     }
 
-    currentProject = { images: project.images, index: 0 };
+    currentProject = {
+        images: project.images,
+        index: 0,
+        title: project.title,
+        description: project.description
+    };
+    renderLightboxIndicators();
     lightboxTitle.textContent = project.title;
     lightboxCaption.textContent = project.description;
     lightboxImage.src = project.images[0];
@@ -459,7 +466,33 @@ function showProjectImage(index) {
 
     currentProject.index = (index + currentProject.images.length) % currentProject.images.length;
     lightboxImage.src = currentProject.images[currentProject.index];
-    lightboxImage.alt = lightboxTitle.textContent;
+    lightboxImage.alt = currentProject.title;
+    lightboxTitle.textContent = currentProject.title;
+    lightboxCaption.textContent = currentProject.description;
+    syncLightboxIndicators();
+}
+
+function renderLightboxIndicators() {
+    lightboxIndicators.innerHTML = "";
+
+    currentProject.images.forEach((_, index) => {
+        const indicator = document.createElement("button");
+        indicator.type = "button";
+        indicator.setAttribute("aria-label", `Slide ${index + 1}`);
+        indicator.className = index === currentProject.index ? "active" : "";
+        indicator.addEventListener("click", event => {
+            event.stopPropagation();
+            showProjectImage(index);
+        });
+        lightboxIndicators.append(indicator);
+    });
+}
+
+function syncLightboxIndicators() {
+    [...lightboxIndicators.children].forEach((indicator, index) => {
+        indicator.classList.toggle("active", index === currentProject.index);
+        indicator.toggleAttribute("aria-current", index === currentProject.index);
+    });
 }
 
 // Project loading
@@ -535,7 +568,7 @@ lightbox.addEventListener("click", event => {
     }
 });
 
-document.querySelectorAll("#projectLightbox .lightbox-dialog, #projectLightbox img, #projectLightbox .lightbox-text, #projectLightbox .proj-control, #projectLightbox .lightbox-close")
+document.querySelectorAll("#projectLightbox .lightbox-dialog, #projectLightbox img, #projectLightbox .lightbox-caption, #projectLightbox .lightbox-indicators, #projectLightbox .proj-control, #projectLightbox .lightbox-close")
     .forEach(element => {
         element.addEventListener("click", event => event.stopPropagation());
     });
