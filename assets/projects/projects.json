@@ -1,0 +1,136 @@
+[
+  {
+    "slug": "fellps-adega-barbearia",
+    "title": "Fellps Adega e Barbearia",
+    "description": "Logotipo e aplicação para Adega e Barbearia",
+    "order": 1,
+    "cover": "assets/projects/fellps-adega-barbearia/01.webp",
+    "images": [
+      "assets/projects/fellps-adega-barbearia/01.webp",
+      "assets/projects/fellps-adega-barbearia/02.webp",
+      "assets/projects/fellps-adega-barbearia/03.webp"
+    ]
+  },
+  {
+    "slug": "landing-page-antecipacao-fgts",
+    "title": "Landing Page Antecipação FGTS",
+    "description": "Projeto e prototipação de Landing Page para o produto Antecipação do FGTS",
+    "order": 2,
+    "cover": "assets/projects/landing-page-antecipacao-fgts/01.webp",
+    "images": [
+      "assets/projects/landing-page-antecipacao-fgts/01.webp",
+      "assets/projects/landing-page-antecipacao-fgts/02.webp",
+      "assets/projects/landing-page-antecipacao-fgts/03.webp",
+      "assets/projects/landing-page-antecipacao-fgts/04.webp",
+      "assets/projects/landing-page-antecipacao-fgts/05.webp"
+    ]
+  },
+  {
+    "slug": "da-cruz-system",
+    "title": "Da Cruz System",
+    "description": "Identidade visual criada para a academia Da Cruz",
+    "order": 3,
+    "cover": "assets/projects/da-cruz-system/01.webp",
+    "images": [
+      "assets/projects/da-cruz-system/01.webp",
+      "assets/projects/da-cruz-system/02.webp",
+      "assets/projects/da-cruz-system/03.webp"
+    ]
+  },
+  {
+    "slug": "vans-sticker",
+    "title": "Vans Sticker",
+    "description": "Ilustração de tênis da Vans para aplicação em adesivos e acessórios.",
+    "order": 4,
+    "cover": "assets/projects/vans-sticker/01.webp",
+    "images": [
+      "assets/projects/vans-sticker/01.webp",
+      "assets/projects/vans-sticker/02.webp",
+      "assets/projects/vans-sticker/03.webp"
+    ]
+  },
+  {
+    "slug": "lous-tavern",
+    "title": "Lou's Tavern",
+    "description": "Logo criado com base na 'Lou's Tavern' do filme Clube da Luta",
+    "order": 5,
+    "cover": "assets/projects/lous-tavern/01.webp",
+    "images": [
+      "assets/projects/lous-tavern/01.webp",
+      "assets/projects/lous-tavern/02.webp",
+      "assets/projects/lous-tavern/03.webp"
+    ]
+  },
+  {
+    "slug": "lavazul-logo",
+    "title": "Lavazul Logo",
+    "description": "Identidade visual criada para Lavazul",
+    "order": 6,
+    "cover": "assets/projects/lavazul-logo/01.webp",
+    "images": [
+      "assets/projects/lavazul-logo/01.webp",
+      "assets/projects/lavazul-logo/02.webp"
+    ]
+  },
+  {
+    "slug": "dimo-street-lettering",
+    "title": "Dimo Street Lettering",
+    "description": "Marca Street Lettering para aplicação em camisetas, bonés e adesivos.",
+    "order": 7,
+    "cover": "assets/projects/dimo-street-lettering/01.webp",
+    "images": [
+      "assets/projects/dimo-street-lettering/01.webp",
+      "assets/projects/dimo-street-lettering/02.webp",
+      "assets/projects/dimo-street-lettering/03.webp",
+      "assets/projects/dimo-street-lettering/04.webp"
+    ]
+  },
+  {
+    "slug": "aclimacao-boxing-club",
+    "title": "Aclimação Boxing Club",
+    "description": "Logotipo para clube de boxe",
+    "order": 8,
+    "cover": "assets/projects/aclimacao-boxing-club/01.webp",
+    "images": [
+      "assets/projects/aclimacao-boxing-club/01.webp",
+      "assets/projects/aclimacao-boxing-club/02.webp",
+      "assets/projects/aclimacao-boxing-club/03.webp"
+    ]
+  },
+  {
+    "slug": "certificacao-pci",
+    "title": "Certificação PCI",
+    "description": "Social media para a Certificação PCI",
+    "order": 9,
+    "cover": "assets/projects/certificacao-pci/01.webp",
+    "images": [
+      "assets/projects/certificacao-pci/01.webp",
+      "assets/projects/certificacao-pci/02.webp",
+      "assets/projects/certificacao-pci/03.webp",
+      "assets/projects/certificacao-pci/04.webp"
+    ]
+  },
+  {
+    "slug": "jiu-jitsu-lettering",
+    "title": "Jiu Jitsu Lettering",
+    "description": "Ilustração Lettering Jiu Jitsu para aplicação em materiais impressos",
+    "order": 10,
+    "cover": "assets/projects/jiu-jitsu-lettering/01.webp",
+    "images": [
+      "assets/projects/jiu-jitsu-lettering/01.webp",
+      "assets/projects/jiu-jitsu-lettering/02.webp",
+      "assets/projects/jiu-jitsu-lettering/03.webp"
+    ]
+  },
+  {
+    "slug": "ryu-dragon-vetorizacao",
+    "title": "Ryu Dragon Vetorização",
+    "description": "Vetorização de desenho antigo de Dragão Ryu",
+    "order": 11,
+    "cover": "assets/projects/ryu-dragon-vetorizacao/01.webp",
+    "images": [
+      "assets/projects/ryu-dragon-vetorizacao/01.webp",
+      "assets/projects/ryu-dragon-vetorizacao/02.webp"
+    ]
+  }
+]

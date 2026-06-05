@@ -1,4 +1,4 @@
-document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById("year").textContent = new Date().getFullYear();
 
 const header = document.querySelector("header");
 const nav = document.querySelector("header nav");
@@ -10,7 +10,6 @@ const sections = navLinks
 const heroSlides = [...document.querySelectorAll(".hero-slideshow img")];
 const carousel = document.querySelector(".infinite-carousel");
 const viewport = carousel.querySelector(".carousel-viewport");
-const originalSlides = [...viewport.children];
 const prevButton = document.querySelector(".carousel-control-previous");
 const nextButton = document.querySelector(".carousel-control-next");
 const lightbox = document.getElementById("projectLightbox");
@@ -21,6 +20,18 @@ const bgImages = [...document.querySelectorAll(".bg-img")];
 const currentScales = new WeakMap();
 const visibleBackgrounds = new Set();
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+let projects = [];
+let originalSlides = [];
+let observedSlide = null;
+let current = 0;
+let slideWidth = 0;
+let visibleSlides = 3;
+let autoPlayTimer;
+let carouselMeasureFrame = 0;
+let currentProject = { images: [], index: 0 };
+let heroCurrent = 0;
+let heroTimer;
 
 function setMenuState(isOpen) {
     nav.classList.toggle("open", isOpen);
@@ -89,11 +100,11 @@ function updateBgZoom() {
         const rect = element.getBoundingClientRect();
         const scrollPercent = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
         const target = 1 + Math.max(0, Math.min(scrollPercent, 1)) * 0.25;
-        const current = currentScales.get(element) ?? 1;
-        const next = current + (target - current) * 0.12;
+        const currentScale = currentScales.get(element) ?? 1;
+        const nextScale = currentScale + (target - currentScale) * 0.12;
 
-        currentScales.set(element, next);
-        element.style.transform = `scale(${next})`;
+        currentScales.set(element, nextScale);
+        element.style.transform = `scale(${nextScale})`;
     });
 }
 
@@ -165,9 +176,6 @@ function enableSwipe(element, onSwipeLeft, onSwipeRight) {
     element.addEventListener("mouseup", onEnd);
 }
 
-let heroCurrent = 0;
-let heroTimer;
-
 function showHero(index) {
     heroSlides.forEach(slide => slide.classList.remove("active"));
     heroCurrent = (index + heroSlides.length) % heroSlides.length;
@@ -205,21 +213,71 @@ if (heroSlides.length > 1) {
     startHeroAuto();
 }
 
-originalSlides.forEach(slide => {
-    const clone = slide.cloneNode(true);
-    clone.setAttribute("aria-hidden", "true");
-    clone.querySelectorAll("img").forEach(image => {
-        image.loading = "lazy";
-        image.decoding = "async";
-    });
-    viewport.append(clone);
-});
+function setCarouselControlsDisabled(disabled) {
+    prevButton.disabled = disabled;
+    nextButton.disabled = disabled;
+}
 
-let current = 0;
-let slideWidth = 0;
-let visibleSlides = 3;
-let autoPlayTimer;
-let carouselMeasureFrame = 0;
+function createProjectSlide(project, projectIndex) {
+    const slide = document.createElement("div");
+    slide.className = "slide";
+    slide.dataset.projectIndex = String(projectIndex);
+
+    const image = document.createElement("img");
+    image.src = project.cover;
+    image.alt = project.title;
+    image.loading = "lazy";
+    image.decoding = "async";
+
+    const overlay = document.createElement("div");
+    overlay.className = "slide-hover";
+
+    const label = document.createElement("span");
+    label.textContent = project.title;
+
+    overlay.append(label);
+    slide.append(image, overlay);
+    return slide;
+}
+
+function renderProjects(projectList) {
+    viewport.innerHTML = "";
+
+    if (!projectList.length) {
+        const status = document.createElement("p");
+        status.className = "carousel-status";
+        status.textContent = "Nenhum projeto disponível no momento.";
+        viewport.append(status);
+        setCarouselControlsDisabled(true);
+        return;
+    }
+
+    const fragment = document.createDocumentFragment();
+    projectList.forEach((project, index) => {
+        fragment.append(createProjectSlide(project, index));
+    });
+    viewport.append(fragment);
+}
+
+function hydrateCarouselSlides() {
+    viewport.querySelectorAll(".slide-clone").forEach(slide => slide.remove());
+    originalSlides = [...viewport.querySelectorAll(".slide")];
+    current = 0;
+
+    if (!originalSlides.length) {
+        stopCarouselAuto();
+        return;
+    }
+
+    originalSlides.forEach(slide => {
+        const clone = slide.cloneNode(true);
+        clone.classList.add("slide-clone");
+        clone.setAttribute("aria-hidden", "true");
+        viewport.append(clone);
+    });
+
+    setCarouselControlsDisabled(originalSlides.length <= 1);
+}
 
 function moveTo(index, animate = true) {
     viewport.style.transition = animate ? "transform 0.6s ease" : "none";
@@ -227,6 +285,11 @@ function moveTo(index, animate = true) {
 }
 
 function calculateCarousel() {
+    if (!originalSlides.length) {
+        viewport.style.transform = "translateX(0)";
+        return;
+    }
+
     const width = window.innerWidth;
 
     if (width <= 600) {
@@ -249,10 +312,15 @@ function scheduleCarouselMeasure() {
 
 function normalizeCarousel() {
     const max = originalSlides.length;
+    if (!max) {
+        return;
+    }
+
     if (current >= max) {
         current -= max;
         moveTo(current, false);
     }
+
     if (current < 0) {
         current += max;
         moveTo(current, false);
@@ -260,12 +328,20 @@ function normalizeCarousel() {
 }
 
 function nextCarousel() {
+    if (originalSlides.length <= 1) {
+        return;
+    }
+
     current += 1;
     moveTo(current, true);
     window.setTimeout(normalizeCarousel, 600);
 }
 
 function prevCarousel() {
+    if (originalSlides.length <= 1) {
+        return;
+    }
+
     current -= 1;
     moveTo(current, true);
     window.setTimeout(normalizeCarousel, 600);
@@ -273,7 +349,7 @@ function prevCarousel() {
 
 function startCarouselAuto() {
     window.clearTimeout(autoPlayTimer);
-    if (!reducedMotion) {
+    if (!reducedMotion && originalSlides.length > 1) {
         autoPlayTimer = window.setTimeout(() => {
             nextCarousel();
             startCarouselAuto();
@@ -285,13 +361,71 @@ function stopCarouselAuto() {
     window.clearTimeout(autoPlayTimer);
 }
 
-nextButton.addEventListener("click", () => {
-    nextCarousel();
-    startCarouselAuto();
+const carouselResizeObserver = new ResizeObserver(() => {
+    scheduleCarouselMeasure();
 });
+
+function observeCarouselSlides() {
+    if (observedSlide) {
+        carouselResizeObserver.unobserve(observedSlide);
+    }
+
+    observedSlide = originalSlides[0] ?? null;
+
+    if (observedSlide) {
+        carouselResizeObserver.observe(observedSlide);
+    }
+}
+
+function openLightbox(projectIndex) {
+    const project = projects[projectIndex];
+    if (!project) {
+        return;
+    }
+
+    currentProject = { images: project.images, index: 0 };
+    lightboxTitle.textContent = project.title;
+    lightboxCaption.textContent = project.description;
+    lightboxImage.src = project.images[0];
+    lightboxImage.alt = project.title;
+    lightbox.hidden = false;
+}
+
+function closeLightbox() {
+    lightbox.hidden = true;
+}
+
+function showProjectImage(index) {
+    if (!currentProject.images.length) {
+        return;
+    }
+
+    currentProject.index = (index + currentProject.images.length) % currentProject.images.length;
+    lightboxImage.src = currentProject.images[currentProject.index];
+    lightboxImage.alt = lightboxTitle.textContent;
+}
+
+async function loadProjects() {
+    const response = await fetch("assets/projects/projects.json");
+    if (!response.ok) {
+        throw new Error(`Failed to load projects.json: ${response.status}`);
+    }
+
+    projects = await response.json();
+    renderProjects(projects);
+    hydrateCarouselSlides();
+    observeCarouselSlides();
+    scheduleCarouselMeasure();
+    startCarouselAuto();
+}
 
 prevButton.addEventListener("click", () => {
     prevCarousel();
+    startCarouselAuto();
+});
+
+nextButton.addEventListener("click", () => {
+    nextCarousel();
     startCarouselAuto();
 });
 
@@ -307,55 +441,13 @@ enableSwipe(carousel, () => {
     startCarouselAuto();
 });
 
-const carouselResizeObserver = new ResizeObserver(() => {
-    scheduleCarouselMeasure();
-});
-
-carouselResizeObserver.observe(carousel);
-carouselResizeObserver.observe(originalSlides[0]);
-
-if (document.fonts?.ready) {
-    document.fonts.ready.then(() => {
-        scheduleCarouselMeasure();
-    });
-}
-
-scheduleCarouselMeasure();
-startCarouselAuto();
-
-let currentProject = { images: [], index: 0 };
-
-function openLightbox(images, title, caption) {
-    currentProject = { images, index: 0 };
-    lightboxTitle.textContent = title;
-    lightboxCaption.textContent = caption;
-    lightboxImage.src = images[0];
-    lightboxImage.alt = title;
-    lightbox.hidden = false;
-}
-
-function closeLightbox() {
-    lightbox.hidden = true;
-}
-
-function showProjectImage(index) {
-    currentProject.index = (index + currentProject.images.length) % currentProject.images.length;
-    lightboxImage.src = currentProject.images[currentProject.index];
-    lightboxImage.alt = lightboxTitle.textContent;
-}
-
 viewport.addEventListener("click", event => {
     const slide = event.target.closest(".slide");
-    if (!slide || !viewport.contains(slide)) {
+    if (!slide) {
         return;
     }
 
-    const images = JSON.parse(slide.getAttribute("data-images") || "[]");
-    if (!images.length) {
-        return;
-    }
-
-    openLightbox(images, slide.dataset.title || "", slide.dataset.caption || "");
+    openLightbox(Number(slide.dataset.projectIndex));
 });
 
 document.querySelector(".proj-next").addEventListener("click", event => {
@@ -387,9 +479,11 @@ document.addEventListener("keydown", event => {
     if (event.key === "Escape") {
         closeLightbox();
     }
+
     if (event.key === "ArrowRight") {
         showProjectImage(currentProject.index + 1);
     }
+
     if (event.key === "ArrowLeft") {
         showProjectImage(currentProject.index - 1);
     }
@@ -400,5 +494,18 @@ enableSwipe(lightbox, () => showProjectImage(currentProject.index + 1), () => sh
 window.addEventListener("scroll", onScrollHeader, { passive: true });
 window.addEventListener("scroll", setActiveNavLink, { passive: true });
 window.addEventListener("load", setActiveNavLink);
+
+if (document.fonts?.ready) {
+    document.fonts.ready.then(() => {
+        scheduleCarouselMeasure();
+    });
+}
+
+loadProjects().catch(error => {
+    console.error(error);
+    viewport.innerHTML = '<p class="carousel-status">Não foi possível carregar os projetos agora.</p>';
+    setCarouselControlsDisabled(true);
+});
+
 onScrollHeader();
 setActiveNavLink();

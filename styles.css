@@ -643,6 +643,12 @@ footer {
     display: flex;
 }
 
+.carousel-status {
+    width: 100%;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
 .infinite-carousel .slide {
     flex: 0 0 calc(100% / var(--carousel-slides-per-view));
     aspect-ratio: 4 / 3;
@@ -698,6 +704,12 @@ footer {
     text-align: center;
     border-radius: 50%;
     border: 0;
+}
+
+.carousel-control-previous:disabled,
+.carousel-control-next:disabled {
+    opacity: 0.35;
+    cursor: default;
 }
 
 .carousel-control-previous {
