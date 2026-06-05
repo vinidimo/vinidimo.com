@@ -1,7 +1,6 @@
 document.getElementById("year").textContent = new Date().getFullYear();
 
-const ASSET_VERSION = "20260605-1";
-
+// Header and navigation
 const header = document.querySelector("header");
 const nav = document.querySelector("header nav");
 const hamburger = document.getElementById("hamburger");
@@ -38,15 +37,6 @@ let queuedCarouselDirection = 0;
 let currentProject = { images: [], index: 0 };
 let heroCurrent = 0;
 let heroTimer;
-
-function withAssetVersion(url) {
-    if (!url || /^(https?:|data:|blob:)/i.test(url)) {
-        return url;
-    }
-
-    const separator = url.includes("?") ? "&" : "?";
-    return `${url}${separator}v=${ASSET_VERSION}`;
-}
 
 function setMenuState(isOpen) {
     nav.classList.toggle("open", isOpen);
@@ -140,6 +130,7 @@ if (!reducedMotion) {
     updateBgZoom();
 }
 
+// Shared interactions
 function enableSwipe(element, onSwipeLeft, onSwipeRight) {
     let startX = 0;
     let startY = 0;
@@ -228,6 +219,7 @@ if (heroSlides.length > 1) {
     startHeroAuto();
 }
 
+// Portfolio carousel
 function setCarouselControlsDisabled(disabled) {
     prevButton.disabled = disabled;
     nextButton.disabled = disabled;
@@ -239,7 +231,7 @@ function createProjectSlide(project, projectIndex) {
     slide.dataset.projectIndex = String(projectIndex);
 
     const image = document.createElement("img");
-    image.src = withAssetVersion(project.cover);
+    image.src = project.cover;
     image.alt = project.title;
     image.loading = "lazy";
     image.decoding = "async";
@@ -249,10 +241,15 @@ function createProjectSlide(project, projectIndex) {
     const overlay = document.createElement("div");
     overlay.className = "slide-hover";
 
+    const eyebrow = document.createElement("span");
+    eyebrow.className = "slide-hover-eyebrow";
+    eyebrow.textContent = "Ver projeto";
+
     const label = document.createElement("span");
+    label.className = "slide-hover-title";
     label.textContent = project.title;
 
-    overlay.append(label);
+    overlay.append(eyebrow, label);
     slide.append(image, overlay);
     return slide;
 }
@@ -422,6 +419,7 @@ const carouselResizeObserver = new ResizeObserver(() => {
     scheduleCarouselMeasure();
 });
 
+// Lightbox
 function observeCarouselSlides() {
     if (observedSlide) {
         carouselResizeObserver.unobserve(observedSlide);
@@ -443,7 +441,7 @@ function openLightbox(projectIndex) {
     currentProject = { images: project.images, index: 0 };
     lightboxTitle.textContent = project.title;
     lightboxCaption.textContent = project.description;
-    lightboxImage.src = withAssetVersion(project.images[0]);
+    lightboxImage.src = project.images[0];
     lightboxImage.alt = project.title;
     lightbox.hidden = false;
     document.body.style.overflow = "hidden";
@@ -460,12 +458,13 @@ function showProjectImage(index) {
     }
 
     currentProject.index = (index + currentProject.images.length) % currentProject.images.length;
-    lightboxImage.src = withAssetVersion(currentProject.images[currentProject.index]);
+    lightboxImage.src = currentProject.images[currentProject.index];
     lightboxImage.alt = lightboxTitle.textContent;
 }
 
+// Project loading
 async function loadProjects() {
-    const response = await fetch(withAssetVersion("assets/projects/projects.json"));
+    const response = await fetch("assets/projects/projects.json");
     if (!response.ok) {
         throw new Error(`Failed to load projects.json: ${response.status}`);
     }
