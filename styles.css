@@ -831,6 +831,23 @@ footer {
     opacity: .75;
 }
 
+@media (max-width: 480px) {
+    .social {
+        flex-wrap: nowrap;
+        gap: 0.7rem;
+    }
+
+    .social a {
+        width: 36px;
+        height: 36px;
+    }
+
+    .social img {
+        width: 20px;
+        height: 20px;
+    }
+}
+
 .fade-in {
     opacity: 0;
     transform: translateY(30px);
