@@ -3,845 +3,68 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self'; upgrade-insecure-requests">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="vinidimo — design gráfico para empresas e pessoas físicas. Logos, identidade visual, ilustrações, redes sociais, sites e artes sob medida.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="vinidimo">
+    <meta property="og:title" content="vinidimo | Design gráfico e digital">
+    <meta property="og:description"
+        content="Design gráfico, identidade visual, ilustrações, social media e sites sob medida para marcas e pessoas.">
+    <meta property="og:url" content="https://vinidimo.com/">
+    <meta property="og:image" content="https://vinidimo.com/assets/content/cj29835723v5892fjas29.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="vinidimo | Design gráfico e digital">
+    <meta name="twitter:description"
+        content="Design gráfico, identidade visual, ilustrações, social media e sites sob medida para marcas e pessoas.">
+    <meta name="twitter:image" content="https://vinidimo.com/assets/content/cj29835723v5892fjas29.webp">
     <title>vinidimo | Design gráfico e digital</title>
-    <link rel="icon" type="image/svg+xml" href="https://vinidimo.com/assets/logo-black.svg"
+    <link rel="canonical" href="https://vinidimo.com/">
+    <link rel="icon" type="image/svg+xml" href="assets/logo-black.svg"
         media="(prefers-color-scheme: light)">
-    <link rel="icon" type="image/svg+xml" href="https://vinidimo.com/assets/logo-white.svg"
+    <link rel="icon" type="image/svg+xml" href="assets/logo-white.svg"
         media="(prefers-color-scheme: dark)">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --brand: #00aaff;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            line-height: 1.7;
-            color: #222;
-            background: #fff;
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-        }
-
-        textarea {
-            resize: none;
-        }
-
-        h1,
-        h2,
-        h3 {
-            margin-bottom: 1rem;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        img {
-            display: block;
-            max-width: 100%;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: auto;
-            padding: 0 1rem;
-        }
-
-        header {
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(6px);
-            color: #fff;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 10;
-            transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
-        }
-
-        header.scrolled {
-            background: rgba(0, 0, 0, .7);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, .35);
-        }
-
-        header .container {
-            transition: padding 0.3s ease;
-        }
-
-        header.scrolled .container {
-            padding: 0.6rem 2rem;
-        }
-
-        header h1.brand img {
-            transition: transform 0.3s ease;
-        }
-
-        header.scrolled h1.brand img {
-            transform: scale(0.85);
-        }
-
-        nav a {
-            transition: color .25s ease;
-        }
-
-        nav a:hover {
-            color: var(--brand);
-        }
-
-        header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-        }
-
-        header h1 {
-            text-transform: lowercase;
-            font-size: 1.5rem;
-        }
-
-        header h1.brand {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding-top: 8px;
-        }
-
-        header h1.brand img {
-            width: 42px;
-            height: auto;
-        }
-
-        nav {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        nav a {
-            color: #fff;
-            position: relative;
-            padding-bottom: 6px;
-            font-weight: 600;
-        }
-
-        nav a::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--brand);
-            transition: width .25s ease;
-        }
-
-        nav a:hover::after,
-        nav a.active::after {
-            width: 100%;
-        }
-
-        .hamburger {
-            position: relative;
-            width: 28px;
-            height: 20px;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .hamburger span {
-            position: absolute;
-            width: 100%;
-            height: 3px;
-            background: #fff;
-            border-radius: 2px;
-            transition: all .3s;
-        }
-
-        .hamburger span:nth-child(1) {
-            top: 0;
-        }
-
-        .hamburger span:nth-child(2) {
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .hamburger span:nth-child(3) {
-            bottom: 0;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg);
-            top: 50%;
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg);
-            top: 50%;
-        }
-
-        @media(max-width:900px) {
-            nav {
-                position: fixed;
-                top: 60px;
-                left: 0;
-                width: 100%;
-                background: #111;
-                flex-direction: column;
-                align-items: center;
-                gap: 1.2rem;
-                overflow: hidden;
-                max-height: 0;
-                opacity: 0;
-                transform: translateY(-8px);
-                padding: 0;
-                transition: max-height .4s ease, opacity .25s ease, transform .25s ease, padding .25s ease;
-            }
-
-            nav.open {
-                max-height: 260px;
-                opacity: 1;
-                transform: translateY(0);
-                padding: 1rem 0 1.2rem;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-        }
-
-        section {
-            min-height: 100vh;
-            padding: 6rem 1rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        section h2 {
-            text-transform: uppercase;
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        section h2::after {
-            content: "";
-            display: block;
-            width: 60px;
-            height: 3px;
-            background: var(--brand);
-            margin: 0.5rem auto;
-        }
-
-        section p {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 1rem;
-        }
-
-        .bg-img {
-            position: absolute;
-            inset: 0;
-            background-size: cover;
-            background-position: center;
-            transform: scale(1);
-            z-index: 0;
-            will-change: transform;
-        }
-
-        @media(max-width:900px) {
-            .bg-img {
-                transform: none !important;
-            }
-        }
-
-        .overlay-section {
-            color: #fff;
-        }
-
-        .overlay-section::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, .55);
-            backdrop-filter: saturate(80%) brightness(85%);
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .overlay-section>.container,
-        .overlay-section .bg-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        #hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding-top: calc(6rem + 80px);
-            padding-bottom: 6rem;
-        }
-
-        #hero .container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
-            gap: 3rem;
-            height: auto;
-        }
-
-        .hero-slideshow {
-            position: relative;
-            height: 520px;
-            max-height: 70vh;
-            border-radius: 24px;
-            overflow: hidden;
-        }
-
-        .hero-slideshow img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 1s ease;
-            transform: scale(1);
-            animation: zoom 16s ease-in-out infinite alternate;
-        }
-
-        .hero-slideshow img.active {
-            opacity: 1;
-            z-index: 1;
-        }
-
-        #hero .hero-text {
-            flex: 1;
-        }
-
-        #hero h2 {
-            font-size: 2.6rem;
-            text-align: left;
-        }
-
-        #hero h2::after {
-            margin-left: 0;
-            margin-right: auto;
-        }
-
-        #hero p {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
-
-        .hero-cta {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            padding: 16px 32px;
-            min-height: 52px;
-
-            background: linear-gradient(135deg, #4F46E5, #7C3AED);
-            color: #ffffff !important;
-
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration: none;
-
-            border-radius: 12px;
-            border: none;
-
-            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
-
-        .hero-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 28px rgba(79, 70, 229, 0.45);
-        }
-
-        .hero-cta:active {
-            transform: translateY(0);
-        }
-
-        @media (max-width: 900px) {
-            #hero {
-                padding-top: calc(4rem + 60px);
-                padding-left: 0;
-                padding-right: 0;
-            }
-
-            #hero .container {
-                grid-template-columns: 1fr;
-                padding-left: 1.25rem;
-                padding-right: 1.25rem;
-            }
-
-            #hero h2 {
-                font-size: 1.9rem;
-                line-height: 1.25;
-                text-align: center;
-                margin-left: auto;
-                margin-right: auto;
-                hyphens: none;
-                -webkit-hyphens: none;
-                -ms-hyphens: none;
-                word-break: normal;
-                overflow-wrap: break-word;
-            }
-
-            #hero h2::after {
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            #hero p {
-                font-size: 1.05rem;
-                line-height: 1.6;
-                text-align: center;
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .hero-cta {
-                margin: 0 auto;
-                display: block;
-                text-align: center;
-            }
-        }
-
-        @media(max-width:900px) {
-            .hero-slideshow {
-                display: none;
-            }
-
-            #hero .container {
-                gap: 1.5rem;
-            }
-        }
-
-        @keyframes zoom {
-            from {
-                transform: scale(1);
-            }
-
-            to {
-                transform: scale(1.15);
-            }
-        }
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            background: #fff;
-            color: #222;
-            padding: 2rem;
-            border-radius: 6px;
-            text-align: center;
-            transition: transform .3s, box-shadow .3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, .1);
-        }
-
-        #portfolio {
-            padding: 4rem 1rem;
-        }
-
-        #contato {
-            background: #f9f9f9;
-            color: #222;
-        }
-
-        .form-wrap {
-            width: min(100%, 900px);
-            margin: 1rem auto 0;
-        }
-
-        form {
-            display: grid;
-            gap: 1rem;
-            width: 100%;
-        }
-
-        input,
-        textarea {
-            padding: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1.05rem;
-            width: 100%;
-            font-family: inherit;
-        }
-
-        form button[type="submit"] {
-            width: 100%;
-            grid-column: 1 / -1;
-            background: var(--brand);
-            color: #fff;
-            border: none;
-            padding: 1rem;
-            font-size: 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background .25s;
-        }
-
-        form button[type="submit"]:hover {
-            background: #0088cc;
-        }
-
-        @media(min-width:880px) {
-            form.two-col {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            form.two-col textarea {
-                grid-column: 1 / -1;
-            }
-        }
-
-        footer {
-            background: #111;
-            color: #fff;
-            text-align: center;
-            padding: 2rem 1rem;
-            font-size: 0.9rem;
-        }
-
-        .social {
-            margin-top: 1rem;
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-        }
-
-        .social img {
-            width: 24px;
-            height: 24px;
-            filter: invert(1);
-            transition: opacity .25s;
-        }
-
-        .social img:hover {
-            opacity: .6;
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.9s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .infinite-carousel,
-        .infinite-carousel * {
-            user-select: none;
-            -webkit-user-drag: none;
-        }
-
-        .infinite-carousel {
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-            touch-action: pan-y;
-        }
-
-        .infinite-carousel .carousel-viewport {
-            display: flex;
-        }
-
-        .infinite-carousel .slide {
-            flex: 0 0 33.3333%;
-        }
-
-        .infinite-carousel .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            border-radius: 0px;
-            display: block;
-        }
-
-        @media(max-width: 900px) {
-            .infinite-carousel .slide {
-                flex: 0 0 calc(50% - 10px);
-            }
-        }
-
-        @media(max-width: 600px) {
-            .infinite-carousel .slide {
-                flex: 0 0 100%;
-                margin-right: 0;
-            }
-        }
-
-        .slide {
-            position: relative;
-            cursor: pointer;
-        }
-
-        .slide-hover {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity .3s;
-            border-radius: 0px;
-            text-align: center;
-            padding: 10px;
-        }
-
-        .slide:hover .slide-hover {
-            opacity: 1;
-        }
-
-        .carousel-control-previous,
-        .carousel-control-next {
-            display: block;
-            width: 40px;
-            height: 40px;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            margin: auto;
-            cursor: pointer;
-            background: rgba(0, 0, 0, .6);
-            color: #fff;
-            line-height: 40px;
-            font-size: 18px;
-            text-align: center;
-            border-radius: 50%;
-        }
-
-        .carousel-control-previous {
-            left: 10px;
-        }
-
-        .carousel-control-next {
-            right: 10px;
-        }
-
-        #projectLightbox,
-        #projectLightbox * {
-            user-select: none;
-            -webkit-user-drag: none;
-        }
-
-        #projectLightbox {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, .9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 200;
-        }
-
-        #projectLightbox .lightbox-content {
-            text-align: center;
-            color: #fff;
-            position: relative;
-            max-width: 100%;
-            max-height: 100%;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            pointer-events: none;
-        }
-
-        #projectLightbox h2,
-        #projectLightbox p {
-            margin: 0.5rem 0;
-            margin: 0.3rem 0;
-        }
-
-        #projectLightbox img {
-            max-width: 90vw;
-            max-height: calc(100vh - 140px);
-            margin: 1rem auto;
-            display: block;
-        }
-
-        #projectLightbox .lightbox-text {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 1rem 1.5rem;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
-            text-align: center;
-        }
-
-        #projectLightbox .proj-control {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.6);
-            border: none;
-            color: #fff;
-            font-size: 2rem;
-            padding: .5rem 1rem;
-            cursor: pointer;
-            border-radius: 50%;
-        }
-
-        #projectLightbox img,
-        #projectLightbox .lightbox-text,
-        #projectLightbox .proj-control {
-            pointer-events: auto;
-        }
-
-        #projectLightbox .proj-prev {
-            left: 20px;
-        }
-
-        #projectLightbox .proj-next {
-            right: 20px;
-        }
-
-        .carousel-control-previous,
-        .carousel-control-next {
-            width: 30px;
-            height: 30px;
-            font-size: 16px;
-            line-height: 30px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        @media (max-width: 600px) {
-
-            .carousel-control-previous,
-            .carousel-control-next {
-                width: 28px;
-                height: 28px;
-                font-size: 14px;
-                line-height: 28px;
-            }
-        }
-
-        #projectLightbox .proj-prev,
-        #projectLightbox .proj-next {
-            width: 30px;
-            height: 30px;
-            font-size: 18px;
-            line-height: 30px;
-            border-radius: 50%;
-            background-color: rgba(0, 0, 0, 0.6);
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 100;
-        }
-
-        #projectLightbox .proj-prev {
-            left: 20px;
-        }
-
-        #projectLightbox .proj-next {
-            right: 20px;
-        }
-
-        @media (max-width: 600px) {
-
-            #projectLightbox .proj-prev,
-            #projectLightbox .proj-next {
-                width: 28px;
-                height: 28px;
-                font-size: 14px;
-                line-height: 28px;
-            }
-        }
-
-        .footer-brand {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.6rem;
-            margin-bottom: 0.5rem;
-        }
-    </style>
+    <link rel="preload" href="assets/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/montserrat-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <header>
         <div class="container">
             <h1 class="brand">
-                <img src="https://vinidimo.com/assets/logo-white.svg" alt="vinidimo">
+                <img src="assets/logo-white.svg" alt="vinidimo" width="42" height="42">
                 vinidimo
             </h1>
-            <nav>
+            <nav id="site-nav">
                 <a href="#hero" class="active">Início</a>
                 <a href="#servicos">Serviços</a>
                 <a href="#portfolio">Portfólio</a>
                 <a href="#sobre">Sobre</a>
                 <a href="#contato">Contato</a>
             </nav>
-            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+            <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="site-nav"
+                aria-label="Abrir menu">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </header>
 
     <section id="hero">
         <div class="container">
             <div class="hero-slideshow">
-                <img src="https://vinidimo.com/assets/content/v90q38rq928cq289fkqw.gif" class="active"
-                    fetchpriority="high">
-                <img src="https://vinidimo.com/assets/content/cj29835723v5892fjas29.webp">
-                <img src="https://vinidimo.com/assets/content/vm9238572vn9382mr3.webp">
-                <img src="https://vinidimo.com/assets/content/mc2037b2n059g23.webp">
-                <img src="https://vinidimo.com/assets/content/c2n9382nv359832.webp">
-                <img src="https://vinidimo.com/assets/content/n2983c42n938c44.webp">
-                <img src="https://vinidimo.com/assets/content/vn29523v59823yn5v792.webp">
+                <img src="assets/content/v90q38rq928cq289fkqw.gif" class="active"
+                    alt="Apresentação visual do estúdio vinidimo" fetchpriority="high" decoding="async">
+                <img src="assets/content/cj29835723v5892fjas29.webp" alt="" loading="lazy" decoding="async">
+                <img src="assets/content/vm9238572vn9382mr3.webp" alt="" loading="lazy" decoding="async">
+                <img src="assets/content/mc2037b2n059g23.webp" alt="" loading="lazy" decoding="async">
+                <img src="assets/content/c2n9382nv359832.webp" alt="" loading="lazy" decoding="async">
+                <img src="assets/content/n2983c42n938c44.webp" alt="" loading="lazy" decoding="async">
+                <img src="assets/content/vn29523v59823yn5v792.webp" alt="" loading="lazy" decoding="async">
             </div>
             <div class="hero-text">
                 <h2>vinidimo – Estúdio de Design e Marketing Independente</h2>
@@ -854,8 +77,7 @@
     </section>
 
     <section id="servicos" class="overlay-section">
-        <div class="bg-img"
-            style="background-image:url('https://vinidimo.com/assets/content/photo-1498050108023-c5249f4df085.webp');">
+        <div class="bg-img bg-services">
         </div>
         <div class="container fade-in">
             <h2>O que podemos criar juntos</h2>
@@ -898,133 +120,136 @@
                 <div class="carousel-viewport">
                     <div class="slide" data-title="Fellps Adega e Barbearia"
                         data-caption="Logotipo e aplicação para Adega e Barbearia" data-images='[
-                        "https://vinidimo.com/assets/projects/fellps-3515601.webp",
-                        "https://vinidimo.com/assets/projects/fellps-3515602.webp",
-                        "https://vinidimo.com/assets/projects/fellps-3515603.webp"
+                        "assets/projects/fellps-3515601.webp",
+                        "assets/projects/fellps-3515602.webp",
+                        "assets/projects/fellps-3515603.webp"
                         ]'>
-                        <img src="https://vinidimo.com/assets/projects/fellps-3515601.webp"
-                            alt="Fellps Adega e Barbearia">
+                        <img src="assets/projects/fellps-3515601.webp" alt="Fellps Adega e Barbearia" loading="lazy"
+                            decoding="async">
                         <div class="slide-hover"><span>Fellps Adega e Barbearia</span></div>
                     </div>
 
                     <div class="slide" data-title="Landing Page Antecipação FGTS"
                         data-caption="Projeto e prototipação de Landing Page para o produto Antecipação do FGTS"
                         data-images='[
-                        "https://vinidimo.com/assets/projects/fgtslp-1897264871201.webp",
-                        "https://vinidimo.com/assets/projects/fgtslp-1897264871202.webp",
-                        "https://vinidimo.com/assets/projects/fgtslp-1897264871203.webp",
-                        "https://vinidimo.com/assets/projects/fgtslp-1897264871204.webp",
-                        "https://vinidimo.com/assets/projects/fgtslp-1897264871205.webp"
+                        "assets/projects/fgtslp-1897264871201.webp",
+                        "assets/projects/fgtslp-1897264871202.webp",
+                        "assets/projects/fgtslp-1897264871203.webp",
+                        "assets/projects/fgtslp-1897264871204.webp",
+                        "assets/projects/fgtslp-1897264871205.webp"
                         ]'>
-                        <img src="https://vinidimo.com/assets/projects/fgtslp-1897264871201.webp"
-                            alt="Landing Page Antecipação FGTS">
+                        <img src="assets/projects/fgtslp-1897264871201.webp" alt="Landing Page Antecipação FGTS"
+                            loading="lazy" decoding="async">
                         <div class="slide-hover"><span>Landing Page Antecipação FGTS</span></div>
                     </div>
 
                     <div class="slide" data-title="Da Cruz System"
                         data-caption="Identidade visual criada para a academia Da Cruz" data-images='[
-                        "https://vinidimo.com/assets/projects/dacruz-29785628701.webp",
-                        "https://vinidimo.com/assets/projects/dacruz-29785628702.webp",
-                        "https://vinidimo.com/assets/projects/dacruz-29785628703.webp"
+                        "assets/projects/dacruz-29785628701.webp",
+                        "assets/projects/dacruz-29785628702.webp",
+                        "assets/projects/dacruz-29785628703.webp"
                         ]'>
-                        <img src="https://vinidimo.com/assets/projects/dacruz-29785628701.webp" alt="Da Cruz System">
+                        <img src="assets/projects/dacruz-29785628701.webp" alt="Da Cruz System" loading="lazy"
+                            decoding="async">
                         <div class="slide-hover"><span>Da Cruz System</span></div>
                     </div>
 
                     <div class="slide" data-title="Vans Sticker"
                         data-caption="Ilustração de tênis da Vans para aplicação em adesivos e acessórios." data-images='[
-                        "https://vinidimo.com/assets/projects/vanssticker-86728301.webp",
-                        "https://vinidimo.com/assets/projects/vanssticker-86728302.webp",
-                        "https://vinidimo.com/assets/projects/vanssticker-86728303.webp"
+                        "assets/projects/vanssticker-86728301.webp",
+                        "assets/projects/vanssticker-86728302.webp",
+                        "assets/projects/vanssticker-86728303.webp"
                         ]'>
-                        <img src="https://vinidimo.com/assets/projects/vanssticker-86728301.webp" alt="Vans Sticker">
+                        <img src="assets/projects/vanssticker-86728301.webp" alt="Vans Sticker" loading="lazy"
+                            decoding="async">
                         <div class="slide-hover"><span>Vans Sticker</span></div>
                     </div>
 
                     <div class="slide" data-title="Lou's Tavern"
                         data-caption="Logo criado com base na ''Lou's Tavern'' do filme Clube da Luta" data-images='[
-                        "https://vinidimo.com/assets/projects/loustavern-1654601.webp",
-                        "https://vinidimo.com/assets/projects/loustavern-1654602.webp",
-                        "https://vinidimo.com/assets/projects/loustavern-1654603.webp"
+                        "assets/projects/loustavern-1654601.webp",
+                        "assets/projects/loustavern-1654602.webp",
+                        "assets/projects/loustavern-1654603.webp"
                         ]'>
-                        <img src="https://vinidimo.com/assets/projects/loustavern-1654601.webp" alt="Lou's Tavern">
+                        <img src="assets/projects/loustavern-1654601.webp" alt="Lou's Tavern" loading="lazy"
+                            decoding="async">
                         <div class="slide-hover"><span>Lou's Tavern</span></div>
                     </div>
 
                     <div class="slide" data-title="Lavazul Logo" data-caption="Identidade visual criada para Lavazul"
                         data-images='[
-                        "https://vinidimo.com/assets/projects/lavazul-56465101.webp",
-                        "https://vinidimo.com/assets/projects/lavazul-56465102.webp"
+                        "assets/projects/lavazul-56465101.webp",
+                        "assets/projects/lavazul-56465102.webp"
                         ]'>
-                        <img src="https://vinidimo.com/assets/projects/lavazul-56465101.webp" alt="Lavazul Logo">
+                        <img src="assets/projects/lavazul-56465101.webp" alt="Lavazul Logo" loading="lazy"
+                            decoding="async">
                         <div class="slide-hover"><span>Lavazul Logo</span></div>
                     </div>
 
                     <div class="slide" data-title="Dimo Street Lettering"
                         data-caption="Marca Street Lettering para aplicação em camisetas, bonés e adesivos."
                         data-images='[
-                        "https://vinidimo.com/assets/projects/dimostreetlettering-28765201.webp",
-                        "https://vinidimo.com/assets/projects/dimostreetlettering-28765202.webp",
-                        "https://vinidimo.com/assets/projects/dimostreetlettering-28765203.webp",
-                        "https://vinidimo.com/assets/projects/dimostreetlettering-28765204.webp"
+                        "assets/projects/dimostreetlettering-28765201.webp",
+                        "assets/projects/dimostreetlettering-28765202.webp",
+                        "assets/projects/dimostreetlettering-28765203.webp",
+                        "assets/projects/dimostreetlettering-28765204.webp"
                         ]'>
-                        <img src="https://vinidimo.com/assets/projects/dimostreetlettering-28765201.webp"
-                            alt="Dimo Street Lettering">
+                        <img src="assets/projects/dimostreetlettering-28765201.webp" alt="Dimo Street Lettering"
+                            loading="lazy" decoding="async">
                         <div class="slide-hover"><span>Dimo Street Lettering</span></div>
                     </div>
 
                     <div class="slide" data-title="Aclimação Boxing Club" data-caption="Logotipo para clube de boxe"
                         data-images='[
-                        "https://vinidimo.com/assets/projects/aclboxclub-5412402.webp",
-                        "https://vinidimo.com/assets/projects/aclboxclub-5412401.webp",
-                        "https://vinidimo.com/assets/projects/aclboxclub-5412403.webp"
+                        "assets/projects/aclboxclub-5412402.webp",
+                        "assets/projects/aclboxclub-5412401.webp",
+                        "assets/projects/aclboxclub-5412403.webp"
                         ]'>
-                        <img src="https://vinidimo.com/assets/projects/aclboxclub-5412402.webp"
-                            alt="Aclimação Boxing Club">
+                        <img src="assets/projects/aclboxclub-5412402.webp" alt="Aclimação Boxing Club" loading="lazy"
+                            decoding="async">
                         <div class="slide-hover"><span>Aclimação Boxing Club</span></div>
                     </div>
 
                     <div class="slide" data-title="Certificação PCI" data-caption="Social media para a Certificação PCI"
                         data-images='[
-                        "https://vinidimo.com/assets/projects/pcisocialmedia-2938658923502.webp",
-                        "https://vinidimo.com/assets/projects/pcisocialmedia-2938658923503.webp",
-                        "https://vinidimo.com/assets/projects/pcisocialmedia-2938658923504.webp"
+                        "assets/projects/pcisocialmedia-2938658923502.webp",
+                        "assets/projects/pcisocialmedia-2938658923503.webp",
+                        "assets/projects/pcisocialmedia-2938658923504.webp"
                         ]'>
-                        <img src="https://vinidimo.com/assets/projects/pcisocialmedia-2938658923501.webp"
-                            alt="Certificação PCI">
+                        <img src="assets/projects/pcisocialmedia-2938658923501.webp" alt="Certificação PCI"
+                            loading="lazy" decoding="async">
                         <div class="slide-hover"><span>Certificação PCI</span></div>
                     </div>
 
                     <div class="slide" data-title="Jiu Jitsu Lettering"
                         data-caption="Ilustração Lettering Jiu Jitsu para aplicação em materiais impressos" data-images='[
-                        "https://vinidimo.com/assets/projects/jiujitsulettering-1321801.webp",
-                        "https://vinidimo.com/assets/projects/jiujitsulettering-1321802.webp",
-                        "https://vinidimo.com/assets/projects/jiujitsulettering-1321803.webp"
+                        "assets/projects/jiujitsulettering-1321801.webp",
+                        "assets/projects/jiujitsulettering-1321802.webp",
+                        "assets/projects/jiujitsulettering-1321803.webp"
                         ]'>
-                        <img src="https://vinidimo.com/assets/projects/jiujitsulettering-1321801.webp"
-                            alt="Jiu Jitsu Lettering">
+                        <img src="assets/projects/jiujitsulettering-1321801.webp" alt="Jiu Jitsu Lettering"
+                            loading="lazy" decoding="async">
                         <div class="slide-hover"><span>Jiu Jitsu Lettering</span></div>
                     </div>
 
                     <div class="slide" data-title="Ryu Dragon Vetorização"
                         data-caption="Vetorização de desenho antigo de Dragão Ryu" data-images='[
-                        "https://vinidimo.com/assets/projects/ryudragon-7214902.webp",
-                        "https://vinidimo.com/assets/projects/ryudragon-7214901.webp"
+                        "assets/projects/ryudragon-7214902.webp",
+                        "assets/projects/ryudragon-7214901.webp"
                         ]'>
-                        <img src="https://vinidimo.com/assets/projects/ryudragon-7214902.webp"
-                            alt="Ryu Dragon Vetorização">
+                        <img src="assets/projects/ryudragon-7214902.webp" alt="Ryu Dragon Vetorização" loading="lazy"
+                            decoding="async">
                         <div class="slide-hover"><span>Ryu Dragon Vetorização</span></div>
                     </div>
                 </div>
-                <a class="carousel-control-previous">◀</a>
-                <a class="carousel-control-next">▶</a>
+                <button type="button" class="carousel-control-previous" aria-label="Projeto anterior">◀</button>
+                <button type="button" class="carousel-control-next" aria-label="Próximo projeto">▶</button>
             </div>
         </div>
     </section>
 
     <section id="sobre" class="overlay-section">
-        <div class="bg-img"
-            style="background-image:url('https://vinidimo.com/assets/content/photo-1508830524289-0adcbe822b40.webp');">
+        <div class="bg-img bg-about">
         </div>
         <div class="bg-content">
             <div class="container bg-inner fade-in">
@@ -1051,9 +276,20 @@
                 em realidade.</p>
             <div class="form-wrap">
                 <form class="two-col" id="whatsForm">
-                    <input type="text" id="nome" placeholder="Seu nome" required>
-                    <input type="email" id="email" placeholder="Seu e-mail" required>
-                    <textarea id="mensagem" rows="6" placeholder="Explique sua ideia" required></textarea>
+                    <div class="field">
+                        <label for="nome">Seu nome</label>
+                        <input type="text" id="nome" name="nome" placeholder="Seu nome" autocomplete="name" required>
+                    </div>
+                    <div class="field">
+                        <label for="email">Seu e-mail</label>
+                        <input type="email" id="email" name="email" placeholder="Seu e-mail" autocomplete="email"
+                            inputmode="email" required>
+                    </div>
+                    <div class="field field-full">
+                        <label for="mensagem">Explique sua ideia</label>
+                        <textarea id="mensagem" name="mensagem" rows="6" placeholder="Explique sua ideia"
+                            autocomplete="off" required></textarea>
+                    </div>
                     <button type="submit">Falar no WhatsApp</button>
                 </form>
             </div>
@@ -1061,31 +297,37 @@
     </section>
 
     <footer>
-        <div class="footer-brand" style="display:flex; align-items:center; gap:0.5rem;">
-            <img src="https://vinidimo.com/assets/logo-white.svg" alt="vinidimo" style="width:32px; height:auto;">
-            <span style="font-weight:600; text-transform:lowercase;">vinidimo</span>
+        <div class="footer-brand">
+            <img src="assets/logo-white.svg" alt="vinidimo" width="32" height="32">
+            <span class="footer-name">vinidimo</span>
         </div>
         <p>Copyright © <span id="year"></span> vinidimo — Todos os direitos reservados</p>
         <div class="social">
-            <a href="https://instagram.com/vinidimo" target="_blank"><img
-                    src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram"></a>
-            <a href="https://behance.net/vinidimo" target="_blank"><img
-                    src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/behance.svg" alt="Behance"></a>
-            <a href="https://www.linkedin.com/company/vini-dimo/" target="_blank"><img
-                    src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/linkedin.svg" alt="LinkedIn"></a>
-            <a href="mailto:contato@vinidimo.com"><img
-                    src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/gmail.svg" alt="E-mail"></a>
-            <a href="https://wa.me/5511945144513" target="_blank"><img
-                    src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" alt="WhatsApp"></a>
-            <a href="https://www.youtube.com/@dimovinicius" target="_blank"><img
-                    src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/youtube.svg" alt="YouTube"></a>
+            <a href="https://instagram.com/vinidimo" target="_blank" rel="noopener noreferrer"
+                aria-label="Instagram">
+                <img src="assets/icons/instagram.svg" alt="Instagram">
+            </a>
+            <a href="https://behance.net/vinidimo" target="_blank" rel="noopener noreferrer" aria-label="Behance">
+                <img src="assets/icons/behance.svg" alt="Behance">
+            </a>
+            <a href="https://www.linkedin.com/company/vini-dimo/" target="_blank" rel="noopener noreferrer"
+                aria-label="LinkedIn">
+                <img src="assets/icons/linkedin.svg" alt="LinkedIn">
+            </a>
+            <a href="mailto:contato@vinidimo.com" aria-label="E-mail">
+                <img src="assets/icons/gmail.svg" alt="E-mail">
+            </a>
+            <a href="https://wa.me/5511945144513" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                <img src="assets/icons/whatsapp.svg" alt="WhatsApp">
+            </a>
+            <a href="https://www.youtube.com/@dimovinicius" target="_blank" rel="noopener noreferrer"
+                aria-label="YouTube">
+                <img src="assets/icons/youtube.svg" alt="YouTube">
+            </a>
         </div>
-        <script>
-            document.getElementById('year').textContent = new Date().getFullYear();
-        </script>
     </footer>
 
-    <div id="projectLightbox" style="display:none;">
+    <div id="projectLightbox" hidden>
         <div class="lightbox-content">
             <img id="projectImg" src="" alt="">
             <div class="lightbox-text">
@@ -1094,335 +336,10 @@
             </div>
         </div>
 
-        <button class="proj-control proj-prev">◀</button>
-        <button class="proj-control proj-next">▶</button>
+        <button type="button" class="proj-control proj-prev" aria-label="Imagem anterior">◀</button>
+        <button type="button" class="proj-control proj-next" aria-label="Próxima imagem">▶</button>
     </div>
-    <script>
-        const header = document.querySelector("header");
-
-        function onScrollHeader() {
-            if (window.scrollY > 40) {
-                header.classList.add("scrolled");
-            } else {
-                header.classList.remove("scrolled");
-            }
-        }
-
-        window.addEventListener("scroll", onScrollHeader);
-    </script>
-    <script>
-        const io = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }) }, { threshold: 0.2 });
-        document.querySelectorAll(".fade-in").forEach(el => io.observe(el));
-
-        const hamburger = document.getElementById("hamburger");
-        const nav = document.querySelector("header nav");
-        hamburger.addEventListener("click", () => { hamburger.classList.toggle("active"); nav.classList.toggle("open"); });
-
-        document.querySelectorAll("header nav a").forEach(link => {
-            link.addEventListener("click", () => {
-                document.querySelector("header nav").classList.remove("open");
-                document.getElementById("hamburger").classList.remove("active");
-            });
-        });
-
-        document.getElementById("whatsForm").addEventListener("submit", function (e) { e.preventDefault(); const nome = document.getElementById("nome").value; const email = document.getElementById("email").value; const mensagem = document.getElementById("mensagem").value; const texto = `Olá, meu nome é ${nome} (${email}).%0A${mensagem}`; window.open(`https://wa.me/5511945144513?text=${texto}`, '_blank'); });
-    </script>
-    <script>
-        const bgImgs = document.querySelectorAll(".bg-img");
-        const currentScales = new WeakMap();
-
-        function updateBgZoom() {
-            bgImgs.forEach(el => {
-                const rect = el.getBoundingClientRect();
-                let target = 1;
-
-                if (rect.top < window.innerHeight && rect.bottom > 0) {
-                    const scrollPercent = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-                    target = 1 + scrollPercent * 0.25;
-                }
-
-                if (!currentScales.has(el)) currentScales.set(el, 1);
-                const current = currentScales.get(el);
-                const next = current + (target - current) * 0.08;
-                currentScales.set(el, next);
-
-                el.style.transform = `scale(${next})`;
-            });
-
-            requestAnimationFrame(updateBgZoom);
-        }
-
-        requestAnimationFrame(updateBgZoom);
-    </script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script>
-        /* ========================
-           FUNÇÃO SWIPE GENÉRICA
-        ======================== */
-        function enableSwipe($el, onSwipeLeft, onSwipeRight) {
-            let startX = 0, startY = 0, isDragging = false;
-
-            function onStart(e) {
-                isDragging = true;
-                const t = e.touches ? e.touches[0] : e;
-                startX = t.pageX;
-                startY = t.pageY;
-            }
-
-            function onMove(e) {
-                if (!isDragging || !e.touches) return;
-                const t = e.touches[0];
-                const diffX = t.pageX - startX;
-                const diffY = t.pageY - startY;
-
-                if (Math.abs(diffX) > Math.abs(diffY)) {
-                    e.preventDefault();
-                }
-            }
-
-            function onEnd(e) {
-                if (!isDragging) return;
-                isDragging = false;
-                const t = e.changedTouches ? e.changedTouches[0] : e;
-                const diff = t.pageX - startX;
-
-                if (Math.abs(diff) > 50) {
-                    diff > 0 ? onSwipeRight() : onSwipeLeft();
-                }
-            }
-
-            $el.on("touchstart mousedown", onStart);
-            $el.on("touchmove", onMove);
-            $el.on("touchend mouseup", onEnd);
-        }
-    </script>
-    <script>
-        /* ========================
-           HERO SLIDESHOW COM SWIPE
-        ======================== */
-        $(function () {
-            const $heroSlides = $(".hero-slideshow img");
-            let heroCurrent = 0;
-            let heroTimer;
-
-            function showHero(i) {
-                $heroSlides.removeClass("active");
-                heroCurrent = (i + $heroSlides.length) % $heroSlides.length;
-                $heroSlides.eq(heroCurrent).addClass("active");
-            }
-
-            function heroNext() { showHero(heroCurrent + 1); }
-            function heroPrev() { showHero(heroCurrent - 1); }
-
-            function startHeroAuto() {
-                clearInterval(heroTimer);
-                heroTimer = setInterval(heroNext, 8000);
-            }
-            startHeroAuto();
-
-            $heroSlides.attr("draggable", "false").on("dragstart", e => e.preventDefault());
-
-            enableSwipe($(".hero-slideshow"),
-                () => { heroNext(); startHeroAuto(); },
-                () => { heroPrev(); startHeroAuto(); }
-            );
-        });
-    </script>
-    <script>
-        /* ========================
-           INFINITE CAROUSEL — RESPONSIVO + CLIQUE RÁPIDO
-        ======================== */
-        const $carousel = $(".infinite-carousel");
-        const $viewport = $carousel.find(".carousel-viewport");
-
-        const $originalSlides = $viewport.children();
-        $viewport.append($originalSlides.clone());
-
-        let current = 0;
-        let slideWidth = 0;
-        let visibleSlides = 3;
-        let autoPlayTimer;
-
-        function calculate() {
-            const w = window.innerWidth;
-
-            if (w <= 600) visibleSlides = 1;
-            else if (w <= 900) visibleSlides = 2;
-            else visibleSlides = 3;
-
-            slideWidth = $carousel[0].getBoundingClientRect().width / visibleSlides;
-            moveTo(current, false);
-        }
-
-        function moveTo(index, animate = true) {
-            $viewport.css("transition", animate ? "transform 0.6s ease" : "none");
-            $viewport.css("transform", `translateX(${-index * slideWidth}px)`);
-        }
-
-        function normalize() {
-            const max = $originalSlides.length;
-            if (current >= max) {
-                current -= max;
-                moveTo(current, false);
-            }
-            if (current < 0) {
-                current += max;
-                moveTo(current, false);
-            }
-        }
-
-        function next() {
-            current++;
-            moveTo(current, true);
-            setTimeout(normalize, 600);
-        }
-
-        function prev() {
-            current--;
-            moveTo(current, true);
-            setTimeout(normalize, 600);
-        }
-
-        function startAuto() {
-            clearTimeout(autoPlayTimer);
-            autoPlayTimer = setTimeout(() => {
-                next();
-                startAuto();
-            }, 4000);
-        }
-
-        function stopAuto() {
-            clearTimeout(autoPlayTimer);
-        }
-
-        $(".carousel-control-next").on("click", e => {
-            e.preventDefault();
-            next();
-            startAuto();
-        });
-
-        $(".carousel-control-previous").on("click", e => {
-            e.preventDefault();
-            prev();
-            startAuto();
-        });
-
-        $(window).on("resize", calculate);
-
-        calculate();
-        startAuto();
-
-        $carousel.on("mouseenter", stopAuto);
-        $carousel.on("mouseleave", startAuto);
-
-        $(function () {
-            const $carousel = $(".infinite-carousel");
-            const $prevBtn = $(".carousel-control-previous");
-            const $nextBtn = $(".carousel-control-next");
-
-            if (window.matchMedia("(max-width: 900px)").matches) {
-                enableSwipe(
-                    $carousel,
-                    () => $nextBtn.trigger("click"), // swipe left
-                    () => $prevBtn.trigger("click")  // swipe right
-                );
-            }
-        });
-    </script>
-    <script>
-        /* ========================
-            LIGHTBOX
-            ======================== */
-        let currentProject = { images: [], index: 0 };
-
-        $(".infinite-carousel .slide").on("click", function () {
-            const imgs = JSON.parse($(this).attr("data-images") || "[]");
-            const title = $(this).data("title") || "";
-            const caption = $(this).data("caption") || "";
-            if (!imgs.length) return;
-
-            currentProject.images = imgs;
-            currentProject.index = 0;
-            $("#projectTitle").text(title);
-            $("#projectCaption").text(caption);
-            $("#projectImg").attr("src", imgs[0]);
-
-            $("#projectLightbox").fadeIn();
-        });
-
-        function showImage(i) {
-            currentProject.index = (i + currentProject.images.length) % currentProject.images.length;
-            $("#projectImg").attr("src", currentProject.images[currentProject.index]);
-        }
-
-        $(".proj-next").on("click", () => showImage(currentProject.index + 1));
-        $(".proj-prev").on("click", () => showImage(currentProject.index - 1));
-
-        $("#projectLightbox").on("click", function (e) {
-            if (e.target.id === "projectLightbox") $("#projectLightbox").fadeOut();
-        });
-
-        $(document).on("keydown", function (e) {
-            if ($("#projectLightbox").is(":visible")) {
-                if (e.key === "Escape") $("#projectLightbox").fadeOut();
-                if (e.key === "ArrowRight") showImage(currentProject.index + 1);
-                if (e.key === "ArrowLeft") showImage(currentProject.index - 1);
-            }
-        });
-
-        // swipe lightbox
-        enableSwipe($("#projectLightbox"),
-            () => showImage(currentProject.index + 1),
-            () => showImage(currentProject.index - 1)
-        );
-
-        // close on click outside
-        const lightbox = document.getElementById("projectLightbox");
-
-        lightbox.addEventListener("click", () => {
-            lightbox.style.display = "none";
-        });
-
-        [
-            "#projectLightbox img",
-            "#projectLightbox .lightbox-text",
-            "#projectLightbox .proj-control"
-        ].forEach(selector => {
-            document.querySelectorAll(selector).forEach(el => {
-                el.addEventListener("click", e => e.stopPropagation());
-            });
-        });
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const navLinks = [...document.querySelectorAll("header nav a")];
-            const sections = navLinks
-                .map(a => document.querySelector(a.getAttribute("href")))
-                .filter(Boolean);
-            const headerH = document.querySelector("header").offsetHeight;
-
-            function setActive() {
-                const pos = window.scrollY + headerH + 5;
-                let current = sections[0];
-
-                for (const sec of sections) {
-                    const top = sec.offsetTop;
-                    const bottom = top + sec.offsetHeight;
-                    if (pos >= top && pos < bottom) {
-                        current = sec;
-                        break;
-                    }
-                }
-
-                navLinks.forEach(a =>
-                    a.classList.toggle("active", a.getAttribute("href") === "#" + current.id)
-                );
-            }
-
-            window.addEventListener("scroll", setActive);
-            window.addEventListener("load", setActive);
-        });
-    </script>
+    <script src="main.js"></script>
 </body>
 
 </html>
