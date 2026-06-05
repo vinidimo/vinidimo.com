@@ -29,6 +29,9 @@ let slideWidth = 0;
 let visibleSlides = 3;
 let autoPlayTimer;
 let carouselMeasureFrame = 0;
+let carouselNormalizeTimer = 0;
+let carouselAnimating = false;
+let queuedCarouselDirection = 0;
 let currentProject = { images: [], index: 0 };
 let heroCurrent = 0;
 let heroTimer;
@@ -284,6 +287,12 @@ function moveTo(index, animate = true) {
     viewport.style.transform = `translateX(${-index * slideWidth}px)`;
 }
 
+function clearCarouselAnimationState() {
+    window.clearTimeout(carouselNormalizeTimer);
+    carouselNormalizeTimer = 0;
+    carouselAnimating = false;
+}
+
 function calculateCarousel() {
     if (!originalSlides.length) {
         viewport.style.transform = "translateX(0)";
@@ -302,6 +311,7 @@ function calculateCarousel() {
 
     carousel.style.setProperty("--carousel-slides-per-view", String(visibleSlides));
     slideWidth = originalSlides[0].getBoundingClientRect().width;
+    clearCarouselAnimationState();
     moveTo(current, false);
 }
 
@@ -327,24 +337,57 @@ function normalizeCarousel() {
     }
 }
 
-function nextCarousel() {
-    if (originalSlides.length <= 1) {
+function flushQueuedCarouselMove() {
+    if (!queuedCarouselDirection) {
         return;
     }
 
-    current += 1;
+    const direction = queuedCarouselDirection;
+    queuedCarouselDirection = 0;
+
+    if (direction > 0) {
+        nextCarousel();
+    } else {
+        prevCarousel();
+    }
+}
+
+function finishCarouselTransition() {
+    if (!carouselAnimating) {
+        return;
+    }
+
+    clearCarouselAnimationState();
+    normalizeCarousel();
+    flushQueuedCarouselMove();
+}
+
+function queueCarouselMove(direction) {
+    queuedCarouselDirection = direction;
+}
+
+function stepCarousel(direction) {
+    if (originalSlides.length <= 1 || !slideWidth) {
+        return;
+    }
+
+    if (carouselAnimating) {
+        queueCarouselMove(direction);
+        return;
+    }
+
+    carouselAnimating = true;
+    current += direction;
     moveTo(current, true);
-    window.setTimeout(normalizeCarousel, 600);
+    carouselNormalizeTimer = window.setTimeout(finishCarouselTransition, 650);
+}
+
+function nextCarousel() {
+    stepCarousel(1);
 }
 
 function prevCarousel() {
-    if (originalSlides.length <= 1) {
-        return;
-    }
-
-    current -= 1;
-    moveTo(current, true);
-    window.setTimeout(normalizeCarousel, 600);
+    stepCarousel(-1);
 }
 
 function startCarouselAuto() {
@@ -448,6 +491,12 @@ viewport.addEventListener("click", event => {
     }
 
     openLightbox(Number(slide.dataset.projectIndex));
+});
+
+viewport.addEventListener("transitionend", event => {
+    if (event.target === viewport && event.propertyName === "transform") {
+        finishCarouselTransition();
+    }
 });
 
 document.querySelector(".proj-next").addEventListener("click", event => {
