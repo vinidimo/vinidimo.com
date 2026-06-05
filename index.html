@@ -73,7 +73,19 @@
 
     <section id="hero">
         <div class="container">
-            <div class="hero-slideshow">
+            <div class="hero-text">
+                <span class="hero-tag">Soluções visuais para marcas e negócios</span>
+                <h1>Desenvolvemos imagem e comunicação para marcas em destaque</h1>
+                <p>Unimos estratégia, clareza e personalidade em projetos visuais pensados para valorizar sua marca,
+                    comunicar melhor e gerar mais consistência.</p>
+                <a href="#contato" class="hero-cta">Peça seu orçamento</a>
+                <div class="hero-notes" aria-label="Áreas de atuação">
+                    <span>Design</span>
+                    <span>Fotografia</span>
+                    <span>Sites</span>
+                </div>
+            </div>
+            <div class="hero-slideshow" aria-label="Galeria visual do estúdio">
                 <img src="assets/content/v90q38rq928cq289fkqw.gif" class="active"
                     alt="Apresentação visual do estúdio vinidimo" fetchpriority="high" decoding="async">
                 <img src="assets/content/cj29835723v5892fjas29.webp" alt="" loading="lazy" decoding="async">
@@ -82,12 +94,6 @@
                 <img src="assets/content/c2n9382nv359832.webp" alt="" loading="lazy" decoding="async">
                 <img src="assets/content/n2983c42n938c44.webp" alt="" loading="lazy" decoding="async">
                 <img src="assets/content/vn29523v59823yn5v792.webp" alt="" loading="lazy" decoding="async">
-            </div>
-            <div class="hero-text">
-                <h1>Desenvolvemos imagem e comunicação para marcas que querem se destacar</h1>
-                <p>Unimos estratégia, clareza e personalidade em projetos visuais pensados para valorizar sua marca,
-                    comunicar melhor e gerar mais consistência.</p>
-                <a href="#contato" class="hero-cta">Peça seu orçamento</a>
             </div>
         </div>
     </section>
@@ -222,11 +228,16 @@
     </footer>
 
     <div id="projectLightbox" hidden>
-        <div class="lightbox-content">
-            <img id="projectImg" src="" alt="">
-            <div class="lightbox-text">
-                <h2 id="projectTitle"></h2>
-                <p id="projectCaption"></p>
+        <div class="lightbox-dialog" role="dialog" aria-modal="true" aria-labelledby="projectTitle">
+            <button type="button" class="lightbox-close" aria-label="Fechar lightbox">×</button>
+            <div class="lightbox-content">
+                <div class="lightbox-media">
+                    <img id="projectImg" src="" alt="">
+                </div>
+                <div class="lightbox-text">
+                    <h2 id="projectTitle"></h2>
+                    <p id="projectCaption"></p>
+                </div>
             </div>
         </div>
 

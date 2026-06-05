@@ -16,6 +16,7 @@ const lightbox = document.getElementById("projectLightbox");
 const lightboxImage = document.getElementById("projectImg");
 const lightboxTitle = document.getElementById("projectTitle");
 const lightboxCaption = document.getElementById("projectCaption");
+const lightboxCloseButton = document.querySelector(".lightbox-close");
 const bgImages = [...document.querySelectorAll(".bg-img")];
 const currentScales = new WeakMap();
 const visibleBackgrounds = new Set();
@@ -432,10 +433,12 @@ function openLightbox(projectIndex) {
     lightboxImage.src = project.images[0];
     lightboxImage.alt = project.title;
     lightbox.hidden = false;
+    document.body.style.overflow = "hidden";
 }
 
 function closeLightbox() {
     lightbox.hidden = true;
+    document.body.style.overflow = "";
 }
 
 function showProjectImage(index) {
@@ -509,13 +512,18 @@ document.querySelector(".proj-prev").addEventListener("click", event => {
     showProjectImage(currentProject.index - 1);
 });
 
+lightboxCloseButton.addEventListener("click", event => {
+    event.stopPropagation();
+    closeLightbox();
+});
+
 lightbox.addEventListener("click", event => {
     if (event.target === lightbox) {
         closeLightbox();
     }
 });
 
-document.querySelectorAll("#projectLightbox img, #projectLightbox .lightbox-text, #projectLightbox .proj-control")
+document.querySelectorAll("#projectLightbox .lightbox-dialog, #projectLightbox img, #projectLightbox .lightbox-text, #projectLightbox .proj-control, #projectLightbox .lightbox-close")
     .forEach(element => {
         element.addEventListener("click", event => event.stopPropagation());
     });
