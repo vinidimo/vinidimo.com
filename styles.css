@@ -112,11 +112,11 @@ header.scrolled .container {
     padding: 0.6rem 2rem;
 }
 
-header h1.brand img {
+header .brand img {
     transition: transform 0.3s ease;
 }
 
-header.scrolled h1.brand img {
+header.scrolled .brand img {
     transform: scale(0.85);
 }
 
@@ -135,19 +135,19 @@ header .container {
     padding: 1rem 2rem;
 }
 
-header h1 {
+header .brand {
     text-transform: lowercase;
     font-size: 1.5rem;
 }
 
-header h1.brand {
+header .brand {
     display: flex;
     align-items: center;
     gap: 0.6rem;
     padding-top: 8px;
 }
 
-header h1.brand img {
+header .brand img {
     width: 42px;
     height: auto;
 }
@@ -380,12 +380,27 @@ section p {
     flex: 1;
 }
 
-#hero h2 {
+#hero .hero-kicker {
+    margin: 0 0 0.9rem;
+    color: var(--brand);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+#hero h1 {
     font-size: 2.6rem;
     text-align: left;
 }
 
-#hero h2::after {
+#hero h1::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--brand);
+    margin-top: 0.5rem;
     margin-left: 0;
     margin-right: auto;
 }
@@ -435,7 +450,7 @@ section p {
         padding-right: 1.25rem;
     }
 
-    #hero h2 {
+    #hero h1 {
         font-size: 1.9rem;
         line-height: 1.25;
         text-align: center;
@@ -448,9 +463,13 @@ section p {
         overflow-wrap: break-word;
     }
 
-    #hero h2::after {
+    #hero h1::after {
         margin-left: auto;
         margin-right: auto;
+    }
+
+    #hero .hero-kicker {
+        text-align: center;
     }
 
     #hero p {
