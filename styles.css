@@ -1112,6 +1112,23 @@ footer {
     }
 }
 
+@media (max-width: 900px) {
+    #projectLightbox .proj-prev,
+    #projectLightbox .proj-next {
+        top: 50% !important;
+        bottom: auto !important;
+        transform: translateY(-50%) !important;
+    }
+
+    #projectLightbox .proj-prev {
+        left: 1rem;
+    }
+
+    #projectLightbox .proj-next {
+        right: 1rem;
+    }
+}
+
 .footer-brand {
     display: flex;
     align-items: center;
