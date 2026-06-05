@@ -306,9 +306,11 @@ section p {
     padding-top: calc(4rem + 72px);
     padding-bottom: 3rem;
     background:
-        radial-gradient(circle at top left, rgba(0, 170, 255, 0.2), transparent 36%),
-        radial-gradient(circle at right center, rgba(255, 255, 255, 0.08), transparent 24%),
-        linear-gradient(180deg, #0b1018 0%, #0f1724 52%, #111b29 100%);
+        radial-gradient(circle at top left, rgba(0, 170, 255, 0.18), transparent 34%),
+        radial-gradient(circle at right center, rgba(255, 255, 255, 0.06), transparent 22%),
+        linear-gradient(-45deg, #0b1018, #0f1724, #132235, #101a2a);
+    background-size: auto, auto, 400% 400%;
+    animation: heroGradient 18s ease infinite;
     color: #f6f7fb;
 }
 
@@ -316,7 +318,7 @@ section p {
     display: grid;
     grid-template-columns: minmax(0, 1fr) max-content;
     align-items: center;
-    gap: 4.5rem;
+    gap: 3.8rem;
     height: auto;
     max-width: 1200px;
 }
@@ -329,16 +331,32 @@ section p {
     justify-self: center;
 }
 
+.hero-visual::before {
+    content: "";
+    position: absolute;
+    top: 46%;
+    left: 44%;
+    width: 430px;
+    height: 430px;
+    border-radius: 50%;
+    background: rgba(6, 12, 22, 0.38);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    transform: translate(-50%, -50%);
+    animation: heroOrb 9s ease-in-out infinite;
+    z-index: 0;
+}
+
 .hero-slideshow {
     position: relative;
-    height: min(54vh, 430px);
+    height: min(60vh, 500px);
     border-radius: 0;
     overflow: hidden;
-    width: 320px;
+    width: 380px;
     max-width: 100%;
     background: transparent;
     box-shadow: none;
-    flex: 0 0 320px;
+    flex: 0 0 380px;
+    z-index: 1;
 }
 
 .hero-slideshow img {
@@ -447,6 +465,7 @@ section p {
     display: none;
     justify-items: center;
     row-gap: 0.7rem;
+    z-index: 1;
 }
 
 .hero-links::before,
@@ -500,7 +519,21 @@ section p {
     }
 
     .hero-visual {
+        order: -1;
+        width: 100%;
         gap: 0;
+        justify-content: center;
+    }
+
+    .hero-visual::before {
+        width: 320px;
+        height: 320px;
+        top: 44%;
+        left: 46%;
+    }
+
+    .hero-links {
+        display: none !important;
     }
 
     #hero h1 {
@@ -540,7 +573,6 @@ section p {
         max-width: 100%;
         height: min(40vh, 330px);
         justify-self: center;
-        order: -1;
         flex-basis: 280px;
     }
 
@@ -556,6 +588,37 @@ section p {
 
     to {
         transform: scale(1.15);
+    }
+}
+
+@keyframes heroGradient {
+    0% {
+        background-position: 0 0, 100% 50%, 0% 50%;
+    }
+
+    50% {
+        background-position: 0 0, 100% 50%, 100% 50%;
+    }
+
+    100% {
+        background-position: 0 0, 100% 50%, 0% 50%;
+    }
+}
+
+@keyframes heroOrb {
+    0% {
+        transform: translate(-50%, -50%) translate3d(-10px, 8px, 0) scale(0.98);
+        opacity: 0.84;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) translate3d(8px, -6px, 0) scale(1.02);
+        opacity: 0.96;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) translate3d(-10px, 8px, 0) scale(0.98);
+        opacity: 0.84;
     }
 }
 
