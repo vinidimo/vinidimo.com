@@ -66,7 +66,19 @@ function buildCard(article) {
                         <div class="card-info">
                             ${escapeHtml(article.intro)}
                         </div>
-                        <div class="card-cta">Saiba mais &rarr;</div>
+                        <div class="card-cta" aria-hidden="true">
+                            <span class="animated-arrow">
+                                <span class="the-arrow -left">
+                                    <span class="shaft"></span>
+                                </span>
+                                <span class="main">
+                                    <span class="text">Saiba mais</span>
+                                    <span class="the-arrow -right">
+                                        <span class="shaft"></span>
+                                    </span>
+                                </span>
+                            </span>
+                        </div>
                         <div class="utility-info">
                             <ul class="utility-list">
                                 <li class="reading-time">${escapeHtml(article.readTime)}</li>

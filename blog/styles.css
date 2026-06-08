@@ -262,13 +262,118 @@ body.blog-page {
     left: 0;
     width: 100%;
     padding: 0 2.3rem;
-    color: #ffffff;
+    opacity: 0;
+    transition: bottom 0.3s ease, opacity 0.3s cubic-bezier(.33, .66, .66, 1);
+}
+
+.blog-post-card .animated-arrow {
+    position: relative;
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.94);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.blog-post-card .animated-arrow .main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.blog-post-card .animated-arrow .text {
+    margin-right: 16px;
+    color: inherit;
     font-family: "Roboto", sans-serif;
     font-size: 0.92rem;
     font-weight: 700;
     letter-spacing: 0.02em;
-    opacity: 0;
-    transition: bottom 0.3s ease, opacity 0.3s cubic-bezier(.33, .66, .66, 1);
+    line-height: 1;
+}
+
+.blog-post-card .the-arrow {
+    width: 1px;
+    transition: all 0.2s ease;
+}
+
+.blog-post-card .the-arrow.-left {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+.blog-post-card .the-arrow.-left > .shaft {
+    width: 0;
+    background-color: currentColor;
+}
+
+.blog-post-card .the-arrow.-left > .shaft::before,
+.blog-post-card .the-arrow.-left > .shaft::after {
+    width: 0;
+    background-color: currentColor;
+}
+
+.blog-post-card .the-arrow.-left > .shaft::before {
+    transform: rotate(0);
+}
+
+.blog-post-card .the-arrow.-left > .shaft::after {
+    transform: rotate(0);
+}
+
+.blog-post-card .the-arrow.-right {
+    position: relative;
+    top: 1px;
+}
+
+.blog-post-card .the-arrow.-right > .shaft {
+    width: 1px;
+    transition-delay: 0.2s;
+}
+
+.blog-post-card .the-arrow.-right > .shaft::before,
+.blog-post-card .the-arrow.-right > .shaft::after {
+    width: 8px;
+    transition: all 0.5s ease;
+    transition-delay: 0.3s;
+}
+
+.blog-post-card .the-arrow.-right > .shaft::before {
+    transform: rotate(40deg);
+}
+
+.blog-post-card .the-arrow.-right > .shaft::after {
+    transform: rotate(-40deg);
+}
+
+.blog-post-card .the-arrow > .shaft {
+    display: block;
+    position: relative;
+    height: 1px;
+    background-color: currentColor;
+    transition: all 0.2s ease;
+    will-change: transform;
+}
+
+.blog-post-card .the-arrow > .shaft::before,
+.blog-post-card .the-arrow > .shaft::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 1px;
+    background-color: currentColor;
+    transition: all 0.2s ease;
+}
+
+.blog-post-card .the-arrow > .shaft::before {
+    transform-origin: top right;
+}
+
+.blog-post-card .the-arrow > .shaft::after {
+    transform-origin: bottom right;
 }
 
 .blog-post-card .utility-info {
@@ -318,6 +423,63 @@ body.blog-page {
 .blog-post-card:focus-visible .card-cta {
     opacity: 1;
     bottom: 72px;
+}
+
+.blog-post-card .card-cta:hover .animated-arrow,
+.blog-post-card .card-cta:focus-visible .animated-arrow {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.blog-post-card .card-cta:hover .animated-arrow .main,
+.blog-post-card .card-cta:focus-visible .animated-arrow .main {
+    transform: translateX(80px);
+}
+
+.blog-post-card .card-cta:hover .animated-arrow .the-arrow.-left > .shaft,
+.blog-post-card .card-cta:focus-visible .animated-arrow .the-arrow.-left > .shaft {
+    width: 64px;
+    transition-delay: 0.1s;
+}
+
+.blog-post-card .card-cta:hover .animated-arrow .the-arrow.-left > .shaft::before,
+.blog-post-card .card-cta:hover .animated-arrow .the-arrow.-left > .shaft::after,
+.blog-post-card .card-cta:focus-visible .animated-arrow .the-arrow.-left > .shaft::before,
+.blog-post-card .card-cta:focus-visible .animated-arrow .the-arrow.-left > .shaft::after {
+    width: 8px;
+    transition-delay: 0.1s;
+}
+
+.blog-post-card .card-cta:hover .animated-arrow .the-arrow.-left > .shaft::before,
+.blog-post-card .card-cta:focus-visible .animated-arrow .the-arrow.-left > .shaft::before {
+    transform: rotate(40deg);
+}
+
+.blog-post-card .card-cta:hover .animated-arrow .the-arrow.-left > .shaft::after,
+.blog-post-card .card-cta:focus-visible .animated-arrow .the-arrow.-left > .shaft::after {
+    transform: rotate(-40deg);
+}
+
+.blog-post-card .card-cta:hover .animated-arrow .the-arrow.-right > .shaft,
+.blog-post-card .card-cta:focus-visible .animated-arrow .the-arrow.-right > .shaft {
+    width: 0;
+    transform: translateX(200%);
+    transition-delay: 0s;
+}
+
+.blog-post-card .card-cta:hover .animated-arrow .the-arrow.-right > .shaft::before,
+.blog-post-card .card-cta:hover .animated-arrow .the-arrow.-right > .shaft::after,
+.blog-post-card .card-cta:focus-visible .animated-arrow .the-arrow.-right > .shaft::before,
+.blog-post-card .card-cta:focus-visible .animated-arrow .the-arrow.-right > .shaft::after {
+    width: 0;
+    transition: all 0.1s ease;
+    transition-delay: 0s;
+}
+
+.blog-post-card .card-cta:hover .animated-arrow .the-arrow.-right > .shaft::before,
+.blog-post-card .card-cta:hover .animated-arrow .the-arrow.-right > .shaft::after,
+.blog-post-card .card-cta:focus-visible .animated-arrow .the-arrow.-right > .shaft::before,
+.blog-post-card .card-cta:focus-visible .animated-arrow .the-arrow.-right > .shaft::after {
+    transform: rotate(0);
 }
 
 .blog-article-shell {
