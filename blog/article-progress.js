@@ -7,11 +7,13 @@ function setupArticleProgress() {
     }
 
     function updateArticleProgress() {
-        const articleTop = article.offsetTop;
-        const articleHeight = article.offsetHeight;
+        const articleRect = article.getBoundingClientRect();
         const viewportHeight = window.innerHeight;
-        const maxScrollable = Math.max(articleHeight - viewportHeight, 1);
         const scrollTop = window.scrollY || window.pageYOffset || 0;
+        const articleTop = scrollTop + articleRect.top;
+        const articleHeight = article.scrollHeight;
+        const articleBottom = articleTop + articleHeight;
+        const maxScrollable = Math.max(articleBottom - articleTop - viewportHeight, 1);
         const rawProgress = (scrollTop - articleTop) / maxScrollable;
         const progress = Math.min(Math.max(rawProgress, 0), 1);
 
