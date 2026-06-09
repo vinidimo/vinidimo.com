@@ -1294,6 +1294,7 @@ section p {
     bottom: 0;
     left: 0;
     padding: 0 0 1.1rem;
+    margin-top: 2rem;
 }
 
 .portfolio-logo-kicker {
@@ -1343,6 +1344,8 @@ section p {
     opacity: 0.38;
     transition: opacity 0.25s ease, transform 0.25s ease;
     -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
 }
 
 .portfolio-logo-list img {
@@ -1351,6 +1354,10 @@ section p {
     height: calc(var(--portfolio-logo-base-height, 34px) * var(--logo-balance-factor, 1));
     max-width: none;
     object-fit: contain;
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+    user-select: none;
+    pointer-events: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1375,7 +1382,7 @@ section p {
         right: auto;
         bottom: auto;
         left: auto;
-        margin-top: auto;
+        margin-top: 2.5rem;
         padding-bottom: 0.8rem;
     }
 

@@ -245,6 +245,15 @@ function bindPortfolioLogoListeners() {
         logo.addEventListener("load", balancePortfolioLogos, { once: true });
         logo.dataset.balanceBound = "true";
     });
+
+    document.querySelectorAll(".portfolio-logo-list li").forEach(item => {
+        if (item.dataset.contextBound === "true") {
+            return;
+        }
+
+        item.addEventListener("contextmenu", event => event.preventDefault());
+        item.dataset.contextBound = "true";
+    });
 }
 
 function balancePortfolioLogos() {
