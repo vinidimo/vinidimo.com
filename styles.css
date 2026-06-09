@@ -553,8 +553,43 @@ section p {
     text-wrap: balance;
 }
 
+#hero .hero-underline-word {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+    padding-bottom: 0.22em;
+}
+
+#hero .hero-underline-word svg {
+    position: absolute;
+    left: 0;
+    top: 79%;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+#hero .hero-underline-stroke {
+    stroke: rgba(84, 160, 255, 0.96);
+    stroke-width: clamp(3px, 0.28vw, 4.5px);
+    vector-effect: non-scaling-stroke;
+    stroke-dasharray: 822;
+    stroke-dashoffset: 822;
+    animation: heroUnderlineDraw 2.25s 1s cubic-bezier(.19, .82, .29, 1) forwards;
+}
+
 #hero h1::after {
     display: none;
+}
+
+@keyframes heroUnderlineDraw {
+    from {
+        stroke-dashoffset: 822;
+    }
+
+    to {
+        stroke-dashoffset: 0;
+    }
 }
 
 #hero p {
@@ -812,6 +847,14 @@ section p {
         -ms-hyphens: none;
         word-break: normal;
         overflow-wrap: break-word;
+    }
+
+    #hero .hero-underline-word {
+        padding-bottom: 0.16em;
+    }
+
+    #hero .hero-underline-word svg {
+        top: 82%;
     }
 
     #hero .hero-tag {
