@@ -209,6 +209,7 @@ nav a.active::after {
     border: 0;
     padding: 0;
     -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .hamburger svg {
@@ -233,7 +234,7 @@ nav a.active::after {
     --offset: -38;
     stroke-dasharray: var(--length) var(--total-length);
     stroke-dashoffset: var(--offset);
-    transition: transform .38s cubic-bezier(.645, .045, .355, 1), stroke-dasharray .38s cubic-bezier(.645, .045, .355, 1), stroke-dashoffset .38s cubic-bezier(.645, .045, .355, 1);
+    transition: transform .4s cubic-bezier(.645, .045, .355, 1), stroke-dasharray .3s cubic-bezier(.645, .045, .355, 1), stroke-dashoffset .3s cubic-bezier(.645, .045, .355, 1);
 }
 
 .hamburger .line--1,
@@ -582,14 +583,12 @@ section p {
     border-radius: 999px;
     background:
         linear-gradient(var(--shiny-cta-bg), var(--shiny-cta-bg)) padding-box,
-        conic-gradient(
-            from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+        conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
             transparent,
             var(--shiny-cta-highlight) var(--gradient-percent),
             var(--gradient-shine) calc(var(--gradient-percent) * 2),
             var(--shiny-cta-highlight) calc(var(--gradient-percent) * 3),
-            transparent calc(var(--gradient-percent) * 4)
-        ) border-box;
+            transparent calc(var(--gradient-percent) * 4)) border-box;
     box-shadow:
         inset 0 0 0 1px rgba(255, 255, 255, 0.06),
         inset 0 0 18px rgba(157, 196, 255, 0.08),
@@ -639,16 +638,13 @@ section p {
     height: var(--size);
     border-radius: inherit;
     background:
-        radial-gradient(circle at var(--position) var(--position), rgba(255, 255, 255, 0.9) calc(var(--position) / 4), transparent 0)
-        padding-box;
+        radial-gradient(circle at var(--position) var(--position), rgba(255, 255, 255, 0.9) calc(var(--position) / 4), transparent 0) padding-box;
     background-size: var(--space) var(--space);
     background-repeat: space;
-    mask-image: conic-gradient(
-        from calc(var(--gradient-angle) + 45deg),
-        black,
-        transparent 10% 90%,
-        black
-    );
+    mask-image: conic-gradient(from calc(var(--gradient-angle) + 45deg),
+            black,
+            transparent 10% 90%,
+            black);
     opacity: 0.22;
     filter: blur(0.2px);
 }
@@ -1137,6 +1133,7 @@ section p {
 }
 
 @keyframes serviceTile {
+
     0%,
     12.5%,
     100% {
@@ -1345,6 +1342,7 @@ section p {
     min-height: calc(var(--portfolio-logo-base-height, 34px) * 1.18);
     opacity: 0.38;
     transition: opacity 0.25s ease, transform 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .portfolio-logo-list img {
@@ -1355,7 +1353,14 @@ section p {
     object-fit: contain;
 }
 
-.portfolio-logo-list li:hover {
+@media (hover: hover) and (pointer: fine) {
+    .portfolio-logo-list li:hover {
+        opacity: 0.8;
+        transform: translateY(-1px);
+    }
+}
+
+.portfolio-logo-list li:active {
     opacity: 0.8;
     transform: translateY(-1px);
 }
@@ -1370,7 +1375,7 @@ section p {
         right: auto;
         bottom: auto;
         left: auto;
-        margin-top: 2.25rem;
+        margin-top: auto;
         padding-bottom: 0.8rem;
     }
 
@@ -1407,7 +1412,7 @@ section p {
     }
 
     to {
-        transform: translateX(-50%);
+        transform: translateX(calc(-50% - (var(--portfolio-logo-gap) / 2)));
     }
 }
 
@@ -1921,6 +1926,7 @@ footer {
 }
 
 @media (max-width: 900px) {
+
     .carousel-control-previous,
     .carousel-control-next {
         width: 38px;
