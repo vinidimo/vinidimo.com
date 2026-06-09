@@ -20,10 +20,10 @@ const lightboxCaption = document.getElementById("projectCaption");
 const lightboxCloseButton = document.querySelector(".lightbox-close");
 const lightboxIndicators = document.querySelector(".lightbox-indicators");
 const bgImages = [...document.querySelectorAll(".bg-img")];
+const portfolioLogoTrack = document.querySelector(".portfolio-logo-track");
 const currentScales = new WeakMap();
 const visibleBackgrounds = new Set();
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const portfolioLogos = [...document.querySelectorAll(".portfolio-logo-list img")];
 
 let projects = [];
 let originalSlides = [];
@@ -61,6 +61,10 @@ const fadeObserver = new IntersectionObserver(entries => {
 }, { threshold: 0.2 });
 
 document.querySelectorAll(".fade-in").forEach(element => fadeObserver.observe(element));
+
+navLinks.forEach((link, index) => {
+    link.style.setProperty("--nav-item-index", String(index));
+});
 
 hamburger.addEventListener("click", () => {
     setMenuState(!nav.classList.contains("open"));
@@ -209,7 +213,42 @@ function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
 }
 
+function getPortfolioLogos() {
+    return [...document.querySelectorAll(".portfolio-logo-list img")];
+}
+
+function setupPortfolioMarquee() {
+    if (!portfolioLogoTrack) {
+        return;
+    }
+
+    const logoLists = portfolioLogoTrack.querySelectorAll(".portfolio-logo-list");
+    if (logoLists.length > 1) {
+        return;
+    }
+
+    const clone = logoLists[0].cloneNode(true);
+    clone.setAttribute("aria-hidden", "true");
+    clone.querySelectorAll("img").forEach(image => {
+        image.alt = "";
+    });
+
+    portfolioLogoTrack.append(clone);
+}
+
+function bindPortfolioLogoListeners() {
+    getPortfolioLogos().forEach(logo => {
+        if (logo.dataset.balanceBound === "true" || logo.complete) {
+            return;
+        }
+
+        logo.addEventListener("load", balancePortfolioLogos, { once: true });
+        logo.dataset.balanceBound = "true";
+    });
+}
+
 function balancePortfolioLogos() {
+    const portfolioLogos = getPortfolioLogos();
     if (!portfolioLogos.length) {
         return;
     }
@@ -254,14 +293,8 @@ heroSlides.forEach(slide => {
     slide.addEventListener("dragstart", event => event.preventDefault());
 });
 
-portfolioLogos.forEach(logo => {
-    if (logo.complete) {
-        return;
-    }
-
-    logo.addEventListener("load", balancePortfolioLogos, { once: true });
-});
-
+setupPortfolioMarquee();
+bindPortfolioLogoListeners();
 balancePortfolioLogos();
 
 if (heroSlides.length > 1) {
