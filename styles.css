@@ -1342,6 +1342,10 @@ section p {
 }
 
 @media (max-width: 768px) {
+    #portfolio {
+        padding-bottom: 10.5rem;
+    }
+
     .portfolio-logo-marquee {
         padding-bottom: 0.8rem;
     }
