@@ -20,6 +20,8 @@ const lightboxCaption = document.getElementById("projectCaption");
 const lightboxCloseButton = document.querySelector(".lightbox-close");
 const lightboxIndicators = document.querySelector(".lightbox-indicators");
 const bgImages = [...document.querySelectorAll(".bg-img")];
+const heroUnderlineWord = document.querySelector(".hero-underline-word");
+const heroUnderlinePath = document.querySelector(".hero-underline-stroke");
 const portfolioLogoTrack = document.querySelector(".portfolio-logo-track");
 const currentScales = new WeakMap();
 const visibleBackgrounds = new Set();
@@ -209,6 +211,28 @@ function startHeroAuto() {
     }
 }
 
+function updateHeroUnderlineTiming() {
+    if (!heroUnderlineWord || !heroUnderlinePath) {
+        return;
+    }
+
+    const svg = heroUnderlinePath.ownerSVGElement;
+    if (!svg?.viewBox?.baseVal?.width) {
+        return;
+    }
+
+    const pathLength = heroUnderlinePath.getTotalLength();
+    const renderedSvgWidth = svg.getBoundingClientRect().width;
+    const scale = renderedSvgWidth / svg.viewBox.baseVal.width;
+    const renderedPathLength = pathLength * scale;
+    const isMobileViewport = window.innerWidth <= 768;
+
+    // Keep a near-constant drawing speed in px/s across screen sizes.
+    const pixelsPerSecond = isMobileViewport ? 42 : 92;
+    const duration = clamp(renderedPathLength / pixelsPerSecond, isMobileViewport ? 3.4 : 1.9, isMobileViewport ? 5.6 : 3.4);
+    heroUnderlineWord.style.setProperty("--hero-underline-duration", `${duration.toFixed(2)}s`);
+}
+
 function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
 }
@@ -305,6 +329,7 @@ heroSlides.forEach(slide => {
 setupPortfolioMarquee();
 bindPortfolioLogoListeners();
 balancePortfolioLogos();
+updateHeroUnderlineTiming();
 
 if (heroSlides.length > 1) {
     enableSwipe(document.querySelector(".hero-slideshow"), () => {
@@ -619,7 +644,9 @@ nextButton.addEventListener("click", () => {
 
 window.addEventListener("resize", scheduleCarouselMeasure);
 window.addEventListener("load", scheduleCarouselMeasure);
+window.addEventListener("resize", updateHeroUnderlineTiming);
 window.addEventListener("load", balancePortfolioLogos);
+window.addEventListener("load", updateHeroUnderlineTiming);
 carousel.addEventListener("mouseenter", stopCarouselAuto);
 carousel.addEventListener("mouseleave", startCarouselAuto);
 enableSwipe(carousel, () => {
@@ -698,6 +725,7 @@ window.addEventListener("load", setActiveNavLink);
 if (document.fonts?.ready) {
     document.fonts.ready.then(() => {
         scheduleCarouselMeasure();
+        updateHeroUnderlineTiming();
     });
 }
 

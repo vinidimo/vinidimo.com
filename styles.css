@@ -575,7 +575,7 @@ section p {
     vector-effect: non-scaling-stroke;
     stroke-dasharray: 822;
     stroke-dashoffset: 822;
-    animation: heroUnderlineDraw 2.25s 1s cubic-bezier(.19, .82, .29, 1) forwards;
+    animation: heroUnderlineDraw var(--hero-underline-duration, 2.25s) 1s cubic-bezier(.19, .82, .29, 1) forwards;
 }
 
 #hero h1::after {
