@@ -211,6 +211,7 @@ nav a.active::after {
     background: transparent;
     border: 0;
     padding: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .hamburger svg {
@@ -307,28 +308,68 @@ Legacy span styles kept inactive for compatibility with previous markup.
 }
 
 @media(max-width:900px) {
+    header .container {
+        position: relative;
+    }
+
     nav {
-        position: fixed;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        background: #111;
+        position: absolute;
+        top: calc(100% + 1px);
+        left: 50%;
+        width: min(100vw, 100%);
+        background: rgba(10, 14, 22, 0.96);
         flex-direction: column;
         align-items: center;
         gap: 1.2rem;
         overflow: hidden;
         max-height: 0;
         opacity: 0;
-        transform: translateY(-8px);
+        transform: translateX(-50%) translateY(-12px) scale(0.985);
+        transform-origin: top center;
         padding: 0;
-        transition: max-height .4s ease, opacity .25s ease, transform .25s ease, padding .25s ease;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 18px 34px rgba(0, 0, 0, 0.22);
+        backdrop-filter: blur(10px);
+        transition: max-height .28s cubic-bezier(.22, 1, .36, 1), opacity .18s ease, transform .2s cubic-bezier(.22, 1, .36, 1), padding .2s ease;
+    }
+
+    nav a {
+        opacity: 0;
+        transform: translateY(-8px);
+        transition: opacity .16s ease, transform .2s cubic-bezier(.22, 1, .36, 1);
+        -webkit-tap-highlight-color: transparent;
     }
 
     nav.open {
         max-height: 260px;
         opacity: 1;
-        transform: translateY(0);
+        transform: translateX(-50%) translateY(0) scale(1);
         padding: 1rem 0 1.2rem;
+    }
+
+    nav.open a {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    nav.open a:nth-child(1) {
+        transition-delay: 0.015s;
+    }
+
+    nav.open a:nth-child(2) {
+        transition-delay: 0.03s;
+    }
+
+    nav.open a:nth-child(3) {
+        transition-delay: 0.045s;
+    }
+
+    nav.open a:nth-child(4) {
+        transition-delay: 0.06s;
+    }
+
+    nav.open a:nth-child(5) {
+        transition-delay: 0.075s;
     }
 
     .hamburger {
@@ -1343,10 +1384,15 @@ section p {
 
 @media (max-width: 768px) {
     #portfolio {
-        padding-bottom: 10.5rem;
+        padding-bottom: 4rem;
     }
 
     .portfolio-logo-marquee {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        left: auto;
+        margin-top: 2.25rem;
         padding-bottom: 0.8rem;
     }
 
