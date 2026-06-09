@@ -23,6 +23,7 @@ const bgImages = [...document.querySelectorAll(".bg-img")];
 const currentScales = new WeakMap();
 const visibleBackgrounds = new Set();
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const portfolioLogos = [...document.querySelectorAll(".portfolio-logo-list img")];
 
 let projects = [];
 let originalSlides = [];
@@ -204,10 +205,64 @@ function startHeroAuto() {
     }
 }
 
+function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+}
+
+function balancePortfolioLogos() {
+    if (!portfolioLogos.length) {
+        return;
+    }
+
+    const measuredLogos = portfolioLogos
+        .map(logo => {
+            const width = logo.naturalWidth || Number(logo.getAttribute("width")) || 0;
+            const height = logo.naturalHeight || Number(logo.getAttribute("height")) || 0;
+
+            if (!width || !height) {
+                return null;
+            }
+
+            return {
+                logo,
+                aspectRatio: width / height
+            };
+        })
+        .filter(Boolean);
+
+    if (!measuredLogos.length) {
+        return;
+    }
+
+    const sortedRatios = measuredLogos
+        .map(item => item.aspectRatio)
+        .sort((first, second) => first - second);
+    const medianIndex = Math.floor(sortedRatios.length / 2);
+    const medianAspectRatio = sortedRatios.length % 2 === 0
+        ? (sortedRatios[medianIndex - 1] + sortedRatios[medianIndex]) / 2
+        : sortedRatios[medianIndex];
+
+    measuredLogos.forEach(({ logo, aspectRatio }) => {
+        // Keep the perceived visual area closer between narrow and wide wordmarks.
+        const balanceFactor = clamp(Math.sqrt(medianAspectRatio / aspectRatio), 0.68, 1.32);
+        logo.style.setProperty("--logo-balance-factor", balanceFactor.toFixed(3));
+    });
+}
+
 heroSlides.forEach(slide => {
     slide.draggable = false;
     slide.addEventListener("dragstart", event => event.preventDefault());
 });
+
+portfolioLogos.forEach(logo => {
+    if (logo.complete) {
+        return;
+    }
+
+    logo.addEventListener("load", balancePortfolioLogos, { once: true });
+});
+
+balancePortfolioLogos();
 
 if (heroSlides.length > 1) {
     enableSwipe(document.querySelector(".hero-slideshow"), () => {
@@ -522,6 +577,7 @@ nextButton.addEventListener("click", () => {
 
 window.addEventListener("resize", scheduleCarouselMeasure);
 window.addEventListener("load", scheduleCarouselMeasure);
+window.addEventListener("load", balancePortfolioLogos);
 carousel.addEventListener("mouseenter", stopCarouselAuto);
 carousel.addEventListener("mouseleave", startCarouselAuto);
 enableSwipe(carousel, () => {

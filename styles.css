@@ -1267,7 +1267,120 @@ section p {
 
 /* Portfolio and contact */
 #portfolio {
+    position: relative;
     padding: 4rem 1rem;
+    overflow: hidden;
+}
+
+.portfolio-logo-marquee {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0 0 1.1rem;
+}
+
+.portfolio-logo-kicker {
+    width: min(100%, 1180px);
+    margin: 0 auto 0.9rem;
+    padding: 0 0.75rem;
+    color: rgba(15, 23, 42, 0.52);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.portfolio-logo-marquee-mask {
+    width: min(100%, 1180px);
+    margin: 0 auto;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent 0, black 96px, black calc(100% - 96px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0, black 96px, black calc(100% - 96px), transparent 100%);
+}
+
+.portfolio-logo-track {
+    --portfolio-logo-gap: 5.4rem;
+    display: flex;
+    align-items: center;
+    gap: var(--portfolio-logo-gap);
+    width: max-content;
+    animation: portfolioLogoScroll 42s linear infinite;
+}
+
+.portfolio-logo-list {
+    display: flex;
+    align-items: center;
+    gap: var(--portfolio-logo-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.portfolio-logo-list li {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(var(--portfolio-logo-base-height, 34px) * 1.18);
+    opacity: 0.42;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.portfolio-logo-list img {
+    display: block;
+    width: auto;
+    height: calc(var(--portfolio-logo-base-height, 34px) * var(--logo-balance-factor, 1));
+    max-width: none;
+    object-fit: contain;
+}
+
+.portfolio-logo-list li:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .portfolio-logo-marquee {
+        padding-bottom: 0.8rem;
+    }
+
+    .portfolio-logo-track {
+        --portfolio-logo-gap: 3.6rem;
+    }
+
+    .portfolio-logo-kicker {
+        width: calc(100% - 2rem);
+        margin-bottom: 0.7rem;
+        padding: 0;
+        font-size: 0.64rem;
+        letter-spacing: 0.14em;
+    }
+
+    .portfolio-logo-marquee-mask {
+        width: calc(100% - 2rem);
+        mask-image: linear-gradient(to right, transparent 0, black 40px, black calc(100% - 40px), transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent 0, black 40px, black calc(100% - 40px), transparent 100%);
+    }
+
+    .portfolio-logo-list li {
+        min-height: calc(var(--portfolio-logo-base-height-mobile, 24px) * 1.24);
+    }
+
+    .portfolio-logo-list img {
+        height: calc(var(--portfolio-logo-base-height-mobile, 24px) * var(--logo-balance-factor, 1));
+    }
+}
+
+@keyframes portfolioLogoScroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
 }
 
 #contato {
