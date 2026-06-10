@@ -31,15 +31,18 @@ let projects = [];
 let originalSlides = [];
 let observedSlide = null;
 let current = 0;
+let currentPosition = 0;
+let targetPosition = 0;
 let slideWidth = 0;
 let visibleSlides = 3;
 let autoPlayTimer;
 let carouselMeasureFrame = 0;
-let carouselNormalizeTimer = 0;
-let carouselAnimating = false;
+let carouselAnimationFrame = 0;
+let carouselLastFrameTime = 0;
 let currentProject = { images: [], index: 0 };
 let heroCurrent = 0;
 let heroTimer;
+const carouselStepDurationMs = 220;
 
 function setMenuState(isOpen) {
     nav.classList.toggle("open", isOpen);
@@ -398,36 +401,47 @@ function renderProjects(projectList) {
 function hydrateCarouselSlides() {
     viewport.querySelectorAll(".slide-clone").forEach(slide => slide.remove());
     originalSlides = [...viewport.querySelectorAll(".slide")];
-    current = 0;
+    current = originalSlides.length;
+    currentPosition = current;
+    targetPosition = current;
 
     if (!originalSlides.length) {
         stopCarouselAuto();
         return;
     }
 
+    const leadingClones = document.createDocumentFragment();
+    const trailingClones = document.createDocumentFragment();
+
     originalSlides.forEach(slide => {
         const clone = slide.cloneNode(true);
         clone.classList.add("slide-clone");
         clone.setAttribute("aria-hidden", "true");
-        viewport.append(clone);
+        trailingClones.append(clone);
     });
+
+    originalSlides.forEach(slide => {
+        const clone = slide.cloneNode(true);
+        clone.classList.add("slide-clone");
+        clone.setAttribute("aria-hidden", "true");
+        leadingClones.append(clone);
+    });
+
+    viewport.prepend(leadingClones);
+    viewport.append(trailingClones);
 
     setCarouselControlsDisabled(originalSlides.length <= 1);
 }
 
-function moveTo(index, animate = true) {
-    viewport.style.transition = animate ? "transform 0.6s ease" : "none";
-    viewport.style.transform = `translateX(${-index * slideWidth}px)`;
+function moveTo(position) {
+    viewport.style.transition = "none";
+    viewport.style.transform = `translateX(${-position * slideWidth}px)`;
 }
 
-function clearCarouselAnimationState() {
-    window.clearTimeout(carouselNormalizeTimer);
-    carouselNormalizeTimer = 0;
-    carouselAnimating = false;
-
-    if (originalSlides.length > 1) {
-        setCarouselControlsDisabled(false);
-    }
+function stopCarouselAnimation() {
+    window.cancelAnimationFrame(carouselAnimationFrame);
+    carouselAnimationFrame = 0;
+    carouselLastFrameTime = 0;
 }
 
 function calculateCarousel() {
@@ -448,8 +462,8 @@ function calculateCarousel() {
 
     carousel.style.setProperty("--carousel-slides-per-view", String(visibleSlides));
     slideWidth = originalSlides[0].getBoundingClientRect().width;
-    clearCarouselAnimationState();
-    moveTo(current, false);
+    stopCarouselAnimation();
+    moveTo(currentPosition);
 }
 
 function scheduleCarouselMeasure() {
@@ -463,24 +477,62 @@ function normalizeCarousel() {
         return;
     }
 
-    if (current >= max) {
-        current -= max;
-        moveTo(current, false);
+    while (currentPosition >= max * 2) {
+        currentPosition -= max;
+        targetPosition -= max;
     }
 
-    if (current < 0) {
-        current += max;
-        moveTo(current, false);
+    while (currentPosition < max) {
+        currentPosition += max;
+        targetPosition += max;
     }
+
+    current = Math.round(targetPosition);
+    moveTo(currentPosition);
 }
 
-function finishCarouselTransition() {
-    if (!carouselAnimating) {
+function animateCarousel(timestamp) {
+    if (!slideWidth || !originalSlides.length) {
+        stopCarouselAnimation();
         return;
     }
 
-    clearCarouselAnimationState();
+    if (!carouselLastFrameTime) {
+        carouselLastFrameTime = timestamp;
+    }
+
+    const delta = timestamp - carouselLastFrameTime;
+    carouselLastFrameTime = timestamp;
+
+    const maxStep = delta / carouselStepDurationMs;
+    const distance = targetPosition - currentPosition;
+
+    if (Math.abs(distance) <= maxStep) {
+        currentPosition = targetPosition;
+    } else {
+        currentPosition += Math.sign(distance) * maxStep;
+    }
+
     normalizeCarousel();
+    moveTo(currentPosition);
+
+    if (Math.abs(targetPosition - currentPosition) > 0.0001) {
+        carouselAnimationFrame = window.requestAnimationFrame(animateCarousel);
+        return;
+    }
+
+    currentPosition = targetPosition;
+    current = Math.round(targetPosition);
+    moveTo(currentPosition);
+    stopCarouselAnimation();
+}
+
+function ensureCarouselAnimation() {
+    if (carouselAnimationFrame) {
+        return;
+    }
+
+    carouselAnimationFrame = window.requestAnimationFrame(animateCarousel);
 }
 
 function stepCarousel(direction) {
@@ -488,15 +540,10 @@ function stepCarousel(direction) {
         return;
     }
 
-    if (carouselAnimating) {
-        return;
-    }
-
-    carouselAnimating = true;
-    setCarouselControlsDisabled(true);
-    current += direction;
-    moveTo(current, true);
-    carouselNormalizeTimer = window.setTimeout(finishCarouselTransition, 650);
+    targetPosition += direction;
+    current = Math.round(targetPosition);
+    normalizeCarousel();
+    ensureCarouselAnimation();
 }
 
 function nextCarousel() {
@@ -647,12 +694,6 @@ viewport.addEventListener("click", event => {
     }
 
     openLightbox(Number(slide.dataset.projectIndex));
-});
-
-viewport.addEventListener("transitionend", event => {
-    if (event.target === viewport && event.propertyName === "transform") {
-        finishCarouselTransition();
-    }
 });
 
 document.querySelector(".proj-next").addEventListener("click", event => {
