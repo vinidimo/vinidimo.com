@@ -1455,8 +1455,8 @@ section p {
     align-items: center;
     justify-content: center;
     min-height: calc(var(--portfolio-logo-base-height, 34px) * 1.18);
-    opacity: 0.38;
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    opacity: 0.5;
+    transition: opacity 0.25s ease;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
     user-select: none;
@@ -1468,6 +1468,8 @@ section p {
     height: calc(var(--portfolio-logo-base-height, 34px) * var(--logo-balance-factor, 1));
     max-width: none;
     object-fit: contain;
+    filter: grayscale(1) brightness(0.7) contrast(0.9);
+    transition: filter 0.25s ease, transform 0.25s ease;
     -webkit-user-drag: none;
     -webkit-touch-callout: none;
     user-select: none;
@@ -1476,14 +1478,22 @@ section p {
 
 @media (hover: hover) and (pointer: fine) {
     .portfolio-logo-list li:hover {
-        opacity: 0.8;
-        transform: translateY(-1px);
+        opacity: 0.85;
+    }
+
+    .portfolio-logo-list li:hover img {
+        filter: none;
+        transform: scale(1.04);
     }
 }
 
 .portfolio-logo-list li:active {
-    opacity: 0.8;
-    transform: translateY(-1px);
+    opacity: 0.85;
+}
+
+.portfolio-logo-list li:active img {
+    filter: none;
+    transform: scale(1.04);
 }
 
 @media (max-width: 768px) {

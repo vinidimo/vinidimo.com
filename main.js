@@ -37,7 +37,6 @@ let autoPlayTimer;
 let carouselMeasureFrame = 0;
 let carouselNormalizeTimer = 0;
 let carouselAnimating = false;
-let queuedCarouselDirection = 0;
 let currentProject = { images: [], index: 0 };
 let heroCurrent = 0;
 let heroTimer;
@@ -425,6 +424,10 @@ function clearCarouselAnimationState() {
     window.clearTimeout(carouselNormalizeTimer);
     carouselNormalizeTimer = 0;
     carouselAnimating = false;
+
+    if (originalSlides.length > 1) {
+        setCarouselControlsDisabled(false);
+    }
 }
 
 function calculateCarousel() {
@@ -471,21 +474,6 @@ function normalizeCarousel() {
     }
 }
 
-function flushQueuedCarouselMove() {
-    if (!queuedCarouselDirection) {
-        return;
-    }
-
-    const direction = queuedCarouselDirection;
-    queuedCarouselDirection = 0;
-
-    if (direction > 0) {
-        nextCarousel();
-    } else {
-        prevCarousel();
-    }
-}
-
 function finishCarouselTransition() {
     if (!carouselAnimating) {
         return;
@@ -493,11 +481,6 @@ function finishCarouselTransition() {
 
     clearCarouselAnimationState();
     normalizeCarousel();
-    flushQueuedCarouselMove();
-}
-
-function queueCarouselMove(direction) {
-    queuedCarouselDirection = direction;
 }
 
 function stepCarousel(direction) {
@@ -506,11 +489,11 @@ function stepCarousel(direction) {
     }
 
     if (carouselAnimating) {
-        queueCarouselMove(direction);
         return;
     }
 
     carouselAnimating = true;
+    setCarouselControlsDisabled(true);
     current += direction;
     moveTo(current, true);
     carouselNormalizeTimer = window.setTimeout(finishCarouselTransition, 650);
