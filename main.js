@@ -39,10 +39,14 @@ let autoPlayTimer;
 let carouselMeasureFrame = 0;
 let carouselAnimationFrame = 0;
 let carouselLastFrameTime = 0;
+let carouselCurrentSpeedBoost = 1;
 let currentProject = { images: [], index: 0 };
 let heroCurrent = 0;
 let heroTimer;
 const carouselStepDurationMs = 220;
+const carouselMaxSpeedBoost = 3.2;
+const carouselSpeedBoostPerSlide = 0.4;
+const carouselSpeedLerp = 0.14;
 
 function setMenuState(isOpen) {
     nav.classList.toggle("open", isOpen);
@@ -442,6 +446,7 @@ function stopCarouselAnimation() {
     window.cancelAnimationFrame(carouselAnimationFrame);
     carouselAnimationFrame = 0;
     carouselLastFrameTime = 0;
+    carouselCurrentSpeedBoost = 1;
 }
 
 function calculateCarousel() {
@@ -504,8 +509,14 @@ function animateCarousel(timestamp) {
     const delta = timestamp - carouselLastFrameTime;
     carouselLastFrameTime = timestamp;
 
-    const maxStep = delta / carouselStepDurationMs;
     const distance = targetPosition - currentPosition;
+    const pendingSlides = Math.max(0, Math.abs(distance) - 1);
+    const targetSpeedBoost = Math.min(
+        carouselMaxSpeedBoost,
+        1 + ((carouselMaxSpeedBoost - 1) * (1 - Math.exp(-pendingSlides * carouselSpeedBoostPerSlide)))
+    );
+    carouselCurrentSpeedBoost += (targetSpeedBoost - carouselCurrentSpeedBoost) * carouselSpeedLerp;
+    const maxStep = (delta / carouselStepDurationMs) * carouselCurrentSpeedBoost;
 
     if (Math.abs(distance) <= maxStep) {
         currentPosition = targetPosition;

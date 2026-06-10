@@ -2054,24 +2054,26 @@ footer {
 
     .carousel-control-previous,
     .carousel-control-next {
-        width: 38px;
-        height: 58px;
-        font-size: 1.8rem;
-        opacity: 1;
+        width: 30px;
+        height: 44px;
+        font-size: 1.35rem;
+        opacity: 0.68;
         visibility: visible;
         transform: none;
         pointer-events: auto;
-        color: rgba(255, 255, 255, 0.9);
-        background: rgba(9, 16, 28, 0.2);
-        border-radius: 16px;
+        color: rgba(255, 255, 255, 0.82);
+        background: rgba(9, 16, 28, 0.12);
+        border-color: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        box-shadow: 0 6px 16px rgba(6, 14, 24, 0.08);
     }
 
     .carousel-control-previous {
-        left: 10px;
+        left: 6px;
     }
 
     .carousel-control-next {
-        right: 10px;
+        right: 6px;
     }
 
     #projectLightbox {
