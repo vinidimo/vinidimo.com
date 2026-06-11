@@ -109,42 +109,29 @@ textarea {
 
 /* Header */
 header {
-    background: transparent;
+    background: rgba(0, 0, 0, 0.9);
     color: #fff;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 10;
-    transform: translateZ(0);
-    will-change: transform;
-    backface-visibility: hidden;
-    isolation: isolate;
+    border-bottom: none;
+    box-shadow: none;
     transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
 }
 
 header::before {
-    content: "";
-    position: absolute;
-    top: -1px;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.9);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
-    pointer-events: none;
-    z-index: 0;
-    transition: background 0.3s ease, box-shadow 0.3s ease;
+    content: none;
 }
 
 header.scrolled {
-    background: transparent;
+    background: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
 }
 
 header.scrolled::before {
-    background: rgba(0, 0, 0, 0.7);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    content: none;
 }
 
 header .container {

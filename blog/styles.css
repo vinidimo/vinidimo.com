@@ -75,6 +75,8 @@ body.blog-page {
 }
 
 .blog-header-inner {
+    position: relative;
+    z-index: 1;
     width: min(calc(100% - 2rem), 1400px);
     margin: 0 auto;
     min-height: 76px;
