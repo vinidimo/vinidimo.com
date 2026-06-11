@@ -10,6 +10,9 @@ on:
       - ".github/workflows/generate-blog.yml"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   generate-blog:
     if: github.actor != 'github-actions[bot]'
