@@ -98,10 +98,22 @@
     ]
   },
   {
+    "slug": "cielo-social-media",
+    "title": "Cielo Social Media",
+    "description": "Artes para rede social da Cielo",
+    "order": 9,
+    "cover": "assets/projects/cielo-social-media/01.webp",
+    "images": [
+      "assets/projects/cielo-social-media/01.webp",
+      "assets/projects/cielo-social-media/02.webp",
+      "assets/projects/cielo-social-media/03.webp"
+    ]
+  },
+  {
     "slug": "certificacao-pci",
     "title": "Certificação PCI",
     "description": "Social media para a Certificação PCI",
-    "order": 9,
+    "order": 10,
     "cover": "assets/projects/certificacao-pci/01.webp",
     "images": [
       "assets/projects/certificacao-pci/01.webp",
@@ -114,7 +126,7 @@
     "slug": "jiu-jitsu-lettering",
     "title": "Jiu Jitsu Lettering",
     "description": "Ilustração Lettering Jiu Jitsu para aplicação em materiais impressos",
-    "order": 10,
+    "order": 11,
     "cover": "assets/projects/jiu-jitsu-lettering/01.webp",
     "images": [
       "assets/projects/jiu-jitsu-lettering/01.webp",
@@ -126,7 +138,7 @@
     "slug": "ryu-dragon-vetorizacao",
     "title": "Ryu Dragon Vetorização",
     "description": "Vetorização de desenho antigo de Dragão Ryu",
-    "order": 11,
+    "order": 12,
     "cover": "assets/projects/ryu-dragon-vetorizacao/01.webp",
     "images": [
       "assets/projects/ryu-dragon-vetorizacao/01.webp",

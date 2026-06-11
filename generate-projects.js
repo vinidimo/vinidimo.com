@@ -37,7 +37,21 @@ function readProjectDirectory(projectDirName) {
     };
 }
 
-const projects = fs.readdirSync(projectsRoot, { withFileTypes: true })
+function normalizeProjectOrders(projects) {
+    let nextAvailableOrder = 1;
+
+    return projects.map(project => {
+        const requestedOrder = project.order;
+        const order = requestedOrder === Number.MAX_SAFE_INTEGER
+            ? nextAvailableOrder
+            : Math.max(requestedOrder, nextAvailableOrder);
+
+        nextAvailableOrder = order + 1;
+        return { ...project, order };
+    });
+}
+
+const projects = normalizeProjectOrders(fs.readdirSync(projectsRoot, { withFileTypes: true })
     .filter(entry => entry.isDirectory())
     .map(entry => readProjectDirectory(entry.name))
     .sort((a, b) => {
@@ -46,7 +60,7 @@ const projects = fs.readdirSync(projectsRoot, { withFileTypes: true })
         }
 
         return a.title.localeCompare(b.title, "pt-BR");
-    });
+    }));
 
 fs.writeFileSync(outputPath, `${JSON.stringify(projects, null, 2)}\n`, "utf8");
 console.log(`Updated ${path.relative(__dirname, outputPath)}`);

@@ -18,6 +18,7 @@ const lightboxImage = document.getElementById("projectImg");
 const lightboxTitle = document.getElementById("projectTitle");
 const lightboxCaption = document.getElementById("projectCaption");
 const lightboxCloseButton = document.querySelector(".lightbox-close");
+const lightboxDialog = document.querySelector("#projectLightbox .lightbox-dialog");
 const lightboxGalleryGrid = document.querySelector(".lightbox-gallery-grid");
 const lightboxZoomOverlay = document.querySelector(".lightbox-zoom-overlay");
 const lightboxZoomStage = document.querySelector(".lightbox-zoom-stage");
@@ -45,6 +46,8 @@ let carouselCurrentSpeedBoost = 1;
 let currentProject = { images: [], index: 0 };
 let heroCurrent = 0;
 let heroTimer;
+const preloadedProjectImages = new Set();
+const decodedProjectImages = new Map();
 const carouselStepDurationMs = 220;
 const carouselMaxSpeedBoost = 3.2;
 const carouselSpeedBoostPerSlide = 0.4;
@@ -615,6 +618,7 @@ function openLightbox(projectIndex) {
     lightboxCaption.textContent = project.description;
     closeProjectImageZoom();
     lightbox.hidden = false;
+    lightboxDialog.scrollTop = 0;
     document.body.style.overflow = "hidden";
 }
 
@@ -630,8 +634,7 @@ function openProjectImageZoom(index) {
     }
 
     currentProject.index = (index + currentProject.images.length) % currentProject.images.length;
-    lightboxImage.src = currentProject.images[currentProject.index];
-    lightboxImage.alt = `${currentProject.title} - imagem ${currentProject.index + 1}`;
+    prepareProjectImageZoom(currentProject.index);
     syncLightboxGallery();
     lightboxZoomOverlay.hidden = false;
 }
@@ -644,6 +647,7 @@ function renderLightboxGallery() {
     lightboxGalleryGrid.innerHTML = "";
     lightboxGalleryGrid.className = "lightbox-gallery-grid";
     lightboxGalleryGrid.classList.add(`gallery-count-${currentProject.images.length}`);
+    preloadProjectImages(currentProject.images);
 
     currentProject.images.forEach((imagePath, index) => {
         const thumb = document.createElement("button");
@@ -654,12 +658,46 @@ function renderLightboxGallery() {
         thumb.setAttribute("aria-label", `Abrir imagem ${index + 1} do projeto`);
         thumbImage.src = imagePath;
         thumbImage.alt = `${currentProject.title} - miniatura ${index + 1}`;
+        thumbImage.decoding = "async";
+        thumbImage.loading = "eager";
         thumb.append(thumbImage);
         thumb.addEventListener("click", event => {
             event.stopPropagation();
             openProjectImageZoom(index);
         });
+        thumb.addEventListener("pointerenter", () => prepareProjectImageZoom(index));
+        thumb.addEventListener("focus", () => prepareProjectImageZoom(index));
+        thumb.addEventListener("touchstart", () => prepareProjectImageZoom(index), { passive: true });
         lightboxGalleryGrid.append(thumb);
+    });
+}
+
+function prepareProjectImageZoom(index) {
+    const imagePath = currentProject.images[index];
+    if (!imagePath) {
+        return;
+    }
+
+    lightboxImage.alt = `${currentProject.title} - imagem ${index + 1}`;
+    if (lightboxImage.src !== new URL(imagePath, window.location.href).href) {
+        lightboxImage.src = imagePath;
+    }
+}
+
+function preloadProjectImages(imagePaths) {
+    imagePaths.forEach(imagePath => {
+        if (preloadedProjectImages.has(imagePath)) {
+            return;
+        }
+
+        preloadedProjectImages.add(imagePath);
+        const image = new Image();
+        image.decoding = "async";
+        image.src = imagePath;
+        decodedProjectImages.set(imagePath, {
+            image,
+            ready: image.decode ? image.decode().catch(() => undefined) : Promise.resolve()
+        });
     });
 }
 
