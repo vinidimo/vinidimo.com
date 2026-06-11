@@ -50,10 +50,22 @@
     ]
   },
   {
+    "slug": "ford-social-media",
+    "title": "Bradesco Seguros Social Media",
+    "description": "Social media para Bradesco Seguros",
+    "order": 5,
+    "cover": "assets/projects/ford-social-media/01.webp",
+    "images": [
+      "assets/projects/ford-social-media/01.webp",
+      "assets/projects/ford-social-media/02.webp",
+      "assets/projects/ford-social-media/03.webp"
+    ]
+  },
+  {
     "slug": "lous-tavern",
     "title": "Lou's Tavern",
     "description": "Logo criado com base na 'Lou's Tavern' do filme Clube da Luta",
-    "order": 5,
+    "order": 6,
     "cover": "assets/projects/lous-tavern/01.webp",
     "images": [
       "assets/projects/lous-tavern/01.webp",
@@ -65,7 +77,7 @@
     "slug": "lavazul-logo",
     "title": "Lavazul Logo",
     "description": "Identidade visual criada para Lavazul",
-    "order": 6,
+    "order": 7,
     "cover": "assets/projects/lavazul-logo/01.webp",
     "images": [
       "assets/projects/lavazul-logo/01.webp",
@@ -76,7 +88,7 @@
     "slug": "dimo-street-lettering",
     "title": "Dimo Street Lettering",
     "description": "Marca Street Lettering para aplicação em camisetas, bonés e adesivos.",
-    "order": 7,
+    "order": 8,
     "cover": "assets/projects/dimo-street-lettering/01.webp",
     "images": [
       "assets/projects/dimo-street-lettering/01.webp",
@@ -89,24 +101,12 @@
     "slug": "aclimacao-boxing-club",
     "title": "Aclimação Boxing Club",
     "description": "Logotipo para clube de boxe",
-    "order": 8,
+    "order": 9,
     "cover": "assets/projects/aclimacao-boxing-club/01.webp",
     "images": [
       "assets/projects/aclimacao-boxing-club/01.webp",
       "assets/projects/aclimacao-boxing-club/02.webp",
       "assets/projects/aclimacao-boxing-club/03.webp"
-    ]
-  },
-  {
-    "slug": "cielo-social-media",
-    "title": "Cielo Social Media",
-    "description": "Artes para rede social da Cielo",
-    "order": 9,
-    "cover": "assets/projects/cielo-social-media/01.webp",
-    "images": [
-      "assets/projects/cielo-social-media/01.webp",
-      "assets/projects/cielo-social-media/02.webp",
-      "assets/projects/cielo-social-media/03.webp"
     ]
   },
   {
@@ -156,6 +156,18 @@
     "images": [
       "assets/projects/ryu-dragon-vetorizacao/01.webp",
       "assets/projects/ryu-dragon-vetorizacao/02.webp"
+    ]
+  },
+  {
+    "slug": "cielo-social-media",
+    "title": "Cielo Social Media",
+    "description": "Artes para rede social da Cielo",
+    "order": 14,
+    "cover": "assets/projects/cielo-social-media/01.webp",
+    "images": [
+      "assets/projects/cielo-social-media/01.webp",
+      "assets/projects/cielo-social-media/02.webp",
+      "assets/projects/cielo-social-media/03.webp"
     ]
   }
 ]
