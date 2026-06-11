@@ -18,7 +18,9 @@ const lightboxImage = document.getElementById("projectImg");
 const lightboxTitle = document.getElementById("projectTitle");
 const lightboxCaption = document.getElementById("projectCaption");
 const lightboxCloseButton = document.querySelector(".lightbox-close");
-const lightboxIndicators = document.querySelector(".lightbox-indicators");
+const lightboxGalleryGrid = document.querySelector(".lightbox-gallery-grid");
+const lightboxZoomOverlay = document.querySelector(".lightbox-zoom-overlay");
+const lightboxZoomStage = document.querySelector(".lightbox-zoom-stage");
 const bgImages = [...document.querySelectorAll(".bg-img")];
 const heroUnderlineWord = document.querySelector(".hero-underline-word");
 const heroUnderlinePath = document.querySelector(".hero-underline-stroke");
@@ -608,53 +610,63 @@ function openLightbox(projectIndex) {
         title: project.title,
         description: project.description
     };
-    renderLightboxIndicators();
+    renderLightboxGallery();
     lightboxTitle.textContent = project.title;
     lightboxCaption.textContent = project.description;
-    lightboxImage.src = project.images[0];
-    lightboxImage.alt = project.title;
+    closeProjectImageZoom();
     lightbox.hidden = false;
     document.body.style.overflow = "hidden";
 }
 
 function closeLightbox() {
+    closeProjectImageZoom();
     lightbox.hidden = true;
     document.body.style.overflow = "";
 }
 
-function showProjectImage(index) {
+function openProjectImageZoom(index) {
     if (!currentProject.images.length) {
         return;
     }
 
     currentProject.index = (index + currentProject.images.length) % currentProject.images.length;
     lightboxImage.src = currentProject.images[currentProject.index];
-    lightboxImage.alt = currentProject.title;
-    lightboxTitle.textContent = currentProject.title;
-    lightboxCaption.textContent = currentProject.description;
-    syncLightboxIndicators();
+    lightboxImage.alt = `${currentProject.title} - imagem ${currentProject.index + 1}`;
+    syncLightboxGallery();
+    lightboxZoomOverlay.hidden = false;
 }
 
-function renderLightboxIndicators() {
-    lightboxIndicators.innerHTML = "";
+function closeProjectImageZoom() {
+    lightboxZoomOverlay.hidden = true;
+}
 
-    currentProject.images.forEach((_, index) => {
-        const indicator = document.createElement("button");
-        indicator.type = "button";
-        indicator.setAttribute("aria-label", `Slide ${index + 1}`);
-        indicator.className = index === currentProject.index ? "active" : "";
-        indicator.addEventListener("click", event => {
+function renderLightboxGallery() {
+    lightboxGalleryGrid.innerHTML = "";
+    lightboxGalleryGrid.className = "lightbox-gallery-grid";
+    lightboxGalleryGrid.classList.add(`gallery-count-${currentProject.images.length}`);
+
+    currentProject.images.forEach((imagePath, index) => {
+        const thumb = document.createElement("button");
+        const thumbImage = document.createElement("img");
+
+        thumb.type = "button";
+        thumb.className = `lightbox-gallery-thumb gallery-item-${index + 1}`;
+        thumb.setAttribute("aria-label", `Abrir imagem ${index + 1} do projeto`);
+        thumbImage.src = imagePath;
+        thumbImage.alt = `${currentProject.title} - miniatura ${index + 1}`;
+        thumb.append(thumbImage);
+        thumb.addEventListener("click", event => {
             event.stopPropagation();
-            showProjectImage(index);
+            openProjectImageZoom(index);
         });
-        lightboxIndicators.append(indicator);
+        lightboxGalleryGrid.append(thumb);
     });
 }
 
-function syncLightboxIndicators() {
-    [...lightboxIndicators.children].forEach((indicator, index) => {
-        indicator.classList.toggle("active", index === currentProject.index);
-        indicator.toggleAttribute("aria-current", index === currentProject.index);
+function syncLightboxGallery() {
+    [...lightboxGalleryGrid.children].forEach((thumb, index) => {
+        thumb.classList.toggle("active", index === currentProject.index);
+        thumb.toggleAttribute("aria-current", index === currentProject.index);
     });
 }
 
@@ -707,31 +719,34 @@ viewport.addEventListener("click", event => {
     openLightbox(Number(slide.dataset.projectIndex));
 });
 
-document.querySelector(".proj-next").addEventListener("click", event => {
-    event.stopPropagation();
-    showProjectImage(currentProject.index + 1);
-});
-
-document.querySelector(".proj-prev").addEventListener("click", event => {
-    event.stopPropagation();
-    showProjectImage(currentProject.index - 1);
-});
-
 lightboxCloseButton.addEventListener("click", event => {
     event.stopPropagation();
     closeLightbox();
 });
 
 lightbox.addEventListener("click", event => {
+    if (!lightboxZoomOverlay.hidden) {
+        closeProjectImageZoom();
+        return;
+    }
+
     if (event.target === lightbox) {
         closeLightbox();
     }
 });
 
-document.querySelectorAll("#projectLightbox .lightbox-dialog, #projectLightbox img, #projectLightbox .lightbox-caption, #projectLightbox .lightbox-indicators, #projectLightbox .proj-control, #projectLightbox .lightbox-close")
+document.querySelectorAll("#projectLightbox .lightbox-dialog, #projectLightbox img, #projectLightbox .lightbox-caption, #projectLightbox .lightbox-gallery-grid, #projectLightbox .lightbox-close")
     .forEach(element => {
         element.addEventListener("click", event => event.stopPropagation());
     });
+
+lightboxZoomOverlay.addEventListener("click", () => {
+    closeProjectImageZoom();
+});
+
+lightboxZoomStage.addEventListener("click", event => {
+    event.stopPropagation();
+});
 
 document.addEventListener("keydown", event => {
     if (lightbox.hidden) {
@@ -739,19 +754,28 @@ document.addEventListener("keydown", event => {
     }
 
     if (event.key === "Escape") {
+        if (!lightboxZoomOverlay.hidden) {
+            closeProjectImageZoom();
+            return;
+        }
+
         closeLightbox();
     }
 
+    if (lightboxZoomOverlay.hidden) {
+        return;
+    }
+
     if (event.key === "ArrowRight") {
-        showProjectImage(currentProject.index + 1);
+        openProjectImageZoom(currentProject.index + 1);
     }
 
     if (event.key === "ArrowLeft") {
-        showProjectImage(currentProject.index - 1);
+        openProjectImageZoom(currentProject.index - 1);
     }
 });
 
-enableSwipe(lightbox, () => showProjectImage(currentProject.index + 1), () => showProjectImage(currentProject.index - 1));
+enableSwipe(lightboxZoomOverlay, () => openProjectImageZoom(currentProject.index + 1), () => openProjectImageZoom(currentProject.index - 1));
 
 window.addEventListener("scroll", onScrollHeader, { passive: true });
 window.addEventListener("scroll", setActiveNavLink, { passive: true });

@@ -372,20 +372,20 @@
             <button type="button" class="lightbox-close" aria-label="Fechar lightbox">&times;</button>
             <div class="lightbox-content">
                 <div class="lightbox-media">
-                    <div class="lightbox-indicators" aria-label="Navegação de imagens"></div>
-                    <div class="lightbox-image-stage">
-                        <img id="projectImg" src="" alt="">
-                    </div>
+                    <div class="lightbox-gallery-grid" aria-label="Galeria de imagens do projeto"></div>
                     <div class="lightbox-caption">
                         <h2 id="projectTitle"></h2>
                         <p id="projectCaption"></p>
                     </div>
                 </div>
             </div>
+            <div class="lightbox-zoom-overlay" hidden>
+                <div class="lightbox-zoom-stage">
+                    <img id="projectImg" src="" alt="">
+                </div>
+            </div>
         </div>
 
-        <button type="button" class="proj-control proj-prev" aria-label="Imagem anterior">&lsaquo;</button>
-        <button type="button" class="proj-control proj-next" aria-label="Próxima imagem">&rsaquo;</button>
     </div>
     <script src="main.js"></script>
 </body>
