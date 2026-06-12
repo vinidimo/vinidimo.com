@@ -3,10 +3,20 @@ const path = require("path");
 
 const projectsRoot = path.join(__dirname, "assets", "projects");
 const outputPath = path.join(projectsRoot, "projects.json");
+const indexPath = path.join(__dirname, "index.html");
 const imageExtensions = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"]);
 
 function toWebPath(...parts) {
     return parts.join("/").replace(/\\/g, "/");
+}
+
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
 }
 
 function readProjectDirectory(projectDirName) {
@@ -51,6 +61,22 @@ function normalizeProjectOrders(projects) {
     });
 }
 
+function buildProjectSlides(projects) {
+    return projects.map((project, index) => `                    <div class="slide" data-project-index="${index}">
+                        <img src="${escapeHtml(project.cover)}" alt="${escapeHtml(project.title)}" loading="lazy" decoding="async" width="900" height="670">
+                        <div class="slide-hover">
+                            <span class="slide-hover-eyebrow">Ver projeto</span>
+                            <span class="slide-hover-title">${escapeHtml(project.title)}</span>
+                        </div>
+                    </div>`).join("\n");
+}
+
+function buildProjectsScript(projects) {
+    return `    <script id="portfolio-projects-data" type="application/json">
+${JSON.stringify(projects, null, 2)}
+    </script>`;
+}
+
 const projects = normalizeProjectOrders(fs.readdirSync(projectsRoot, { withFileTypes: true })
     .filter(entry => entry.isDirectory())
     .map(entry => readProjectDirectory(entry.name))
@@ -63,4 +89,17 @@ const projects = normalizeProjectOrders(fs.readdirSync(projectsRoot, { withFileT
     }));
 
 fs.writeFileSync(outputPath, `${JSON.stringify(projects, null, 2)}\n`, "utf8");
+
+const indexHtml = fs.readFileSync(indexPath, "utf8");
+const updatedIndexWithSlides = indexHtml.replace(
+    /(\s*<!-- portfolio-slides:start -->)[\s\S]*?(<!-- portfolio-slides:end -->)/,
+    `$1\n${buildProjectSlides(projects)}\n                    $2`
+);
+const updatedIndex = updatedIndexWithSlides.replace(
+    /[ \t]*<script id="portfolio-projects-data" type="application\/json">[\s\S]*?<\/script>/,
+    buildProjectsScript(projects)
+);
+
+fs.writeFileSync(indexPath, updatedIndex, "utf8");
 console.log(`Updated ${path.relative(__dirname, outputPath)}`);
+console.log(`Updated ${path.relative(__dirname, indexPath)}`);

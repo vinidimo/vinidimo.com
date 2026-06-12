@@ -26,18 +26,18 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Generate projects.json
+      - name: Generate project artifacts
         run: node generate-projects.js
 
-      - name: Commit updated manifest
+      - name: Commit updated portfolio files
         run: |
-          if git diff --quiet -- assets/projects/projects.json; then
-            echo "No manifest changes detected."
+          if git diff --quiet -- assets/projects/projects.json index.html; then
+            echo "No portfolio changes detected."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/projects/projects.json
-          git commit -m "chore: update projects manifest"
+          git add assets/projects/projects.json index.html
+          git commit -m "chore: update portfolio artifacts"
           git push

@@ -361,54 +361,6 @@ function setCarouselControlsDisabled(disabled) {
     nextButton.disabled = disabled;
 }
 
-function createProjectSlide(project, projectIndex) {
-    const slide = document.createElement("div");
-    slide.className = "slide";
-    slide.dataset.projectIndex = String(projectIndex);
-
-    const image = document.createElement("img");
-    image.src = project.cover;
-    image.alt = project.title;
-    image.loading = "lazy";
-    image.decoding = "async";
-    image.width = 900;
-    image.height = 670;
-
-    const overlay = document.createElement("div");
-    overlay.className = "slide-hover";
-
-    const eyebrow = document.createElement("span");
-    eyebrow.className = "slide-hover-eyebrow";
-    eyebrow.textContent = "Ver projeto";
-
-    const label = document.createElement("span");
-    label.className = "slide-hover-title";
-    label.textContent = project.title;
-
-    overlay.append(eyebrow, label);
-    slide.append(image, overlay);
-    return slide;
-}
-
-function renderProjects(projectList) {
-    viewport.innerHTML = "";
-
-    if (!projectList.length) {
-        const status = document.createElement("p");
-        status.className = "carousel-status";
-        status.textContent = "Nenhum projeto disponível no momento.";
-        viewport.append(status);
-        setCarouselControlsDisabled(true);
-        return;
-    }
-
-    const fragment = document.createDocumentFragment();
-    projectList.forEach((project, index) => {
-        fragment.append(createProjectSlide(project, index));
-    });
-    viewport.append(fragment);
-}
-
 function hydrateCarouselSlides() {
     viewport.querySelectorAll(".slide-clone").forEach(slide => slide.remove());
     originalSlides = [...viewport.querySelectorAll(".slide")];
@@ -727,15 +679,20 @@ function syncLightboxGallery() {
     });
 }
 
-// Project loading
-async function loadProjects() {
-    const response = await fetch("assets/projects/projects.json");
-    if (!response.ok) {
-        throw new Error(`Failed to load projects.json: ${response.status}`);
+function loadProjectsFromDocument() {
+    const projectsScript = document.getElementById("portfolio-projects-data");
+    if (!projectsScript) {
+        throw new Error("Missing portfolio projects script");
     }
 
-    projects = await response.json();
-    renderProjects(projects);
+    projects = JSON.parse(projectsScript.textContent || "[]");
+
+    if (!projects.length) {
+        viewport.innerHTML = '<p class="carousel-status">Nenhum projeto disponivel no momento.</p>';
+        setCarouselControlsDisabled(true);
+        return;
+    }
+
     hydrateCarouselSlides();
     observeCarouselSlides();
     scheduleCarouselMeasure();
@@ -861,11 +818,14 @@ if (document.fonts?.ready) {
     });
 }
 
-loadProjects().catch(error => {
+try {
+    loadProjectsFromDocument();
+} catch (error) {
     console.error(error);
-    viewport.innerHTML = '<p class="carousel-status">Não foi possível carregar os projetos agora.</p>';
+    viewport.innerHTML = '<p class="carousel-status">Nao foi possivel carregar os projetos agora.</p>';
     setCarouselControlsDisabled(true);
-});
+}
 
 onScrollHeader();
 setActiveNavLink();
+
