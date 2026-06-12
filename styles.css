@@ -109,7 +109,7 @@ textarea {
 
 /* Header */
 header {
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.96);
     color: #fff;
     position: fixed;
     top: 0;
@@ -126,7 +126,7 @@ header::before {
 }
 
 header.scrolled {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.9);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
 }
 
@@ -1436,11 +1436,10 @@ section p {
     align-items: center;
     justify-content: center;
     min-height: calc(var(--portfolio-logo-base-height, 34px) * 1.18);
-    opacity: 0.5;
-    transition: opacity 0.25s ease;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
     user-select: none;
+    pointer-events: none;
 }
 
 .portfolio-logo-list img {
@@ -1449,30 +1448,25 @@ section p {
     height: calc(var(--portfolio-logo-base-height, 34px) * var(--logo-balance-factor, 1));
     max-width: none;
     object-fit: contain;
+    opacity: 0.5;
     filter: grayscale(1) brightness(0.7) contrast(0.9);
-    transition: filter 0.25s ease, transform 0.25s ease;
+    transition: opacity 0.25s ease, filter 0.25s ease, transform 0.25s ease;
     -webkit-user-drag: none;
     -webkit-touch-callout: none;
     user-select: none;
-    pointer-events: none;
+    pointer-events: auto;
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .portfolio-logo-list li:hover {
+    .portfolio-logo-list img:hover {
         opacity: 0.85;
-    }
-
-    .portfolio-logo-list li:hover img {
         filter: none;
         transform: scale(1.04);
     }
 }
 
-.portfolio-logo-list li:active {
+.portfolio-logo-list img:active {
     opacity: 0.85;
-}
-
-.portfolio-logo-list li:active img {
     filter: none;
     transform: scale(1.04);
 }
@@ -1885,10 +1879,10 @@ footer {
     height: 100%;
     display: grid;
     grid-template-rows: 1fr;
-    align-items: center;
+    align-items: start;
     justify-items: center;
     gap: 1rem;
-    padding: 1.5rem 1.5rem 2.5rem;
+    padding: 6.4rem 1.5rem 2.5rem;
     background: transparent;
 }
 
@@ -1904,8 +1898,8 @@ footer {
 }
 
 #projectLightbox .lightbox-gallery-grid {
-    width: min(86%, 1160px);
-    height: 100%;
+    width: min(68%, 900px);
+    height: 66%;
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     grid-auto-flow: dense;
@@ -2125,7 +2119,7 @@ footer {
 
 @media (min-width: 1400px) {
     #projectLightbox .lightbox-gallery-grid {
-        width: min(88%, 1240px);
+        width: min(70%, 980px);
     }
 }
 

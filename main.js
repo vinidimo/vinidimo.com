@@ -43,6 +43,7 @@ let carouselMeasureFrame = 0;
 let carouselAnimationFrame = 0;
 let carouselLastFrameTime = 0;
 let carouselCurrentSpeedBoost = 1;
+let carouselPointerInside = false;
 let currentProject = { images: [], index: 0 };
 let heroCurrent = 0;
 let heroTimer;
@@ -52,6 +53,7 @@ const carouselStepDurationMs = 220;
 const carouselMaxSpeedBoost = 3.2;
 const carouselSpeedBoostPerSlide = 0.4;
 const carouselSpeedLerp = 0.14;
+const carouselMaxFrameDeltaMs = 64;
 
 function setMenuState(isOpen) {
     nav.classList.toggle("open", isOpen);
@@ -502,7 +504,7 @@ function normalizeCarousel() {
 }
 
 function animateCarousel(timestamp) {
-    if (!slideWidth || !originalSlides.length) {
+    if (document.hidden || !slideWidth || !originalSlides.length) {
         stopCarouselAnimation();
         return;
     }
@@ -511,7 +513,7 @@ function animateCarousel(timestamp) {
         carouselLastFrameTime = timestamp;
     }
 
-    const delta = timestamp - carouselLastFrameTime;
+    const delta = Math.min(timestamp - carouselLastFrameTime, carouselMaxFrameDeltaMs);
     carouselLastFrameTime = timestamp;
 
     const distance = targetPosition - currentPosition;
@@ -572,8 +574,13 @@ function prevCarousel() {
 
 function startCarouselAuto() {
     window.clearTimeout(autoPlayTimer);
-    if (!reducedMotion && originalSlides.length > 1) {
+    if (!reducedMotion && !document.hidden && !carouselPointerInside && originalSlides.length > 1) {
         autoPlayTimer = window.setTimeout(() => {
+            if (document.hidden || carouselPointerInside) {
+                startCarouselAuto();
+                return;
+            }
+
             nextCarousel();
             startCarouselAuto();
         }, 4000);
@@ -582,6 +589,18 @@ function startCarouselAuto() {
 
 function stopCarouselAuto() {
     window.clearTimeout(autoPlayTimer);
+}
+
+function pauseCarouselForInactivePage() {
+    stopCarouselAuto();
+    stopCarouselAnimation();
+    targetPosition = currentPosition;
+    current = Math.round(currentPosition);
+}
+
+function resumeCarouselForActivePage() {
+    carouselLastFrameTime = 0;
+    startCarouselAuto();
 }
 
 const carouselResizeObserver = new ResizeObserver(() => {
@@ -738,8 +757,24 @@ window.addEventListener("load", scheduleCarouselMeasure);
 window.addEventListener("resize", updateHeroUnderlineTiming);
 window.addEventListener("load", balancePortfolioLogos);
 window.addEventListener("load", updateHeroUnderlineTiming);
-carousel.addEventListener("mouseenter", stopCarouselAuto);
-carousel.addEventListener("mouseleave", startCarouselAuto);
+carousel.addEventListener("mouseenter", () => {
+    carouselPointerInside = true;
+    stopCarouselAuto();
+});
+carousel.addEventListener("mouseleave", () => {
+    carouselPointerInside = false;
+    startCarouselAuto();
+});
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+        pauseCarouselForInactivePage();
+        return;
+    }
+
+    resumeCarouselForActivePage();
+});
+window.addEventListener("blur", pauseCarouselForInactivePage);
+window.addEventListener("focus", resumeCarouselForActivePage);
 enableSwipe(carousel, () => {
     nextCarousel();
     startCarouselAuto();
