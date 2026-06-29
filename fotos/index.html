@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Galerias de eventos com previews protegidos por marca d'agua e selecao por codigo para compra de fotos.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="vinidimo fotos">
+    <meta property="og:title" content="vinidimo fotos | Galerias de eventos">
+    <meta property="og:description" content="Selecione as fotos do seu evento por codigo e envie seu pedido direto pelo WhatsApp.">
+    <meta property="og:image" content="https://vinidimo.com/fotos/assets/site/logo-black.svg">
+    <title>vinidimo fotos | Galerias de eventos</title>
+    <link rel="canonical" href="https://vinidimo.com/fotos/">
+    <link rel="icon" type="image/svg+xml" href="./assets/site/logo-black.svg" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/svg+xml" href="./assets/site/logo-white.svg" media="(prefers-color-scheme: dark)">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="photo-shell">
+        <header class="photo-header">
+            <div class="photo-header-inner">
+                <a class="photo-brand" href="./">
+                    <img src="./assets/site/logo-white.svg" alt="vinidimo">
+                    <span>vinidimo</span>
+                </a>
+            </div>
+        </header>
+
+        <main class="photo-main">
+            <section class="events-filter-bar" aria-label="Filtrar eventos">
+                <div class="events-filter-group">
+                    <div class="events-search">
+                        <label class="events-filter-label" for="event-search-input">Buscar evento</label>
+                        <input class="events-search-input" id="event-search-input" type="search" placeholder="Digite nome, categoria ou data" autocomplete="off" data-event-search-input>
+                    </div>
+                </div>
+            </section>
+
+            <section class="event-grid event-grid--catalog" aria-label="Galerias de eventos" data-events-grid>
+            <div class="event-empty">
+                <h2>Nenhum evento publicado ainda</h2>
+                <p>Quando voce adicionar eventos em <code>assets/photo-events</code> e rodar o gerador, eles aparecerao aqui.</p>
+            </div>
+            </section>
+        </main>
+
+        <footer class="photo-footer">
+            <div class="photo-footer-inner">
+                <p>Copyright &copy; <span data-current-year></span> vinidimo</p>
+            </div>
+        </footer>
+    </div>
+    <script src="./main.js"></script>
+</body>
+</html>
