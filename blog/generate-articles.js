@@ -6,9 +6,9 @@ const repoRoot = path.resolve(blogRoot, "..");
 const outputPath = path.join(blogRoot, "articles.json");
 const blogIndexPath = path.join(blogRoot, "index.html");
 const sitemapPath = path.join(repoRoot, "sitemap.xml");
+const homeIndexPath = path.join(repoRoot, "index.html");
 const imageExtensions = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"]);
 const siteUrl = "https://vinidimo.com";
-const defaultLastmod = "2026-06-08";
 
 function toWebPath(...parts) {
     return parts.join("/").replace(/\\/g, "/");
@@ -21,6 +21,28 @@ function escapeHtml(value) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#39;");
+}
+
+function formatDateInput(value) {
+    if (!value) {
+        return null;
+    }
+
+    const parsed = new Date(value);
+    if (Number.isNaN(parsed.getTime())) {
+        return null;
+    }
+
+    return parsed.toISOString().slice(0, 10);
+}
+
+function formatFileLastmod(filePath) {
+    return fs.statSync(filePath).mtime.toISOString().slice(0, 10);
+}
+
+function getLatestDate(values, fallback) {
+    const normalized = values.filter(Boolean).sort();
+    return normalized[normalized.length - 1] || fallback;
 }
 
 function readArticleDirectory(dirName) {
@@ -91,16 +113,24 @@ function buildCard(article) {
 }
 
 function buildSitemap(articles) {
+    const homeLastmod = formatFileLastmod(homeIndexPath);
+    const articleDates = articles
+        .map(article => formatDateInput(article.datePublished))
+        .filter(Boolean);
+    const blogLastmod = getLatestDate(
+        [...articleDates, formatFileLastmod(blogIndexPath)],
+        homeLastmod
+    );
     const baseEntries = [
         {
             loc: `${siteUrl}/`,
-            lastmod: defaultLastmod,
+            lastmod: homeLastmod,
             changefreq: "monthly",
             priority: "1.0"
         },
         {
             loc: `${siteUrl}/blog/`,
-            lastmod: defaultLastmod,
+            lastmod: blogLastmod,
             changefreq: "weekly",
             priority: "0.8"
         }
@@ -108,7 +138,7 @@ function buildSitemap(articles) {
 
     const articleEntries = articles.map(article => ({
         loc: `${siteUrl}/blog/${article.slug}/`,
-        lastmod: article.datePublished || defaultLastmod,
+        lastmod: formatDateInput(article.datePublished) || formatFileLastmod(path.join(blogRoot, article.slug, "index.html")),
         changefreq: "monthly",
         priority: "0.7"
     }));
