@@ -58,10 +58,10 @@ img {
     min-height: 100vh;
 }
 
-.photo-footer,
 .photo-main,
 .event-main,
-.photo-header-inner {
+.photo-header-inner,
+.photo-footer-inner {
     width: min(1220px, calc(100% - 32px));
     margin: 0 auto;
 }
@@ -505,6 +505,7 @@ img {
     padding: 18px 0 0;
     color: var(--photo-muted);
     font-size: 0.95rem;
+    text-align: center;
 }
 
 .event-main {
@@ -943,14 +944,13 @@ img {
 }
 
 @media (max-width: 640px) {
-    .photo-header,
-    .photo-footer,
     .photo-main,
-    .event-main {
+    .event-main,
+    .photo-header-inner,
+    .photo-footer-inner {
         width: min(100% - 20px, 1220px);
     }
 
-    .photo-header-inner,
     .photo-hero-grid,
     .event-hero {
         padding-left: 16px;
@@ -968,7 +968,6 @@ img {
     .lightbox {
         padding: 12px;
     }
-
     .selection-summary-inner {
         width: min(100% - 20px, 1220px);
     }

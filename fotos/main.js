@@ -51,8 +51,11 @@ function initEventsIndexPage() {
     function updateEventFilters() {
         const searchTerm = normalizeSearchValue(searchInput.value);
         eventCards.forEach(card => {
-            const searchValue = card.dataset.eventSearch || "";
-            card.hidden = searchTerm ? !searchValue.includes(searchTerm) : false;
+            const searchValue = normalizeSearchValue(card.dataset.eventSearch || "");
+            const isVisible = !searchTerm || searchValue.includes(searchTerm);
+            card.hidden = !isVisible;
+            card.style.display = isVisible ? "" : "none";
+            card.setAttribute("aria-hidden", String(!isVisible));
         });
     }
 
