@@ -1,0 +1,35 @@
+{
+  "slug": "treino-feminino-rooster-fight-club",
+  "title": "Treino Feminino Rooster Fight Club",
+  "date": "2026-06-30",
+  "displayDate": "30 jun 2026",
+  "location": "Sao Paulo, SP",
+  "category": "Treino",
+  "description": "Galeria de previews do Treino Feminino Rooster Fight Club.",
+  "cover": "IMG_2351.jpg",
+  "codePrefix": "RFC",
+  "watermark": "vinidimo preview",
+  "salesPhone": "5511945144513",
+  "photos": [
+    {
+      "src": "IMG_2351.jpg",
+      "alt": "Treino Feminino Rooster Fight Club - foto 1",
+      "code": "RFC-001"
+    },
+    {
+      "src": "IMG_2370.jpg",
+      "alt": "Treino Feminino Rooster Fight Club - foto 2",
+      "code": "RFC-002"
+    },
+    {
+      "src": "IMG_2373.jpg",
+      "alt": "Treino Feminino Rooster Fight Club - foto 3",
+      "code": "RFC-003"
+    },
+    {
+      "src": "IMG_2376.jpg",
+      "alt": "Treino Feminino Rooster Fight Club - foto 4",
+      "code": "RFC-004"
+    }
+  ]
+}

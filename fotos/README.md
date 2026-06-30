@@ -4,10 +4,11 @@ Area estatica pronta para publicar em `vinidimo.com/fotos/`.
 
 ## Como manter
 
-1. Crie uma pasta em `assets/photo-events/<slug>/`
-2. Adicione um `event.json` com os dados do evento
-3. Aponte `cover` e `photos[].src` para previews publicos
-4. Rode:
+1. Crie uma pasta em `fotos/<slug>/`
+2. Coloque as imagens de preview dentro dessa pasta
+3. Adicione um `event.json` na mesma pasta
+4. Aponte `cover` e `photos[].src` para arquivos locais, como `IMG_2351.jpg`
+5. Rode:
 
 ```bash
 node fotos/generate-photo-events.js

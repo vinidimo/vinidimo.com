@@ -31,6 +31,15 @@ function copyText(value) {
     return Promise.resolve();
 }
 
+function normalizeSearchValue(value) {
+    return String(value || "")
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, " ");
+}
+
 function initEventsIndexPage() {
     const searchInput = document.querySelector("[data-event-search-input]");
     const eventCards = [...document.querySelectorAll("[data-event-search]")];
@@ -40,7 +49,7 @@ function initEventsIndexPage() {
     }
 
     function updateEventFilters() {
-        const searchTerm = searchInput.value.trim().toLowerCase();
+        const searchTerm = normalizeSearchValue(searchInput.value);
         eventCards.forEach(card => {
             const searchValue = card.dataset.eventSearch || "";
             card.hidden = searchTerm ? !searchValue.includes(searchTerm) : false;
@@ -87,6 +96,10 @@ function initEventPage() {
 
     const selected = new Set();
 
+    if (!summary || !previewElement || !countElement || !copyButton || !whatsappButton || !clearButton || !lightbox || !lightboxImage) {
+        return;
+    }
+
     function readStoredSelection() {
         try {
             const rawValue = localStorage.getItem(storageKey);
@@ -124,9 +137,14 @@ function initEventPage() {
             const code = button.dataset.photoCode;
             const isSelected = selected.has(code);
             const tile = button.closest(".photo-card");
+            const checkbox = button.querySelector('input[type="checkbox"]');
             button.classList.toggle("is-selected", isSelected);
+            button.classList.toggle("image-checkbox-checked", isSelected);
             button.setAttribute("aria-pressed", String(isSelected));
             button.setAttribute("aria-label", `${isSelected ? "Remover" : "Selecionar"} ${code}`);
+            if (checkbox) {
+                checkbox.checked = isSelected;
+            }
             tile?.classList.toggle("is-selected", isSelected);
         });
 

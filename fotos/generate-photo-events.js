@@ -3,12 +3,11 @@ const path = require("path");
 
 const repoRoot = path.resolve(__dirname, "..");
 const photosRoot = __dirname;
-const eventsSourceRoot = path.join(repoRoot, "assets", "photo-events");
+const legacyEventsSourceRoot = path.join(photosRoot, "assets", "photo-events");
 const homeOutputPath = path.join(photosRoot, "index.html");
 const eventsJsonOutputPath = path.join(photosRoot, "events.json");
 const outputAssetsRoot = path.join(photosRoot, "assets");
 const outputSiteAssetsRoot = path.join(outputAssetsRoot, "site");
-const outputEventAssetsRoot = path.join(outputAssetsRoot, "events");
 const mainSiteUrl = "https://vinidimo.com";
 const photosSiteUrl = `${mainSiteUrl}/fotos`;
 
@@ -27,6 +26,44 @@ function escapeHtml(value) {
 
 function formatCountLabel(count) {
     return `${count} ${count === 1 ? "foto" : "fotos"}`;
+}
+
+function escapeSvgText(value) {
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&apos;");
+}
+
+function buildWatermarkPatternValue(value) {
+    const watermarkText = escapeSvgText(String(value || "vinidimo preview").toUpperCase());
+    const svg = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180">
+  <g transform="rotate(-24 160 90)">
+    <text
+      x="160"
+      y="96"
+      text-anchor="middle"
+      font-family="Arial, sans-serif"
+      font-size="26"
+      font-weight="700"
+      letter-spacing="7"
+      fill="#ffffff"
+      fill-opacity="0.24"
+    >${watermarkText}</text>
+  </g>
+</svg>`.trim();
+
+    return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+}
+
+function toInlineStyle(styleMap) {
+    return Object.entries(styleMap)
+        .filter(([, value]) => Boolean(value))
+        .map(([key, value]) => `${key}: ${value};`)
+        .join(" ");
 }
 
 function copyPublicAsset(sourceWebPath, destinationRelativePath) {
@@ -50,55 +87,126 @@ function prepareSharedAssets() {
     };
 }
 
-function readEventDirectory(dirName) {
-    const eventDir = path.join(eventsSourceRoot, dirName);
-    const eventMetaPath = path.join(eventDir, "event.json");
+function listEventDirectories() {
+    const rootEventDirs = fs.readdirSync(photosRoot, { withFileTypes: true })
+        .filter(entry => entry.isDirectory() && entry.name !== "assets")
+        .map(entry => path.join(photosRoot, entry.name))
+        .filter(dir => fs.existsSync(path.join(dir, "event.json")));
 
-    if (!fs.existsSync(eventMetaPath)) {
-        throw new Error(`Missing event.json in ${dirName}`);
+    const legacyEventDirs = fs.existsSync(legacyEventsSourceRoot)
+        ? fs.readdirSync(legacyEventsSourceRoot, { withFileTypes: true })
+        .filter(entry => entry.isDirectory())
+        .map(entry => path.join(legacyEventsSourceRoot, entry.name))
+        .filter(dir => fs.existsSync(path.join(dir, "event.json")))
+        : [];
+
+    return [...rootEventDirs, ...legacyEventDirs];
+}
+
+function normalizeSlug(value) {
+    return String(value)
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+}
+
+function normalizeSearchValue(value) {
+    return String(value || "")
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, " ");
+}
+
+function resolveEventSlug(eventDir, rawSlug) {
+    const fallbackSlug = normalizeSlug(path.basename(eventDir));
+    const normalizedSlug = normalizeSlug(rawSlug || fallbackSlug);
+
+    if (!normalizedSlug) {
+        throw new Error(`Invalid slug in ${path.basename(eventDir)}`);
     }
 
+    return normalizedSlug;
+}
+
+function ensureFileInEventDirectory(eventDir, fileValue, targetBaseName) {
+    const sourcePath = path.resolve(eventDir, fileValue);
+
+    if (!fs.existsSync(sourcePath)) {
+        throw new Error(`Missing asset in ${path.basename(eventDir)}: ${fileValue}`);
+    }
+
+    const relativeToEventDir = path.relative(eventDir, sourcePath);
+    const staysInsideEventDir = relativeToEventDir && !relativeToEventDir.startsWith("..") && !path.isAbsolute(relativeToEventDir);
+
+    if (staysInsideEventDir) {
+        return relativeToEventDir.replace(/\\/g, "/");
+    }
+
+    const safeFileName = targetBaseName || path.basename(sourcePath);
+    const destinationPath = path.join(eventDir, safeFileName);
+    fs.copyFileSync(sourcePath, destinationPath);
+    return safeFileName;
+}
+
+function readEventDirectory(eventDir) {
+    const eventMetaPath = path.join(eventDir, "event.json");
     const meta = JSON.parse(fs.readFileSync(eventMetaPath, "utf8"));
-    const slug = meta.slug || dirName;
+    const slug = resolveEventSlug(eventDir, meta.slug);
+
+    if (!meta.title) {
+        throw new Error(`Missing title in ${path.basename(eventDir)}`);
+    }
+
     const photos = (meta.photos || []).map((photo, index) => {
-        const fileName = `${String(index + 1).padStart(3, "0")}-${path.basename(photo.src)}`;
+        const photoFileName = ensureFileInEventDirectory(
+            eventDir,
+            photo.src,
+            `${String(index + 1).padStart(3, "0")}-${path.basename(photo.src)}`
+        );
 
         return {
-            src: copyPublicAsset(photo.src, toWebPath("assets", "events", slug, fileName)),
+            src: `${slug}/${photoFileName}`.replace(/\\/g, "/"),
+            pageSrc: `./${photoFileName}`.replace(/\\/g, "/"),
             alt: photo.alt || `${meta.title} - foto ${index + 1}`,
             code: photo.code || `${meta.codePrefix || slug.toUpperCase()}-${String(index + 1).padStart(3, "0")}`
         };
     });
 
-    if (!meta.title) {
-        throw new Error(`Missing title in ${dirName}`);
+    if (!photos.length) {
+        throw new Error(`No photos declared in ${path.basename(eventDir)}`);
     }
 
-    if (!photos.length) {
-        throw new Error(`No photos declared in ${dirName}`);
-    }
+    const coverFileName = meta.cover
+        ? ensureFileInEventDirectory(eventDir, meta.cover, `cover-${path.basename(meta.cover)}`)
+        : photos[0].src.replace(`${slug}/`, "");
 
     return {
         slug,
         title: meta.title,
+        searchValue: normalizeSearchValue([meta.title, meta.category || "Evento", meta.displayDate || meta.date || "", meta.location || ""].join(" ")),
         displayDate: meta.displayDate || meta.date || "Data a confirmar",
         date: meta.date || "",
         location: meta.location || "Local a confirmar",
         category: meta.category || "Evento",
         description: meta.description || "",
-        cover: meta.cover
-            ? copyPublicAsset(meta.cover, toWebPath("assets", "events", slug, `cover-${path.basename(meta.cover)}`))
-            : photos[0].src,
+        cover: `${slug}/${coverFileName}`.replace(/\\/g, "/"),
+        coverPageSrc: `./${coverFileName}`.replace(/\\/g, "/"),
         codePrefix: meta.codePrefix || slug.toUpperCase(),
         watermark: meta.watermark || "vinidimo preview",
         salesPhone: meta.salesPhone || "5511945144513",
-        photos
+        photos,
+        eventDir
     };
 }
 
 function buildHome(events, sharedAssets) {
     const cards = events.length
-        ? events.map(event => `            <a class="event-card event-card--catalog" href="./${escapeHtml(event.slug)}/" data-event-search="${escapeHtml([event.title, event.category, event.displayDate].join(" ").toLowerCase())}">
+        ? events.map(event => `            <a class="event-card event-card--catalog" href="./${escapeHtml(event.slug)}/" data-event-search="${escapeHtml(event.searchValue)}">
                 <div class="event-card-cover">
                     <img src="./${escapeHtml(event.cover)}" alt="${escapeHtml(event.title)}" loading="lazy" decoding="async">
                     <span class="event-card-pattern" aria-hidden="true"></span>
@@ -116,7 +224,7 @@ function buildHome(events, sharedAssets) {
             </a>`).join("\n")
         : `            <div class="event-empty">
                 <h2>Nenhum evento publicado ainda</h2>
-                <p>Quando voce adicionar eventos em <code>assets/photo-events</code> e rodar o gerador, eles aparecerao aqui.</p>
+                <p>Quando voce adicionar um <code>event.json</code> em uma pasta de evento dentro de <code>fotos/</code>, ele aparecera aqui.</p>
             </div>`;
 
     return `<!DOCTYPE html>
@@ -180,13 +288,17 @@ function buildPhotoCards(event) {
     return event.photos.map((photo, index) => `                <article class="photo-card">
                     <div class="photo-tile">
                         <button class="photo-preview-button" type="button" data-preview-index="${index}" aria-label="Ampliar ${escapeHtml(photo.code)}">
-                            <span class="photo-frame" data-watermark="${escapeHtml(event.watermark)}">
-                                <img src="../${escapeHtml(photo.src)}" alt="${escapeHtml(photo.alt)}" loading="lazy" decoding="async">
+                            <span class="photo-frame">
+                                <img src="${escapeHtml(photo.pageSrc)}" alt="${escapeHtml(photo.alt)}" loading="lazy" decoding="async">
+                                <span class="photo-watermark" aria-hidden="true"></span>
                             </span>
                         </button>
                         <span class="photo-card-overlay">
-                            <button class="photo-select-button" type="button" data-photo-code="${escapeHtml(photo.code)}" aria-pressed="false" aria-label="Selecionar ${escapeHtml(photo.code)}">
-                                <span class="photo-select-indicator" aria-hidden="true"></span>
+                            <button class="photo-select-button image-checkbox" type="button" data-photo-code="${escapeHtml(photo.code)}" aria-pressed="false" aria-label="Selecionar ${escapeHtml(photo.code)}">
+                                <input class="photo-select-input" type="checkbox" tabindex="-1" aria-hidden="true">
+                                <span class="photo-select-indicator" aria-hidden="true">
+                                    <span class="photo-select-checkmark" aria-hidden="true"></span>
+                                </span>
                             </button>
                             <span class="photo-code-badge">${escapeHtml(photo.code)}</span>
                         </span>
@@ -195,6 +307,9 @@ function buildPhotoCards(event) {
 }
 
 function buildEventPage(event, sharedAssets) {
+    const pageStyle = escapeHtml(toInlineStyle({
+        "--watermark-pattern-image": buildWatermarkPatternValue(event.watermark)
+    }));
     const eventData = {
         slug: event.slug,
         title: event.title,
@@ -202,7 +317,7 @@ function buildEventPage(event, sharedAssets) {
         photos: event.photos.map(photo => ({
             code: photo.code,
             alt: photo.alt,
-            src: `../${photo.src}`
+            src: photo.pageSrc
         }))
     };
 
@@ -225,7 +340,7 @@ function buildEventPage(event, sharedAssets) {
     <link rel="icon" type="image/svg+xml" href="../${escapeHtml(sharedAssets.logoWhite)}" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="../styles.css">
 </head>
-<body>
+<body style="${pageStyle}">
     <div class="photo-shell">
         <header class="photo-header">
             <div class="photo-header-inner">
@@ -240,6 +355,11 @@ function buildEventPage(event, sharedAssets) {
             <section class="event-grid-header">
                 <div>
                     <h2>${escapeHtml(event.title)}</h2>
+                    <div class="event-meta-list">
+                        <span>${escapeHtml(event.displayDate)}</span>
+                        <span>${escapeHtml(event.location)}</span>
+                        <span>${escapeHtml(event.category)}</span>
+                    </div>
                 </div>
             </section>
 
@@ -272,7 +392,10 @@ ${buildPhotoCards(event)}
     <div class="lightbox" data-lightbox hidden>
         <div class="lightbox-dialog">
             <div class="lightbox-stage">
-                <img class="lightbox-image" data-lightbox-image src="" alt="">
+                <div class="lightbox-media-frame">
+                    <img class="lightbox-image" data-lightbox-image src="" alt="">
+                    <span class="photo-watermark lightbox-watermark" aria-hidden="true"></span>
+                </div>
             </div>
         </div>
     </div>
@@ -286,9 +409,9 @@ ${JSON.stringify(eventData, null, 2)}
 `;
 }
 
-const events = fs.readdirSync(eventsSourceRoot, { withFileTypes: true })
-    .filter(entry => entry.isDirectory())
-    .map(entry => readEventDirectory(entry.name))
+const eventDirectories = listEventDirectories();
+const events = eventDirectories
+    .map(readEventDirectory)
     .sort((first, second) => {
         if (first.date && second.date && first.date !== second.date) {
             return second.date.localeCompare(first.date);
@@ -297,14 +420,42 @@ const events = fs.readdirSync(eventsSourceRoot, { withFileTypes: true })
         return first.title.localeCompare(second.title, "pt-BR");
     });
 
+const duplicateSlugs = events.reduce((accumulator, event) => {
+    accumulator[event.slug] = accumulator[event.slug] || [];
+    accumulator[event.slug].push(event.eventDir);
+    return accumulator;
+}, {});
+
+Object.entries(duplicateSlugs).forEach(([slug, dirs]) => {
+    if (dirs.length > 1) {
+        throw new Error(`Duplicate slug "${slug}" found in: ${dirs.join(", ")}`);
+    }
+});
+
 fs.mkdirSync(outputAssetsRoot, { recursive: true });
 fs.mkdirSync(outputSiteAssetsRoot, { recursive: true });
-fs.mkdirSync(outputEventAssetsRoot, { recursive: true });
 
 const sharedAssets = prepareSharedAssets();
 
 fs.writeFileSync(homeOutputPath, buildHome(events, sharedAssets), "utf8");
-fs.writeFileSync(eventsJsonOutputPath, `${JSON.stringify(events, null, 2)}\n`, "utf8");
+fs.writeFileSync(eventsJsonOutputPath, `${JSON.stringify(events.map(event => ({
+    slug: event.slug,
+    title: event.title,
+    displayDate: event.displayDate,
+    date: event.date,
+    location: event.location,
+    category: event.category,
+    description: event.description,
+    cover: event.cover,
+    codePrefix: event.codePrefix,
+    watermark: event.watermark,
+    salesPhone: event.salesPhone,
+    photos: event.photos.map(photo => ({
+        src: photo.src,
+        alt: photo.alt,
+        code: photo.code
+    }))
+})), null, 2)}\n`, "utf8");
 
 events.forEach(event => {
     const eventOutputDir = path.join(photosRoot, event.slug);
