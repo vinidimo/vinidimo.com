@@ -5,7 +5,9 @@ on:
     branches:
       - main
     paths:
-      - "assets/photo-events/**"
+      - "fotos/**"
+      - "assets/logo-black.svg"
+      - "assets/logo-white.svg"
       - "fotos/generate-photo-events.js"
       - ".github/workflows/generate-photo-events.yml"
   workflow_dispatch:
@@ -34,13 +36,13 @@ jobs:
 
       - name: Commit updated photo gallery files
         run: |
-          if git diff --quiet -- fotos assets/photo-events; then
+          if git diff --quiet -- fotos; then
             echo "No photo gallery changes detected."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add fotos assets/photo-events
+          git add fotos
           git commit -m "chore: update photo galleries"
           git push

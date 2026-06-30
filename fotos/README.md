@@ -14,6 +14,10 @@ Area estatica pronta para publicar em `vinidimo.com/fotos/`.
 node fotos/generate-photo-events.js
 ```
 
+Se voce preferir, tambem pode apenas subir a pasta do evento para o GitHub em `fotos/<slug>/`.
+O workflow `.github/workflows/generate-photo-events.yml` roda automaticamente na branch `main`,
+regenera `fotos/index.html`, `fotos/events.json` e o `index.html` do evento, e faz o commit sozinho.
+
 ## Publicacao
 
 - Para usar em `vinidimo.com/fotos/`, basta manter a pasta `fotos/` neste repo e publicar a branch `main` no GitHub Pages.
