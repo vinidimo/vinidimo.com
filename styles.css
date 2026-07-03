@@ -23,6 +23,14 @@
     src: url("assets/fonts/roboto-latin-700.woff2") format("woff2");
 }
 
+@font-face {
+    font-family: "GoGoPosterPunch";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("assets/fonts/GoGoPosterPunch.otf") format("opentype");
+}
+
 /* Base */
 * {
     margin: 0;
@@ -167,6 +175,7 @@ nav a:hover {
 header .brand {
     text-transform: lowercase;
     font-size: 1.5rem;
+    font-family: GoGoPosterPunch, Roboto, "Segoe UI", Arial, sans-serif;
 }
 
 header .brand {
@@ -2179,6 +2188,7 @@ footer {
 }
 
 .footer-name {
+    font-family: GoGoPosterPunch, Roboto, "Segoe UI", Arial, sans-serif;
     font-weight: 600;
     text-transform: lowercase;
 }

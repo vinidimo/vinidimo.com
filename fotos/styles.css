@@ -13,6 +13,14 @@
     --photo-radius-md: 16px;
 }
 
+@font-face {
+    font-family: "GoGoPosterPunch";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../assets/fonts/GoGoPosterPunch.otf") format("opentype");
+}
+
 * {
     box-sizing: border-box;
 }
@@ -93,6 +101,7 @@ img {
     letter-spacing: 0.04em;
     text-transform: lowercase;
     font-size: 1.5rem;
+    font-family: GoGoPosterPunch, Roboto, "Segoe UI", Arial, sans-serif;
     color: #fff;
 }
 
