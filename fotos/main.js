@@ -3,13 +3,46 @@ currentYearElements.forEach(element => {
     element.textContent = String(new Date().getFullYear());
 });
 
-document.querySelectorAll("img").forEach(image => {
-    if (!image.closest(".photo-frame, .lightbox-stage")) {
-        return;
-    }
+function isProtectedPhotoTarget(target) {
+    return Boolean(target?.closest?.(".photo-frame, .lightbox-stage, .lightbox-media-frame, .photo-grid"));
+}
 
+document.querySelectorAll("img").forEach(image => {
     image.draggable = false;
     image.addEventListener("dragstart", event => event.preventDefault());
+});
+
+document.addEventListener("contextmenu", event => {
+    if (isProtectedPhotoTarget(event.target)) {
+        event.preventDefault();
+    }
+});
+
+document.addEventListener("selectstart", event => {
+    if (isProtectedPhotoTarget(event.target)) {
+        event.preventDefault();
+    }
+});
+
+document.addEventListener("copy", event => {
+    if (isProtectedPhotoTarget(event.target)) {
+        event.preventDefault();
+    }
+});
+
+document.addEventListener("keydown", event => {
+    const key = event.key.toLowerCase();
+    const blockedShortcut = (
+        event.key === "F12" ||
+        (event.ctrlKey && key === "s") ||
+        (event.ctrlKey && key === "u") ||
+        (event.ctrlKey && event.shiftKey && ["i", "j", "c"].includes(key))
+    );
+
+    if (blockedShortcut) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
 });
 
 function copyText(value) {
