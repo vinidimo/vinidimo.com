@@ -662,7 +662,7 @@ img {
 }
 
 .photo-watermark::after {
-    background-image: url("./assets/site/logo-white.svg");
+    background-image: url("../assets/logo-white.svg");
     background-repeat: repeat;
     background-position: 40px 30px;
     background-size: 86px 86px;

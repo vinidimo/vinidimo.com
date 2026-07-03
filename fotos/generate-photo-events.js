@@ -7,9 +7,9 @@ const legacyEventsSourceRoot = path.join(photosRoot, "assets", "photo-events");
 const homeOutputPath = path.join(photosRoot, "index.html");
 const eventsJsonOutputPath = path.join(photosRoot, "events.json");
 const outputAssetsRoot = path.join(photosRoot, "assets");
-const outputSiteAssetsRoot = path.join(outputAssetsRoot, "site");
 const mainSiteUrl = "https://vinidimo.com";
 const photosSiteUrl = `${mainSiteUrl}/fotos`;
+const sharedLogoBlackUrl = `${mainSiteUrl}/assets/logo-black.svg`;
 
 function toWebPath(...parts) {
     return parts.join("/").replace(/\\/g, "/");
@@ -66,25 +66,12 @@ function toInlineStyle(styleMap) {
         .join(" ");
 }
 
-function copyPublicAsset(sourceWebPath, destinationRelativePath) {
-    const sourcePath = path.join(repoRoot, sourceWebPath);
-    const destinationPath = path.join(photosRoot, destinationRelativePath);
+function assertSharedAssetExists(...parts) {
+    const assetPath = path.join(repoRoot, ...parts);
 
-    if (!fs.existsSync(sourcePath)) {
-        throw new Error(`Missing asset: ${sourceWebPath}`);
+    if (!fs.existsSync(assetPath)) {
+        throw new Error(`Missing asset: ${toWebPath(...parts)}`);
     }
-
-    fs.mkdirSync(path.dirname(destinationPath), { recursive: true });
-    fs.copyFileSync(sourcePath, destinationPath);
-
-    return toWebPath(destinationRelativePath);
-}
-
-function prepareSharedAssets() {
-    return {
-        logoBlack: copyPublicAsset(toWebPath("assets", "logo-black.svg"), toWebPath("assets", "site", "logo-black.svg")),
-        logoWhite: copyPublicAsset(toWebPath("assets", "logo-white.svg"), toWebPath("assets", "site", "logo-white.svg"))
-    };
 }
 
 function listEventDirectories() {
@@ -204,7 +191,7 @@ function readEventDirectory(eventDir) {
     };
 }
 
-function buildHome(events, sharedAssets) {
+function buildHome(events) {
     const cards = events.length
         ? events.map(event => `            <a class="event-card event-card--catalog" href="./${escapeHtml(event.slug)}/" data-event-search="${escapeHtml(event.searchValue)}">
                 <div class="event-card-cover">
@@ -239,11 +226,11 @@ function buildHome(events, sharedAssets) {
     <meta property="og:site_name" content="vinidimo fotos">
     <meta property="og:title" content="vinidimo fotos | Galerias de eventos">
     <meta property="og:description" content="Selecione as fotos do seu evento por codigo e envie seu pedido direto pelo WhatsApp.">
-    <meta property="og:image" content="${escapeHtml(`${photosSiteUrl}/${events[0]?.cover || "assets/site/logo-black.svg"}`)}">
+    <meta property="og:image" content="${escapeHtml(events[0] ? `${photosSiteUrl}/${events[0].cover}` : sharedLogoBlackUrl)}">
     <title>vinidimo fotos | Galerias de eventos</title>
     <link rel="canonical" href="${photosSiteUrl}/">
-    <link rel="icon" type="image/svg+xml" href="./${escapeHtml(sharedAssets.logoBlack)}" media="(prefers-color-scheme: light)">
-    <link rel="icon" type="image/svg+xml" href="./${escapeHtml(sharedAssets.logoWhite)}" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/svg+xml" href="../assets/logo-black.svg" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/svg+xml" href="../assets/logo-white.svg" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
@@ -251,7 +238,7 @@ function buildHome(events, sharedAssets) {
         <header class="photo-header">
             <div class="photo-header-inner">
                 <a class="photo-brand" href="./">
-                    <img src="./${escapeHtml(sharedAssets.logoWhite)}" alt="vinidimo">
+                    <img src="../assets/logo-white.svg" alt="vinidimo">
                     <span>vinidimo</span>
                 </a>
             </div>
@@ -306,7 +293,7 @@ function buildPhotoCards(event) {
                 </article>`).join("\n");
 }
 
-function buildEventPage(event, sharedAssets) {
+function buildEventPage(event) {
     const pageStyle = escapeHtml(toInlineStyle({
         "--watermark-pattern-image": buildWatermarkPatternValue(event.watermark)
     }));
@@ -336,8 +323,8 @@ function buildEventPage(event, sharedAssets) {
     <meta property="og:image" content="${escapeHtml(`${photosSiteUrl}/${event.cover}`)}">
     <title>${escapeHtml(event.title)} | vinidimo fotos</title>
     <link rel="canonical" href="${photosSiteUrl}/${escapeHtml(event.slug)}/">
-    <link rel="icon" type="image/svg+xml" href="../${escapeHtml(sharedAssets.logoBlack)}" media="(prefers-color-scheme: light)">
-    <link rel="icon" type="image/svg+xml" href="../${escapeHtml(sharedAssets.logoWhite)}" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/svg+xml" href="../../assets/logo-black.svg" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/svg+xml" href="../../assets/logo-white.svg" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body style="${pageStyle}">
@@ -345,7 +332,7 @@ function buildEventPage(event, sharedAssets) {
         <header class="photo-header">
             <div class="photo-header-inner">
                 <a class="photo-brand" href="../">
-                    <img src="../${escapeHtml(sharedAssets.logoWhite)}" alt="vinidimo">
+                    <img src="../../assets/logo-white.svg" alt="vinidimo">
                     <span>vinidimo</span>
                 </a>
             </div>
@@ -433,11 +420,10 @@ Object.entries(duplicateSlugs).forEach(([slug, dirs]) => {
 });
 
 fs.mkdirSync(outputAssetsRoot, { recursive: true });
-fs.mkdirSync(outputSiteAssetsRoot, { recursive: true });
+assertSharedAssetExists("assets", "logo-black.svg");
+assertSharedAssetExists("assets", "logo-white.svg");
 
-const sharedAssets = prepareSharedAssets();
-
-fs.writeFileSync(homeOutputPath, buildHome(events, sharedAssets), "utf8");
+fs.writeFileSync(homeOutputPath, buildHome(events), "utf8");
 fs.writeFileSync(eventsJsonOutputPath, `${JSON.stringify(events.map(event => ({
     slug: event.slug,
     title: event.title,
@@ -461,7 +447,7 @@ events.forEach(event => {
     const eventOutputDir = path.join(photosRoot, event.slug);
     const eventOutputPath = path.join(eventOutputDir, "index.html");
     fs.mkdirSync(eventOutputDir, { recursive: true });
-    fs.writeFileSync(eventOutputPath, buildEventPage(event, sharedAssets), "utf8");
+    fs.writeFileSync(eventOutputPath, buildEventPage(event), "utf8");
 });
 
 console.log(`Updated ${path.relative(repoRoot, homeOutputPath)}`);
