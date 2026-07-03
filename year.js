@@ -10,6 +10,31 @@ if (legacyYearElement && !legacyYearElement.textContent.trim()) {
     legacyYearElement.textContent = currentYear;
 }
 
+const measurementCanvas = document.createElement("canvas");
+const measurementContext = measurementCanvas.getContext("2d");
+
+function getWordmarkTextHeight(wordmark) {
+    if (!measurementContext) {
+        return wordmark.getBoundingClientRect().height;
+    }
+
+    const computedStyle = window.getComputedStyle(wordmark);
+    const fallbackFont = [
+        computedStyle.fontStyle,
+        computedStyle.fontWeight,
+        computedStyle.fontSize,
+        computedStyle.fontFamily
+    ].filter(Boolean).join(" ");
+    measurementContext.font = computedStyle.font && computedStyle.font !== "normal normal normal medium / normal none running 0px / 0px serif"
+        ? computedStyle.font
+        : fallbackFont;
+
+    const metrics = measurementContext.measureText(wordmark.textContent?.trim() || "");
+    const actualHeight = (metrics.actualBoundingBoxAscent || 0) + (metrics.actualBoundingBoxDescent || 0);
+
+    return actualHeight || wordmark.getBoundingClientRect().height;
+}
+
 function measureLogoLockups() {
     document.querySelectorAll(".brand, .footer-brand, .blog-brand, .photo-brand").forEach(lockup => {
         const symbol = lockup.querySelector("img");
@@ -19,7 +44,7 @@ function measureLogoLockups() {
             return;
         }
 
-        const textHeight = wordmark.getBoundingClientRect().height;
+        const textHeight = getWordmarkTextHeight(wordmark);
         if (!textHeight) {
             return;
         }
