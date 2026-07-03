@@ -71,12 +71,6 @@ function buildProjectSlides(projects) {
                     </div>`).join("\n");
 }
 
-function buildProjectsScript(projects) {
-    return `    <script id="portfolio-projects-data" type="application/json">
-${JSON.stringify(projects, null, 2)}
-    </script>`;
-}
-
 const projects = normalizeProjectOrders(fs.readdirSync(projectsRoot, { withFileTypes: true })
     .filter(entry => entry.isDirectory())
     .map(entry => readProjectDirectory(entry.name))
@@ -97,7 +91,7 @@ const updatedIndexWithSlides = indexHtml.replace(
 );
 const updatedIndex = updatedIndexWithSlides.replace(
     /[ \t]*<script id="portfolio-projects-data" type="application\/json">[\s\S]*?<\/script>/,
-    buildProjectsScript(projects)
+    ""
 );
 
 fs.writeFileSync(indexPath, updatedIndex, "utf8");

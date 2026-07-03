@@ -28,7 +28,7 @@
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url("assets/fonts/GoGoPosterPunch.otf") format("opentype");
+    src: url("assets/fonts/gogoposterpunch.woff2") format("woff2");
 }
 
 /* Base */
@@ -41,6 +41,8 @@
 
 :root {
     --brand: #00aaff;
+    --logo-wordmark-light: #e2e2e2;
+    --logo-wordmark-dark: #1e1e1e;
     --carousel-slides-per-view: 3;
     --shiny-cta-bg: #0a1423;
     --shiny-cta-bg-subtle: #22314a;
@@ -176,6 +178,8 @@ header .brand {
     text-transform: lowercase;
     font-size: 1.5rem;
     font-family: GoGoPosterPunch, Roboto, "Segoe UI", Arial, sans-serif;
+    font-weight: 400;
+    color: var(--logo-wordmark-light);
 }
 
 header .brand {
@@ -2189,8 +2193,14 @@ footer {
 
 .footer-name {
     font-family: GoGoPosterPunch, Roboto, "Segoe UI", Arial, sans-serif;
-    font-weight: 600;
+    font-weight: 400;
     text-transform: lowercase;
+    color: var(--logo-wordmark-light);
+}
+
+.brand--dark,
+.footer-name--dark {
+    color: var(--logo-wordmark-dark);
 }
 
 .footer-blog-link {

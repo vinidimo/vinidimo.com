@@ -1,6 +1,8 @@
 :root {
     --blog-bg: #f5f1e8;
     --blog-ink: #18202a;
+    --logo-wordmark-light: #e2e2e2;
+    --logo-wordmark-dark: #1e1e1e;
     --blog-muted: #5d6a79;
     --blog-accent: #0b84d8;
     --blog-accent-dark: #0662a2;
@@ -21,7 +23,7 @@
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url("../assets/fonts/GoGoPosterPunch.otf") format("opentype");
+    src: url("../assets/fonts/gogoposterpunch.woff2") format("woff2");
 }
 
 * {
@@ -79,8 +81,17 @@ body.blog-page {
     color: #fff;
     text-decoration: none;
     font-size: 1.5rem;
-    font-family: GoGoPosterPunch, Roboto, "Segoe UI", Arial, sans-serif;
     text-transform: lowercase;
+}
+
+.blog-brand span {
+    font-family: GoGoPosterPunch, Roboto, "Segoe UI", Arial, sans-serif;
+    font-weight: 400;
+    color: var(--logo-wordmark-light);
+}
+
+.blog-brand--dark span {
+    color: var(--logo-wordmark-dark);
 }
 
 .blog-brand img {
@@ -164,7 +175,9 @@ body.blog-page {
     box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
     text-align: center;
     text-decoration: none;
-    background: var(--card-background);
+    background-image:
+        linear-gradient(180deg, rgba(7, 15, 24, 0.16), rgba(7, 15, 24, 0.8)),
+        var(--card-cover-image);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

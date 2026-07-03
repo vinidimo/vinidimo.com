@@ -739,13 +739,17 @@ function syncLightboxGallery() {
     });
 }
 
-function loadProjectsFromDocument() {
-    const projectsScript = document.getElementById("portfolio-projects-data");
-    if (!projectsScript || !viewport) {
-        throw new Error("Missing portfolio projects script");
+async function loadProjectsFromDocument() {
+    if (!viewport) {
+        throw new Error("Missing portfolio viewport");
     }
 
-    projects = JSON.parse(projectsScript.textContent || "[]");
+    const response = await fetch("assets/projects/projects.json", { cache: "no-store" });
+    if (!response.ok) {
+        throw new Error(`Could not load projects (${response.status})`);
+    }
+
+    projects = await response.json();
 
     if (!projects.length) {
         viewport.innerHTML = '<p class="carousel-status">Nenhum projeto disponivel no momento.</p>';
@@ -894,15 +898,13 @@ if (document.fonts?.ready) {
     });
 }
 
-try {
-    loadProjectsFromDocument();
-} catch (error) {
+loadProjectsFromDocument().catch(error => {
     console.error(error);
     if (viewport) {
         viewport.innerHTML = '<p class="carousel-status">Nao foi possivel carregar os projetos agora.</p>';
     }
     setCarouselControlsDisabled(true);
-}
+});
 
 onScrollHeader();
 setActiveNavLink();

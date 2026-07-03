@@ -5,6 +5,7 @@ const blogRoot = __dirname;
 const repoRoot = path.resolve(blogRoot, "..");
 const outputPath = path.join(blogRoot, "articles.json");
 const blogIndexPath = path.join(blogRoot, "index.html");
+const cardsCssPath = path.join(blogRoot, "generated-cards.css");
 const sitemapPath = path.join(repoRoot, "sitemap.xml");
 const homeIndexPath = path.join(repoRoot, "index.html");
 const imageExtensions = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"]);
@@ -79,8 +80,7 @@ function readArticleDirectory(dirName) {
 }
 
 function buildCard(article) {
-    const coverRelative = `./${article.slug}/${path.basename(article.cover)}`;
-    return `                    <a class="blog-post-card" href="./${article.slug}/" style="--tag-color: ${article.tagColor}; --card-background: linear-gradient(180deg, rgba(7, 15, 24, 0.16), rgba(7, 15, 24, 0.8)), url('${coverRelative}');">
+    return `                    <a class="blog-post-card blog-post-card--${escapeHtml(article.slug)}" href="./${article.slug}/">
                         <div class="title-content">
                             <h3>${escapeHtml(article.title)}</h3>
                             <hr>
@@ -110,6 +110,18 @@ function buildCard(article) {
                         <div class="gradient-overlay"></div>
                         <div class="color-overlay"></div>
                     </a>`;
+}
+
+function buildCardsStyles(articles) {
+    const rules = articles.map(article => {
+        const coverRelative = `./${article.slug}/${path.basename(article.cover)}`;
+        return `.blog-post-card--${article.slug} {
+    --tag-color: ${article.tagColor};
+    --card-cover-image: url("${coverRelative}");
+}`;
+    }).join("\n\n");
+
+    return `${rules}\n`;
 }
 
 function buildSitemap(articles) {
@@ -172,6 +184,7 @@ const articles = fs.readdirSync(blogRoot, { withFileTypes: true })
     });
 
 fs.writeFileSync(outputPath, `${JSON.stringify(articles, null, 2)}\n`, "utf8");
+fs.writeFileSync(cardsCssPath, buildCardsStyles(articles), "utf8");
 
 const blogIndex = fs.readFileSync(blogIndexPath, "utf8");
 const cardsMarkup = articles.map(buildCard).join("\n\n");
@@ -185,4 +198,5 @@ fs.writeFileSync(sitemapPath, buildSitemap(articles), "utf8");
 
 console.log(`Updated ${path.relative(repoRoot, outputPath)}`);
 console.log(`Updated ${path.relative(repoRoot, blogIndexPath)}`);
+console.log(`Updated ${path.relative(repoRoot, cardsCssPath)}`);
 console.log(`Updated ${path.relative(repoRoot, sitemapPath)}`);

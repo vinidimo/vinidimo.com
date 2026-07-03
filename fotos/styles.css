@@ -1,5 +1,7 @@
 :root {
     --photo-bg: #f5f9fd;
+    --logo-wordmark-light: #e2e2e2;
+    --logo-wordmark-dark: #1e1e1e;
     --photo-surface: rgba(255, 255, 255, 0.78);
     --photo-surface-strong: rgba(255, 255, 255, 0.94);
     --photo-ink: #0f1824;
@@ -18,7 +20,7 @@
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url("../assets/fonts/GoGoPosterPunch.otf") format("opentype");
+    src: url("../assets/fonts/gogoposterpunch.woff2") format("woff2");
 }
 
 * {
@@ -97,12 +99,20 @@ img {
     display: inline-flex;
     align-items: center;
     gap: 12px;
-    font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: lowercase;
     font-size: 1.5rem;
-    font-family: GoGoPosterPunch, Roboto, "Segoe UI", Arial, sans-serif;
     color: #fff;
+}
+
+.photo-brand span {
+    font-family: GoGoPosterPunch, Roboto, "Segoe UI", Arial, sans-serif;
+    font-weight: 400;
+    color: var(--logo-wordmark-light);
+}
+
+.photo-brand--dark span {
+    color: var(--logo-wordmark-dark);
 }
 
 .photo-brand img {

@@ -4,14 +4,12 @@ currentYearElements.forEach(element => {
 });
 
 document.querySelectorAll("img").forEach(image => {
+    if (!image.closest(".photo-frame, .lightbox-stage")) {
+        return;
+    }
+
     image.draggable = false;
     image.addEventListener("dragstart", event => event.preventDefault());
-});
-
-document.addEventListener("contextmenu", event => {
-    if (event.target.closest(".photo-frame, .lightbox-stage")) {
-        event.preventDefault();
-    }
 });
 
 function copyText(value) {
@@ -77,14 +75,31 @@ function initEventsIndexPage() {
     updateEventFilters();
 }
 
-function initEventPage() {
-    const eventScript = document.getElementById("photo-event-data");
-    if (!eventScript) {
+async function initEventPage() {
+    const eventSlug = document.body.dataset.eventSlug;
+    if (!eventSlug) {
         return;
     }
 
-    const eventData = JSON.parse(eventScript.textContent || "{}");
-    const storageKey = `vinidimo-photo-selection:${eventData.slug}`;
+    const response = await fetch("../events.json", { cache: "no-store" });
+    if (!response.ok) {
+        throw new Error(`Nao foi possivel carregar o evento (${response.status}).`);
+    }
+
+    const events = await response.json();
+    const eventData = events.find(event => event.slug === eventSlug);
+    if (!eventData) {
+        throw new Error("Nao foi possivel encontrar os dados deste evento.");
+    }
+
+    const normalizedEventData = {
+        ...eventData,
+        photos: (eventData.photos || []).map(photo => ({
+            ...photo,
+            src: photo.pageSrc || `./${String(photo.src || "").split("/").pop()}` 
+        }))
+    };
+    const storageKey = `vinidimo-photo-selection:${normalizedEventData.slug}`;
     const summary = document.querySelector("[data-selection-summary]");
     const previewElement = document.querySelector("[data-selection-preview]");
     const countElement = document.querySelector("[data-selection-count]");
@@ -108,7 +123,7 @@ function initEventPage() {
             const rawValue = localStorage.getItem(storageKey);
             const savedCodes = rawValue ? JSON.parse(rawValue) : [];
             savedCodes.forEach(code => {
-                if (eventData.photos.some(photo => photo.code === code)) {
+                if (normalizedEventData.photos.some(photo => photo.code === code)) {
                     selected.add(code);
                 }
             });
@@ -156,7 +171,7 @@ function initEventPage() {
         previewElement.textContent = buildCodesLabel(codes);
 
         const message = [
-            `Oi! Quero comprar fotos do evento "${eventData.title}".`,
+            `Oi! Quero comprar fotos do evento "${normalizedEventData.title}".`,
             "",
             `Codigos selecionados (${codes.length}):`,
             codes.length ? codes.join(", ") : "Nenhum codigo selecionado.",
@@ -164,7 +179,7 @@ function initEventPage() {
             `Pagina do evento: ${window.location.href}`
         ].join("\n");
 
-        whatsappButton.href = `https://wa.me/${eventData.salesPhone}?text=${encodeURIComponent(message)}`;
+        whatsappButton.href = `https://wa.me/${normalizedEventData.salesPhone}?text=${encodeURIComponent(message)}`;
         persistSelection();
     }
 
@@ -179,7 +194,7 @@ function initEventPage() {
     }
 
     function updateLightbox(index) {
-        const photo = eventData.photos[index];
+        const photo = normalizedEventData.photos[index];
         if (!photo) {
             return;
         }
@@ -247,5 +262,7 @@ function initEventPage() {
     });
 }
 
-initEventPage();
+initEventPage().catch(error => {
+    console.error(error);
+});
 initEventsIndexPage();

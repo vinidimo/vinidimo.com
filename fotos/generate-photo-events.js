@@ -7,6 +7,7 @@ const legacyEventsSourceRoot = path.join(photosRoot, "assets", "photo-events");
 const homeOutputPath = path.join(photosRoot, "index.html");
 const eventsJsonOutputPath = path.join(photosRoot, "events.json");
 const outputAssetsRoot = path.join(photosRoot, "assets");
+const generatedStylesPath = path.join(photosRoot, "generated-events.css");
 const mainSiteUrl = "https://vinidimo.com";
 const photosSiteUrl = `${mainSiteUrl}/fotos`;
 const sharedLogoBlackUrl = `${mainSiteUrl}/assets/logo-black.svg`;
@@ -57,13 +58,6 @@ function buildWatermarkPatternValue(value) {
 </svg>`.trim();
 
     return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
-}
-
-function toInlineStyle(styleMap) {
-    return Object.entries(styleMap)
-        .filter(([, value]) => Boolean(value))
-        .map(([key, value]) => `${key}: ${value};`)
-        .join(" ");
 }
 
 function assertSharedAssetExists(...parts) {
@@ -294,20 +288,6 @@ function buildPhotoCards(event) {
 }
 
 function buildEventPage(event) {
-    const pageStyle = escapeHtml(toInlineStyle({
-        "--watermark-pattern-image": buildWatermarkPatternValue(event.watermark)
-    }));
-    const eventData = {
-        slug: event.slug,
-        title: event.title,
-        salesPhone: event.salesPhone,
-        photos: event.photos.map(photo => ({
-            code: photo.code,
-            alt: photo.alt,
-            src: photo.pageSrc
-        }))
-    };
-
     return `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -326,8 +306,9 @@ function buildEventPage(event) {
     <link rel="icon" type="image/svg+xml" href="../../assets/logo-black.svg" media="(prefers-color-scheme: light)">
     <link rel="icon" type="image/svg+xml" href="../../assets/logo-white.svg" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../generated-events.css">
 </head>
-<body style="${pageStyle}">
+<body class="event-page event-page--${escapeHtml(event.slug)}" data-event-slug="${escapeHtml(event.slug)}">
     <div class="photo-shell">
         <header class="photo-header">
             <div class="photo-header-inner">
@@ -386,14 +367,16 @@ ${buildPhotoCards(event)}
             </div>
         </div>
     </div>
-
-    <script id="photo-event-data" type="application/json">
-${JSON.stringify(eventData, null, 2)}
-    </script>
     <script src="../main.js"></script>
 </body>
 </html>
 `;
+}
+
+function buildGeneratedEventStyles(events) {
+    return events.map(event => `.event-page--${event.slug} {
+    --watermark-pattern-image: ${buildWatermarkPatternValue(event.watermark)};
+}`).join("\n\n") + "\n";
 }
 
 const eventDirectories = listEventDirectories();
@@ -424,6 +407,7 @@ assertSharedAssetExists("assets", "logo-black.svg");
 assertSharedAssetExists("assets", "logo-white.svg");
 
 fs.writeFileSync(homeOutputPath, buildHome(events), "utf8");
+fs.writeFileSync(generatedStylesPath, buildGeneratedEventStyles(events), "utf8");
 fs.writeFileSync(eventsJsonOutputPath, `${JSON.stringify(events.map(event => ({
     slug: event.slug,
     title: event.title,
@@ -438,6 +422,7 @@ fs.writeFileSync(eventsJsonOutputPath, `${JSON.stringify(events.map(event => ({
     salesPhone: event.salesPhone,
     photos: event.photos.map(photo => ({
         src: photo.src,
+        pageSrc: photo.pageSrc,
         alt: photo.alt,
         code: photo.code
     }))
@@ -451,6 +436,7 @@ events.forEach(event => {
 });
 
 console.log(`Updated ${path.relative(repoRoot, homeOutputPath)}`);
+console.log(`Updated ${path.relative(repoRoot, generatedStylesPath)}`);
 console.log(`Updated ${path.relative(repoRoot, eventsJsonOutputPath)}`);
 events.forEach(event => {
     console.log(`Updated ${path.relative(repoRoot, path.join(photosRoot, event.slug, "index.html"))}`);

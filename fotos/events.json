@@ -14,21 +14,25 @@
     "photos": [
       {
         "src": "treino-feminino-rooster-fight-club/IMG_2351.jpg",
+        "pageSrc": "./IMG_2351.jpg",
         "alt": "Treino Feminino Rooster Fight Club - foto 1",
         "code": "RFC-001"
       },
       {
         "src": "treino-feminino-rooster-fight-club/IMG_2370.jpg",
+        "pageSrc": "./IMG_2370.jpg",
         "alt": "Treino Feminino Rooster Fight Club - foto 2",
         "code": "RFC-002"
       },
       {
         "src": "treino-feminino-rooster-fight-club/IMG_2373.jpg",
+        "pageSrc": "./IMG_2373.jpg",
         "alt": "Treino Feminino Rooster Fight Club - foto 3",
         "code": "RFC-003"
       },
       {
         "src": "treino-feminino-rooster-fight-club/IMG_2376.jpg",
+        "pageSrc": "./IMG_2376.jpg",
         "alt": "Treino Feminino Rooster Fight Club - foto 4",
         "code": "RFC-004"
       }
