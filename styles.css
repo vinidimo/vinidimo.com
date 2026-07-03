@@ -105,6 +105,14 @@ img {
     max-width: 100%;
 }
 
+.brand,
+.footer-brand,
+.blog-brand,
+.photo-brand {
+    --lockup-gap: 0.6rem;
+    --lockup-symbol-height: 42px;
+}
+
 button,
 input,
 textarea {
@@ -185,13 +193,18 @@ header .brand {
 header .brand {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: var(--lockup-gap);
     padding-top: 8px;
 }
 
 header .brand img {
-    width: 42px;
-    height: auto;
+    width: auto;
+    height: var(--lockup-symbol-height);
+}
+
+header .brand .brand-wordmark {
+    display: inline-block;
+    line-height: 1;
 }
 
 nav {
@@ -346,7 +359,7 @@ Legacy span styles kept inactive for compatibility with previous markup.
     }
 
     header .brand img {
-        width: 34px;
+        width: auto;
     }
 
     header.scrolled .brand img {
@@ -2187,8 +2200,14 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.6rem;
+    gap: var(--lockup-gap);
     margin-bottom: 0.5rem;
+    --lockup-symbol-height: 32px;
+}
+
+.footer-brand img {
+    width: auto;
+    height: var(--lockup-symbol-height);
 }
 
 .footer-name {
@@ -2196,6 +2215,7 @@ footer {
     font-weight: 400;
     text-transform: lowercase;
     color: var(--logo-wordmark-light);
+    line-height: 1;
 }
 
 .brand--dark,

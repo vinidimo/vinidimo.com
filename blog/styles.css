@@ -76,7 +76,7 @@ body.blog-page {
 .blog-brand {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: var(--lockup-gap);
     padding-top: 8px;
     color: #fff;
     text-decoration: none;
@@ -85,9 +85,11 @@ body.blog-page {
 }
 
 .blog-brand span {
+    display: inline-block;
     font-family: GoGoPosterPunch, Roboto, "Segoe UI", Arial, sans-serif;
     font-weight: 400;
     color: var(--logo-wordmark-light);
+    line-height: 1;
 }
 
 .blog-brand--dark span {
@@ -95,8 +97,8 @@ body.blog-page {
 }
 
 .blog-brand img {
-    width: 42px;
-    height: auto;
+    width: auto;
+    height: var(--lockup-symbol-height);
 }
 
 .blog-home-link {

@@ -99,7 +99,7 @@ img {
 .photo-brand {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
+    gap: var(--lockup-gap);
     letter-spacing: 0.04em;
     text-transform: lowercase;
     font-size: 1.5rem;
@@ -107,9 +107,11 @@ img {
 }
 
 .photo-brand span {
+    display: inline-block;
     font-family: GoGoPosterPunch, Roboto, "Segoe UI", Arial, sans-serif;
     font-weight: 400;
     color: var(--logo-wordmark-light);
+    line-height: 1;
 }
 
 .photo-brand--dark span {
@@ -117,8 +119,8 @@ img {
 }
 
 .photo-brand img {
-    width: 42px;
-    height: 42px;
+    width: auto;
+    height: var(--lockup-symbol-height);
 }
 
 .photo-link-pill,

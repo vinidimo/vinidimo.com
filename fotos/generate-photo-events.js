@@ -259,6 +259,7 @@ ${cards}
             </div>
         </footer>
     </div>
+    <script src="../year.js"></script>
     <script src="./main.js"></script>
 </body>
 </html>
@@ -367,6 +368,7 @@ ${buildPhotoCards(event)}
             </div>
         </div>
     </div>
+    <script src="../year.js"></script>
     <script src="../main.js"></script>
 </body>
 </html>
