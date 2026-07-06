@@ -345,7 +345,7 @@ ${buildPhotoCards(event)}
                     <div class="selection-summary-actions">
                         <button class="summary-button is-ghost" type="button" data-clear-selection>Deselecionar</button>
                         <button class="summary-button" type="button" data-copy-selection>Copiar codigos</button>
-                        <a class="summary-button is-primary" data-whatsapp-selection href="https://wa.me/${escapeHtml(event.salesPhone)}" target="_blank" rel="noopener noreferrer">Fazer pedido</a>
+                        <a class="summary-button is-primary" data-whatsapp-selection href="https://wa.me/" target="_blank" rel="noopener noreferrer">Fazer pedido</a>
                     </div>
                 </div>
             </section>

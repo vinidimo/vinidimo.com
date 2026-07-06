@@ -134,7 +134,7 @@ if (whatsForm) {
         const email = document.getElementById("email")?.value.trim() ?? "";
         const mensagem = document.getElementById("mensagem")?.value.trim() ?? "";
         const texto = encodeURIComponent(`Olá, meu nome é ${nome} (${email}).\n${mensagem}`);
-        window.open(`https://wa.me/5511945144513?text=${texto}`, "_blank", "noopener");
+        window.open(`https://wa.me/?text=${texto}`, "_blank", "noopener");
     });
 }
 

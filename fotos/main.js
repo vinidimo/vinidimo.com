@@ -212,7 +212,7 @@ async function initEventPage() {
             `Pagina do evento: ${window.location.href}`
         ].join("\n");
 
-        whatsappButton.href = `https://wa.me/${normalizedEventData.salesPhone}?text=${encodeURIComponent(message)}`;
+        whatsappButton.href = `https://wa.me/?text=${encodeURIComponent(message)}`;
         persistSelection();
     }
 
