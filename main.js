@@ -142,6 +142,8 @@ const contactForm = document.getElementById("contactForm");
 const formStatus = document.getElementById("formStatus");
 if (contactForm) {
     const submitButton = contactForm.querySelector('button[type="submit"]');
+    const honeypotField = contactForm.querySelector('[name="website"]');
+    const formStartedAt = Date.now();
 
     if (submitButton instanceof HTMLButtonElement) {
         submitButton.textContent = "Enviar mensagem";
@@ -149,6 +151,19 @@ if (contactForm) {
 
     contactForm.addEventListener("submit", async event => {
         event.preventDefault();
+
+        if (honeypotField instanceof HTMLInputElement && honeypotField.value.trim() !== "") {
+            return;
+        }
+
+        if (Date.now() - formStartedAt < 5000) {
+            if (formStatus) {
+                formStatus.textContent = "Aguarde alguns segundos e tente novamente.";
+                formStatus.dataset.state = "error";
+            }
+            return;
+        }
+
         const formData = new FormData(contactForm);
 
         if (formStatus) {

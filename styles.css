@@ -1583,6 +1583,16 @@ textarea {
     font-family: inherit;
 }
 
+.contact-honeypot {
+    display: none !important;
+    position: absolute !important;
+    left: -9999px !important;
+    width: 1px !important;
+    height: 1px !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
 form button[type="submit"] {
     width: 100%;
     grid-column: 1 / -1;

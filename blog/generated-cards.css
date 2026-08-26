@@ -1,3 +1,8 @@
+.blog-post-card--rgb-e-cmyk-diferenca-entre-luz-e-tinta {
+    --tag-color: #3aaed8;
+    --card-cover-image: url("./rgb-e-cmyk-diferenca-entre-luz-e-tinta/cover.png");
+}
+
 .blog-post-card--identidade-visual-para-pequenas-empresas {
     --tag-color: #5bc0be;
     --card-cover-image: url("./identidade-visual-para-pequenas-empresas/cover.webp");
@@ -73,11 +78,6 @@
     --card-cover-image: url("./quando-vale-refazer-a-identidade-visual/cover.webp");
 }
 
-.blog-post-card--erros-de-design-que-enfraquecem-uma-marca {
-    --tag-color: #f94144;
-    --card-cover-image: url("./erros-de-design-que-enfraquecem-uma-marca/cover.webp");
-}
-
 .blog-post-card--como-contratar-um-designer-freelancer {
     --tag-color: #f3722c;
     --card-cover-image: url("./como-contratar-um-designer-freelancer/cover.webp");
@@ -86,9 +86,4 @@
 .blog-post-card--como-escolher-um-designer-para-sua-empresa {
     --tag-color: #f8961e;
     --card-cover-image: url("./como-escolher-um-designer-para-sua-empresa/cover.webp");
-}
-
-.blog-post-card--rgb-e-cmyk-diferenca-entre-luz-e-tinta {
-    --tag-color: #3aaed8;
-    --card-cover-image: url("./rgb-e-cmyk-diferenca-entre-luz-e-tinta/cover.png");
 }
