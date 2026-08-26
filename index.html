@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data:; style-src 'self'; script-src 'self' 'sha256-HZpXrHVTN1CYo8P/fABD91o+bkj4Nn2Fkl4nVxJqe38='; font-src 'self'; connect-src 'self'; form-action 'self'; upgrade-insecure-requests">
+        content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data:; style-src 'self'; script-src 'self' 'sha256-HZpXrHVTN1CYo8P/fABD91o+bkj4Nn2Fkl4nVxJqe38='; font-src 'self'; connect-src 'self' https://api.web3forms.com; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="Criamos soluções visuais para marcas e negócios com foco em identidade visual, fotografia, design digital, materiais gráficos e sites.">
@@ -29,7 +29,7 @@
     <link rel="icon" type="image/svg+xml" href="assets/logo-white.svg"
         media="(prefers-color-scheme: dark)">
     <link rel="preload" href="assets/fonts/roboto-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=20260826-1">
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -415,10 +415,13 @@
             <p>Se você quer fortalecer a forma como o seu negócio se apresenta, envie sua ideia e vamos entender
                 juntos o que faz mais sentido para o seu momento.</p>
             <div class="form-wrap">
-                <form class="two-col" id="whatsForm">
+                <form class="two-col" id="contactForm">
+                    <input type="hidden" name="access_key" value="d0a232d0-2ed5-4650-8bdc-ca7f721a0e0a">
+                    <input type="hidden" name="subject" value="Novo contato pelo site vinidimo">
+                    <input type="hidden" name="from_name" value="vinidimo">
                     <div class="field">
                         <label for="nome">Seu nome</label>
-                        <input type="text" id="nome" name="nome" placeholder="Seu nome" autocomplete="name" required>
+                        <input type="text" id="nome" name="name" placeholder="Seu nome" autocomplete="name" required>
                     </div>
                     <div class="field">
                         <label for="email">Seu e-mail</label>
@@ -427,9 +430,10 @@
                     </div>
                     <div class="field field-full">
                         <label for="mensagem">Explique sua ideia</label>
-                        <textarea id="mensagem" name="mensagem" rows="6" placeholder="Explique sua ideia"
+                        <textarea id="mensagem" name="message" rows="6" placeholder="Explique sua ideia"
                             autocomplete="off" required></textarea>
                     </div>
+                    <div class="form-status" id="formStatus" aria-live="polite"></div>
                     <button type="submit">Solicitar orçamento no WhatsApp</button>
                 </form>
             </div>
@@ -457,9 +461,6 @@
             </a>
             <a href="mailto:contato@vinidimo.com" aria-label="E-mail">
                 <img src="assets/icons/gmail.svg" alt="E-mail" width="24" height="24">
-            </a>
-            <a href="https://wa.me/" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-                <img src="assets/icons/whatsapp.svg" alt="WhatsApp" width="24" height="24">
             </a>
             <a href="https://www.youtube.com/@dimovinicius" target="_blank" rel="noopener noreferrer"
                 aria-label="YouTube">

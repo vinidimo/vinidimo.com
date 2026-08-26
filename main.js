@@ -138,6 +138,58 @@ if (whatsForm) {
     });
 }
 
+const contactForm = document.getElementById("contactForm");
+const formStatus = document.getElementById("formStatus");
+if (contactForm) {
+    const submitButton = contactForm.querySelector('button[type="submit"]');
+
+    if (submitButton instanceof HTMLButtonElement) {
+        submitButton.textContent = "Enviar mensagem";
+    }
+
+    contactForm.addEventListener("submit", async event => {
+        event.preventDefault();
+        const formData = new FormData(contactForm);
+
+        if (formStatus) {
+            formStatus.textContent = "Enviando mensagem...";
+            formStatus.dataset.state = "loading";
+        }
+
+        if (submitButton instanceof HTMLButtonElement) {
+            submitButton.disabled = true;
+        }
+
+        try {
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                body: formData
+            });
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                throw new Error(result.message || "Nao foi possivel enviar a mensagem.");
+            }
+
+            contactForm.reset();
+
+            if (formStatus) {
+                formStatus.textContent = "Mensagem enviada com sucesso. Vou responder no seu e-mail.";
+                formStatus.dataset.state = "success";
+            }
+        } catch (error) {
+            if (formStatus) {
+                formStatus.textContent = "Nao foi possivel enviar agora. Tente novamente em instantes.";
+                formStatus.dataset.state = "error";
+            }
+        } finally {
+            if (submitButton instanceof HTMLButtonElement) {
+                submitButton.disabled = false;
+            }
+        }
+    });
+}
+
 function updateBgZoom() {
     if (reducedMotion) {
         return;

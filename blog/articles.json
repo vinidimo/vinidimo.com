@@ -250,5 +250,19 @@
     "order": 18,
     "cover": "blog/como-escolher-um-designer-para-sua-empresa/cover.webp",
     "tagColor": "#f8961e"
+  },
+  {
+    "slug": "rgb-e-cmyk-diferenca-entre-luz-e-tinta",
+    "title": "RGB e CMYK: por que misturar luz não é o mesmo que misturar tinta",
+    "description": "Entenda a diferença entre RGB e CMYK e por que misturar luzes produz resultados diferentes de misturar tintas, pigmentos e cores de impressão.",
+    "category": "Design",
+    "intro": "Uma explicação simples para entender por que telas e impressoras trabalham com cores de maneiras diferentes.",
+    "tag": "Cor",
+    "readTime": "Leitura de 7 min",
+    "displayDate": "Publicado em 26 de agosto de 2026",
+    "datePublished": "2026-08-26",
+    "order": 19,
+    "cover": "blog/rgb-e-cmyk-diferenca-entre-luz-e-tinta/cover.png",
+    "tagColor": "#3aaed8"
   }
 ]

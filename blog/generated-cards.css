@@ -87,3 +87,8 @@
     --tag-color: #f8961e;
     --card-cover-image: url("./como-escolher-um-designer-para-sua-empresa/cover.webp");
 }
+
+.blog-post-card--rgb-e-cmyk-diferenca-entre-luz-e-tinta {
+    --tag-color: #3aaed8;
+    --card-cover-image: url("./rgb-e-cmyk-diferenca-entre-luz-e-tinta/cover.png");
+}

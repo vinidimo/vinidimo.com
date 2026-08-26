@@ -1024,9 +1024,9 @@ section p {
     --service-card-icon-background-color: rgba(24, 24, 27, 0.04);
     --service-card-icon-border-color: rgba(24, 24, 27, 0.1);
     --service-card-shine-opacity: 0.3;
-    --service-card-shine-gradient: conic-gradient(from 225deg at 50% 50%, rgba(16, 185, 129, 0) 0deg, #10b981 25deg, #edfaf6 285deg, #ffffff 345deg, rgba(16, 185, 129, 0) 360deg);
+    --service-card-shine-gradient: conic-gradient(from 225deg at 50% 50%, rgba(125, 211, 252, 0) 0deg, #7dd3fc 25deg, #edf8ff 285deg, #ffffff 345deg, rgba(125, 211, 252, 0) 360deg);
     --service-card-line-color: #e9e9e7;
-    --service-card-tile-color: rgba(16, 185, 129, 0.08);
+    --service-card-tile-color: rgba(125, 211, 252, 0.08);
     --service-card-hover-border-color: rgba(24, 24, 27, 0.15);
     --service-card-hover-box-shadow-1: rgba(24, 24, 27, 0.05);
     --service-card-hover-box-shadow-1-y: 3px;
@@ -1598,6 +1598,29 @@ form button[type="submit"] {
 
 form button[type="submit"]:hover {
     background: #0088cc;
+}
+
+form button[type="submit"]:disabled {
+    cursor: wait;
+    opacity: 0.7;
+}
+
+.form-status {
+    grid-column: 1 / -1;
+    min-height: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.form-status[data-state="loading"] {
+    color: #475569;
+}
+
+.form-status[data-state="success"] {
+    color: #15803d;
+}
+
+.form-status[data-state="error"] {
+    color: #b91c1c;
 }
 
 @media(min-width:880px) {
