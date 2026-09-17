@@ -3,6 +3,11 @@
     --card-cover-image: url("./rgb-e-cmyk-diferenca-entre-luz-e-tinta/cover.png");
 }
 
+.blog-post-card--teoria-das-cores-como-compor-paletas {
+    --tag-color: #e8ac64;
+    --card-cover-image: url("./teoria-das-cores-como-compor-paletas/cover.png");
+}
+
 .blog-post-card--identidade-visual-para-pequenas-empresas {
     --tag-color: #5bc0be;
     --card-cover-image: url("./identidade-visual-para-pequenas-empresas/cover.webp");
@@ -26,11 +31,6 @@
 .blog-post-card--logo-logotipo-e-logomarca {
     --tag-color: #c77dff;
     --card-cover-image: url("./logo-logotipo-e-logomarca/cover.webp");
-}
-
-.blog-post-card--o-que-esta-incluso-em-uma-identidade-visual-profissional {
-    --tag-color: #06d6a0;
-    --card-cover-image: url("./o-que-esta-incluso-em-uma-identidade-visual-profissional/cover.webp");
 }
 
 .blog-post-card--logo-novo-ou-rebranding {

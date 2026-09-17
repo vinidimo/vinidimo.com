@@ -1,0 +1,7 @@
+.color-figure { margin: 0.75rem 0 1.25rem; min-width: 0; }
+.color-figure img { width: 100%; height: auto; border: 1px solid #e3e0da; border-radius: 16px; background: #faf8f3; }
+.color-figure figcaption { margin-top: 0.75rem; color: #52606d; font-size: 0.9rem; line-height: 1.6; }
+.color-toc { padding: 1.25rem 1.5rem; background: #f5f1e8; border-radius: 16px; }
+.color-toc ol { display: grid; gap: 0.35rem; }
+.blog-article-body h2[id] { scroll-margin-top: 110px; }
+.color-reference-list { font-size: 0.95rem; }
