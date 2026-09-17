@@ -313,13 +313,15 @@ function setupHeroBackgroundCarousel() {
     const slides = backgroundImages.map((image, index) => {
         const slide = document.createElement("div");
         slide.className = "hero-background-slide";
+        const isVideo = /\.(mp4|webm|ogg)$/i.test(image);
+        let video = null;
 
-        if (/\.(mp4|webm|ogg)$/i.test(image)) {
-            const video = document.createElement("video");
+        if (isVideo) {
+            video = document.createElement("video");
             video.src = image;
             video.autoplay = true;
             video.muted = true;
-            video.loop = true;
+            video.loop = backgroundImages.length <= 1;
             video.playsInline = true;
             video.preload = "metadata";
             slide.append(video);
@@ -332,7 +334,7 @@ function setupHeroBackgroundCarousel() {
         }
 
         heroBackgroundCarousel.append(slide);
-        return slide;
+        return { element: slide, video };
     });
 
     if (slides.length <= 1 || reducedMotion) {
@@ -340,11 +342,31 @@ function setupHeroBackgroundCarousel() {
     }
 
     let activeIndex = 0;
-    heroBackgroundTimer = window.setInterval(() => {
-        slides[activeIndex].classList.remove("active");
+
+    function showNextSlide() {
+        window.clearTimeout(heroBackgroundTimer);
+        slides[activeIndex].element.classList.remove("active");
         activeIndex = (activeIndex + 1) % slides.length;
-        slides[activeIndex].classList.add("active");
-    }, 7000);
+        slides[activeIndex].element.classList.add("active");
+        scheduleNextSlide();
+    }
+
+    function scheduleNextSlide() {
+        const activeSlide = slides[activeIndex];
+
+        if (activeSlide.video) {
+            activeSlide.video.currentTime = 0;
+            activeSlide.video.play().catch(() => {
+                heroBackgroundTimer = window.setTimeout(showNextSlide, 7000);
+            });
+            activeSlide.video.addEventListener("ended", showNextSlide, { once: true });
+            return;
+        }
+
+        heroBackgroundTimer = window.setTimeout(showNextSlide, 7000);
+    }
+
+    scheduleNextSlide();
 }
 
 function updateHeroUnderlineTiming() {
