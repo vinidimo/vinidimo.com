@@ -11,8 +11,6 @@ const navLinks = [...document.querySelectorAll("header nav a")];
 const sections = navLinks
     .map(link => document.querySelector(link.getAttribute("href")))
     .filter(Boolean);
-const heroSlideshow = document.querySelector(".hero-slideshow");
-const heroSlides = [...document.querySelectorAll(".hero-slideshow img")];
 const carousel = document.querySelector(".infinite-carousel");
 const viewport = carousel?.querySelector(".carousel-viewport") ?? null;
 const prevButton = document.querySelector(".carousel-control-previous");
@@ -27,6 +25,8 @@ const lightboxGalleryGrid = document.querySelector(".lightbox-gallery-grid");
 const lightboxZoomOverlay = document.querySelector(".lightbox-zoom-overlay");
 const lightboxZoomStage = document.querySelector(".lightbox-zoom-stage");
 const bgImages = [...document.querySelectorAll(".bg-img")];
+const hero = document.getElementById("hero");
+const heroBackgroundCarousel = document.querySelector(".hero-background-carousel");
 const heroUnderlineWord = document.querySelector(".hero-underline-word");
 const heroUnderlinePath = document.querySelector(".hero-underline-stroke");
 const portfolioLogoTrack = document.querySelector(".portfolio-logo-track");
@@ -41,6 +41,7 @@ let current = 0;
 let currentPosition = 0;
 let targetPosition = 0;
 let slideWidth = 0;
+let heroBackgroundTimer = null;
 let visibleSlides = 3;
 let autoPlayTimer;
 let carouselMeasureFrame = 0;
@@ -49,8 +50,6 @@ let carouselLastFrameTime = 0;
 let carouselCurrentSpeedBoost = 1;
 let carouselPointerInside = false;
 let currentProject = { images: [], index: 0 };
-let heroCurrent = 0;
-let heroTimer;
 const preloadedProjectImages = new Set();
 const decodedProjectImages = new Map();
 const carouselStepDurationMs = 220;
@@ -295,29 +294,57 @@ function enableSwipe(element, onSwipeLeft, onSwipeRight) {
     element.addEventListener("mouseup", onEnd);
 }
 
-function showHero(index) {
-    if (!heroSlides.length) {
+function setupHeroBackgroundCarousel() {
+    if (!hero || !heroBackgroundCarousel) {
         return;
     }
 
-    heroSlides.forEach(slide => slide.classList.remove("active"));
-    heroCurrent = (index + heroSlides.length) % heroSlides.length;
-    heroSlides[heroCurrent].classList.add("active");
-}
+    const backgroundImages = (hero.dataset.heroBackgrounds || "")
+        .split(",")
+        .map(image => image.trim())
+        .filter(Boolean);
 
-function heroNext() {
-    showHero(heroCurrent + 1);
-}
-
-function heroPrev() {
-    showHero(heroCurrent - 1);
-}
-
-function startHeroAuto() {
-    clearInterval(heroTimer);
-    if (!reducedMotion && heroSlides.length > 1) {
-        heroTimer = window.setInterval(heroNext, 8000);
+    if (!backgroundImages.length) {
+        return;
     }
+
+    heroBackgroundCarousel.textContent = "";
+
+    const slides = backgroundImages.map((image, index) => {
+        const slide = document.createElement("div");
+        slide.className = "hero-background-slide";
+
+        if (/\.(mp4|webm|ogg)$/i.test(image)) {
+            const video = document.createElement("video");
+            video.src = image;
+            video.autoplay = true;
+            video.muted = true;
+            video.loop = true;
+            video.playsInline = true;
+            video.preload = "metadata";
+            slide.append(video);
+        } else {
+            slide.style.backgroundImage = `url("${image}")`;
+        }
+
+        if (index === 0) {
+            slide.classList.add("active");
+        }
+
+        heroBackgroundCarousel.append(slide);
+        return slide;
+    });
+
+    if (slides.length <= 1 || reducedMotion) {
+        return;
+    }
+
+    let activeIndex = 0;
+    heroBackgroundTimer = window.setInterval(() => {
+        slides[activeIndex].classList.remove("active");
+        activeIndex = (activeIndex + 1) % slides.length;
+        slides[activeIndex].classList.add("active");
+    }, 7000);
 }
 
 function updateHeroUnderlineTiming() {
@@ -430,26 +457,11 @@ function balancePortfolioLogos() {
     });
 }
 
-heroSlides.forEach(slide => {
-    slide.draggable = false;
-    slide.addEventListener("dragstart", event => event.preventDefault());
-});
-
 setupPortfolioMarquee();
 bindPortfolioLogoListeners();
 balancePortfolioLogos();
+setupHeroBackgroundCarousel();
 updateHeroUnderlineTiming();
-
-if (heroSlides.length > 1) {
-    enableSwipe(heroSlideshow, () => {
-        heroNext();
-        startHeroAuto();
-    }, () => {
-        heroPrev();
-        startHeroAuto();
-    });
-    startHeroAuto();
-}
 
 // Portfolio carousel
 function setCarouselControlsDisabled(disabled) {

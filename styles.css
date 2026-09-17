@@ -519,26 +519,58 @@ section p {
     padding-top: calc(4rem + 72px);
     padding-bottom: 3rem;
     position: relative;
-    background:
-        radial-gradient(circle at top left, rgba(0, 170, 255, 0.24), transparent 38%),
-        radial-gradient(circle at right center, rgba(88, 137, 255, 0.12), transparent 26%),
-        linear-gradient(-45deg, #09111b, #0d1724, #16304d, #0f1f31);
-    background-size: auto, auto, 460% 460%;
+    background: linear-gradient(-45deg, #09111b, #0d1724, #16304d, #0f1f31);
+    background-size: 460% 460%;
     animation: heroGradient 14s ease infinite;
+    isolation: isolate;
     color: #f6f7fb;
 }
 
-#hero::before {
-    content: "";
+.hero-background-carousel {
     position: absolute;
     inset: 0;
-    background-image: url("assets/content/hero-texture-dark-grey-speckled.jpg");
-    background-repeat: repeat;
-    background-size: 420px;
-    mix-blend-mode: soft-light;
-    opacity: 0.12;
-    filter: grayscale(1) brightness(0.4) contrast(1.25);
+    z-index: 0;
+    overflow: hidden;
     pointer-events: none;
+}
+
+.hero-background-slide {
+    position: absolute;
+    top: 50%;
+    right: max(2rem, calc((100vw - 1400px) / 2 + 2rem));
+    width: min(56vw, 780px);
+    height: min(74vh, 720px);
+    background-position: center right;
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: opacity 1.6s ease;
+}
+
+.hero-background-slide.active {
+    opacity: 1;
+}
+
+.hero-background-slide video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center right;
+}
+
+@keyframes heroGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 #hero .container {
@@ -548,66 +580,15 @@ section p {
     grid-template-columns: minmax(0, 1fr) max-content;
     align-items: center;
     gap: 3.8rem;
-    height: auto;
-    max-width: 1200px;
-}
-
-.hero-visual {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    justify-self: center;
-}
-
-.hero-visual::before {
-    content: "";
-    position: absolute;
-    top: 46%;
-    left: 44%;
-    width: 430px;
-    height: 430px;
-    border-radius: 50%;
-    background: rgba(6, 12, 22, 0.38);
-    border: 1px solid rgba(255, 255, 255, 0.04);
-    transform: translate(-50%, -50%);
-    animation: heroOrb 9s ease-in-out infinite;
-    z-index: 0;
-}
-
-.hero-slideshow {
-    position: relative;
-    height: min(60vh, 500px);
-    border-radius: 0;
-    overflow: hidden;
-    width: 380px;
-    max-width: 100%;
-    background: transparent;
-    box-shadow: none;
-    flex: 0 0 380px;
-    z-index: 1;
-}
-
-.hero-slideshow img {
-    position: absolute;
-    inset: 0;
     width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-    opacity: 0;
-    transition: opacity 1s ease;
-    transform: scale(1);
-    animation: zoom 16s ease-in-out infinite alternate;
-    filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.35));
-}
-
-.hero-slideshow img.active {
-    opacity: 1;
-    z-index: 1;
+    height: auto;
+    max-width: 1400px;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 
 #hero .hero-text {
+    justify-self: start;
     max-width: 560px;
 }
 
@@ -833,7 +814,7 @@ section p {
 }
 
 .hero-notes span::before {
-    content: "•";
+    content: "\2022";
     color: var(--brand);
     margin-right: 0.45rem;
 }
@@ -888,26 +869,30 @@ section p {
         padding-right: 0;
     }
 
+    .hero-background-slide {
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background-position: center;
+        transform: none;
+    }
+
+    .hero-background-slide.active {
+        opacity: 0.07;
+    }
+
+    .hero-background-slide video {
+        object-fit: cover;
+        object-position: center;
+    }
+
     #hero .container {
         grid-template-columns: 1fr;
         gap: 1.75rem;
         padding-left: 1.25rem;
         padding-right: 1.25rem;
-        justify-items: center;
-    }
-
-    .hero-visual {
-        order: -1;
-        width: 100%;
-        gap: 0;
-        justify-content: center;
-    }
-
-    .hero-visual::before {
-        width: 320px;
-        height: 320px;
-        top: 44%;
-        left: 46%;
+        justify-items: start;
     }
 
     .hero-links {
@@ -954,57 +939,8 @@ section p {
         text-align: center;
     }
 
-    .hero-slideshow {
-        width: 280px;
-        max-width: 100%;
-        height: min(40vh, 330px);
-        justify-self: center;
-        flex-basis: 280px;
-    }
-
     .hero-notes {
         margin-top: 1.2rem;
-    }
-}
-
-@keyframes zoom {
-    from {
-        transform: scale(1);
-    }
-
-    to {
-        transform: scale(1.15);
-    }
-}
-
-@keyframes heroGradient {
-    0% {
-        background-position: 0 0, 100% 50%, 0% 50%;
-    }
-
-    50% {
-        background-position: 0 0, 100% 50%, 100% 50%;
-    }
-
-    100% {
-        background-position: 0 0, 100% 50%, 0% 50%;
-    }
-}
-
-@keyframes heroOrb {
-    0% {
-        transform: translate(-50%, -50%) translate3d(-10px, 8px, 0) scale(0.98);
-        opacity: 0.84;
-    }
-
-    50% {
-        transform: translate(-50%, -50%) translate3d(8px, -6px, 0) scale(1.02);
-        opacity: 0.96;
-    }
-
-    100% {
-        transform: translate(-50%, -50%) translate3d(-10px, 8px, 0) scale(0.98);
-        opacity: 0.84;
     }
 }
 
@@ -1999,13 +1935,11 @@ footer {
     min-height: 8.75rem;
     margin-bottom: -6.4rem;
     padding: 1.4rem 1.5rem 4.75rem;
-    background: linear-gradient(
-        180deg,
-        rgba(0, 0, 0, 0.92) 0%,
-        rgba(0, 0, 0, 0.78) 38%,
-        rgba(0, 0, 0, 0.42) 68%,
-        rgba(0, 0, 0, 0) 100%
-    );
+    background: linear-gradient(180deg,
+            rgba(0, 0, 0, 0.92) 0%,
+            rgba(0, 0, 0, 0.78) 38%,
+            rgba(0, 0, 0, 0.42) 68%,
+            rgba(0, 0, 0, 0) 100%);
     pointer-events: none;
 }
 
