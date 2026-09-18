@@ -617,6 +617,9 @@ section p {
     display: inline-block;
     white-space: nowrap;
     padding-bottom: 0.22em;
+    color: rgba(84, 160, 255, 0.96);
+    font-style: italic;
+    font-weight: 800;
 }
 
 #hero .hero-underline-word svg {
