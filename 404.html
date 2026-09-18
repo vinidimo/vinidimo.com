@@ -105,9 +105,17 @@
 
         .error-text {
             font-family: Montserrat, Roboto, "Segoe UI", Arial, sans-serif;
-            font-size: 210px;
             font-weight: 900;
             letter-spacing: -0.08em;
+        }
+
+        .error-text--top {
+            font-size: 210px;
+        }
+
+        .error-text--bottom {
+            font-size: 118px;
+            letter-spacing: -0.06em;
         }
 
         .home-link-404 {
@@ -133,8 +141,13 @@
         }
 
         @media (max-width: 760px) {
-            .error-text {
+            .error-text--top {
                 font-size: 180px;
+            }
+
+            .error-text--bottom {
+                font-size: 54px;
+                letter-spacing: -0.08em;
             }
 
             .home-link-404 {
@@ -212,12 +225,13 @@
             </g>
 
             <g class="error-copy">
-                <text class="error-text" fill="#fff" x="600" y="360" text-anchor="middle">404</text>
+                <text class="error-text error-text--top" fill="#fff" x="600" y="360" text-anchor="middle">404</text>
             </g>
 
             <g mask="url(#m)">
                 <rect fill="#fff" width="100%" height="100%" />
-                <text class="error-text" x="600" y="360" text-anchor="middle" fill="#162a43">404</text>
+                <text class="error-text error-text--bottom" x="600" y="360" text-anchor="middle" fill="#162a43">NOT
+                    FOUND</text>
             </g>
 
         </svg>
