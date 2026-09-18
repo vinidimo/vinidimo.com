@@ -982,6 +982,7 @@ section p {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 2rem;
+    margin-top: 0.75rem;
 }
 
 .service-card {
@@ -990,7 +991,7 @@ section p {
         0 var(--service-card-box-shadow-1-y) var(--service-card-box-shadow-1-blur) var(--service-card-box-shadow-1),
         0 var(--service-card-box-shadow-2-y) var(--service-card-box-shadow-2-blur) var(--service-card-box-shadow-2),
         0 0 0 1px var(--service-card-border-color);
-    padding: 3rem 1rem 1rem;
+    padding: 1rem;
     border-radius: 15px;
     cursor: default;
     position: relative;
@@ -1010,7 +1011,7 @@ section p {
     z-index: 2;
     position: relative;
     display: table;
-    padding: 8px;
+    padding: 10px;
     margin: 0 auto;
 }
 
@@ -1029,8 +1030,8 @@ section p {
     position: relative;
     z-index: 1;
     display: block;
-    width: 24px;
-    height: 24px;
+    width: 34px;
+    height: 34px;
     transform: translateZ(0);
     color: var(--service-card-icon-color);
     transition: color .25s ease;
