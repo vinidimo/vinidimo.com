@@ -33,6 +33,7 @@ const portfolioLogoTrack = document.querySelector(".portfolio-logo-track");
 const currentScales = new WeakMap();
 const visibleBackgrounds = new Set();
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const heroVideoReplayDelay = 3000;
 
 let projects = [];
 let originalSlides = [];
@@ -321,7 +322,7 @@ function setupHeroBackgroundCarousel() {
             video.src = image;
             video.autoplay = true;
             video.muted = true;
-            video.loop = backgroundImages.length <= 1;
+            video.loop = false;
             video.playsInline = true;
             video.preload = "metadata";
             slide.append(video);
@@ -337,7 +338,22 @@ function setupHeroBackgroundCarousel() {
         return { element: slide, video };
     });
 
-    if (slides.length <= 1 || reducedMotion) {
+    if (slides.length <= 1) {
+        const onlyVideo = slides[0].video;
+
+        if (onlyVideo && !reducedMotion) {
+            onlyVideo.addEventListener("ended", () => {
+                heroBackgroundTimer = window.setTimeout(() => {
+                    onlyVideo.currentTime = 0;
+                    onlyVideo.play().catch(() => {});
+                }, heroVideoReplayDelay);
+            });
+        }
+
+        return;
+    }
+
+    if (reducedMotion) {
         return;
     }
 
@@ -359,7 +375,9 @@ function setupHeroBackgroundCarousel() {
             activeSlide.video.play().catch(() => {
                 heroBackgroundTimer = window.setTimeout(showNextSlide, 7000);
             });
-            activeSlide.video.addEventListener("ended", showNextSlide, { once: true });
+            activeSlide.video.addEventListener("ended", () => {
+                heroBackgroundTimer = window.setTimeout(showNextSlide, heroVideoReplayDelay);
+            }, { once: true });
             return;
         }
 
