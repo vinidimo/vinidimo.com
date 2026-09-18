@@ -1,3 +1,11 @@
+@font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("../assets/fonts/inter-variable.woff2") format("woff2");
+}
+
 :root {
     --blog-bg: #f5f1e8;
     --blog-ink: #18202a;
@@ -33,7 +41,7 @@
 body.blog-page {
     margin: 0;
     color: var(--blog-ink);
-    font-family: Roboto, "Segoe UI", Arial, sans-serif;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
     line-height: 1.7;
     background: #fff;
 }
@@ -86,7 +94,7 @@ body.blog-page {
 
 .blog-brand span {
     display: inline-block;
-    font-family: GoGoPosterPunch, Roboto, "Segoe UI", Arial, sans-serif;
+    font-family: GoGoPosterPunch, Inter, "Segoe UI", Arial, sans-serif;
     font-weight: 400;
     color: var(--logo-wordmark-light);
     line-height: 1;
@@ -226,7 +234,7 @@ body.blog-page {
 .blog-post-card h3 {
     margin: 0;
     color: var(--card-heading);
-    font-family: "Roboto", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 1.4rem;
     font-weight: 600;
     line-height: 1.15;
@@ -250,7 +258,7 @@ body.blog-page {
     width: 100%;
     padding: 0 2.3rem;
     color: var(--card-text);
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
     font-size: 1rem;
     line-height: 1.5;
     opacity: 0;
@@ -286,7 +294,7 @@ body.blog-page {
 .blog-post-card .animated-arrow .text {
     margin-right: 16px;
     color: inherit;
-    font-family: "Roboto", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 0.92rem;
     font-weight: 700;
     letter-spacing: 0.02em;
@@ -397,7 +405,7 @@ body.blog-page {
     display: inline-flex;
     align-items: center;
     color: var(--card-text);
-    font-family: "Roboto", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 0.86rem;
 }
 

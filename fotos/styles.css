@@ -1,3 +1,11 @@
+@font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("../assets/fonts/inter-variable.woff2") format("woff2");
+}
+
 :root {
     --photo-bg: #f5f9fd;
     --logo-wordmark-light: #e2e2e2;
@@ -33,7 +41,7 @@ html {
 
 body {
     margin: 0;
-    font-family: Roboto, "Segoe UI", Arial, sans-serif;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
     color: var(--photo-ink);
     background:
         radial-gradient(circle at top left, rgba(0, 170, 255, 0.12), transparent 28%),
@@ -108,7 +116,7 @@ img {
 
 .photo-brand span {
     display: inline-block;
-    font-family: GoGoPosterPunch, Roboto, "Segoe UI", Arial, sans-serif;
+    font-family: GoGoPosterPunch, Inter, "Segoe UI", Arial, sans-serif;
     font-weight: 400;
     color: var(--logo-wordmark-light);
     line-height: 1;

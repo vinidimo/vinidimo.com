@@ -33,7 +33,63 @@ const portfolioLogoTrack = document.querySelector(".portfolio-logo-track");
 const currentScales = new WeakMap();
 const visibleBackgrounds = new Set();
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const heroVideoReplayDelay = 3000;
+
+// Animate the About statistics once when they become visible.
+function initAboutCounters() {
+    const stats = document.querySelector(".about-stats");
+    if (!stats || reducedMotion || !("IntersectionObserver" in window)) return;
+
+    const counters = [...stats.querySelectorAll("[data-count-to]")].map(element => {
+        const target = Number(element.dataset.countTo);
+        const duration = Number(element.dataset.countDuration) || 1600;
+        const prefix = element.dataset.countPrefix || "";
+        const suffix = element.dataset.countSuffix || "";
+        const value = document.createElement("span");
+        value.setAttribute("aria-hidden", "true");
+        element.setAttribute("aria-label", element.textContent.trim());
+        element.replaceChildren(value);
+        const render = number => {
+            value.textContent = `${prefix}${number}${suffix}`;
+        };
+        render(0);
+        return { target, duration, render };
+    });
+
+    const observer = new IntersectionObserver(entries => {
+        if (!entries.some(entry => entry.isIntersecting)) return;
+        observer.disconnect();
+
+        counters.forEach(({ target, duration, render }) => {
+            let start;
+            function animate(timestamp) {
+                start ??= timestamp;
+                const progress = Math.min((timestamp - start) / duration, 1);
+                // A gentle ease-in-out keeps small integer counts moving near the end.
+                const eased = 0.65 * progress + 0.35 * (1 - Math.cos(Math.PI * progress)) / 2;
+                render(progress === 1 ? target : Math.floor(target * eased));
+                if (progress < 1) requestAnimationFrame(animate);
+            }
+            requestAnimationFrame(animate);
+        });
+    }, { threshold: 0.25 });
+
+    observer.observe(stats);
+}
+
+initAboutCounters();
+const heroVideoReplayDelay = 4000;
+
+const heroFeatureVideo = document.querySelector(".hero-feature-video");
+if (heroFeatureVideo) {
+    let replayTimer;
+    heroFeatureVideo.addEventListener("ended", () => {
+        window.clearTimeout(replayTimer);
+        replayTimer = window.setTimeout(() => {
+            heroFeatureVideo.currentTime = 0;
+            heroFeatureVideo.play().catch(() => { });
+        }, heroVideoReplayDelay);
+    });
+}
 
 let projects = [];
 let originalSlides = [];
@@ -322,7 +378,7 @@ function setupHeroBackgroundCarousel() {
             video.src = image;
             video.autoplay = true;
             video.muted = true;
-            video.loop = false;
+            video.loop = backgroundImages.length === 1;
             video.playsInline = true;
             video.preload = "metadata";
             slide.append(video);
@@ -339,17 +395,6 @@ function setupHeroBackgroundCarousel() {
     });
 
     if (slides.length <= 1) {
-        const onlyVideo = slides[0].video;
-
-        if (onlyVideo && !reducedMotion) {
-            onlyVideo.addEventListener("ended", () => {
-                heroBackgroundTimer = window.setTimeout(() => {
-                    onlyVideo.currentTime = 0;
-                    onlyVideo.play().catch(() => {});
-                }, heroVideoReplayDelay);
-            });
-        }
-
         return;
     }
 

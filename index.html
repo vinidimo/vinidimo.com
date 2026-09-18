@@ -26,8 +26,8 @@
     <link rel="canonical" href="https://vinidimo.com/">
     <link rel="icon" type="image/svg+xml" href="assets/logo-black.svg" media="(prefers-color-scheme: light)">
     <link rel="icon" type="image/svg+xml" href="assets/logo-white.svg" media="(prefers-color-scheme: dark)">
-    <link rel="preload" href="assets/fonts/roboto-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="styles.css?v=20260826-1">
+    <link rel="preload" href="assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="styles.css?v=20260918-5">
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -73,8 +73,10 @@
         </div>
     </header>
 
-    <section id="hero" data-hero-backgrounds="assets/content/nfs893bf363fj674562nd7.webm">
+    <section id="hero" data-hero-backgrounds="assets/content/k23nf0w3hnd34da827nda.webm">
         <div class="hero-background-carousel" aria-hidden="true"></div>
+        <video class="hero-feature-video" src="assets/content/nfs893bf363fj674562nd7.webm" autoplay muted playsinline
+            preload="metadata" aria-hidden="true"></video>
         <div class="container">
             <div class="hero-text">
                 <span class="hero-tag">Soluções visuais para marcas e negócios</span>
@@ -123,7 +125,7 @@
         <div class="bg-img bg-services">
         </div>
         <div class="container fade-in">
-            <h2>Soluções completas para<br>
+            <h2>Soluções <span class="text-brand">completas</span> para<br>
                 impulsionar o seu negócio
             </h2>
             <p>Cada projeto pede uma combinação diferente de recursos, mas o objetivo é o mesmo: transformar boas
@@ -325,7 +327,10 @@
 
     <section id="portfolio">
         <div class="container fade-in">
-            <h2>Quando a comunicação ganha forma, o resultado aparece</h2>
+            <h2>
+                Quando a comunicação ganha forma,<br>
+                o <span class="text-brand">resultado</span> aparece
+            </h2>
             <p>Cada projeto reúne escolhas visuais, direção e intenção para traduzir melhor o que a marca quer dizer.
                 Aqui estão alguns trabalhos desenvolvidos a partir dessa lógica.</p>
 
@@ -478,14 +483,35 @@
         <div class="bg-img bg-about">
         </div>
         <div class="bg-content">
-            <div class="container bg-inner fade-in">
-                <h2>Por trás de cada projeto</h2>
-                <p>Antes de pensar em estética, pensamos em percepção. O ponto de partida é entender o que a marca
-                    precisa transmitir, como quer ser vista e onde sua comunicação precisa evoluir.</p>
-                <p>A partir disso, cada solução é construída com mais critério, unindo direção visual, clareza e
-                    consistência para que a apresentação faça sentido no todo, e não só em peças isoladas.</p>
-                <p>O resultado é um trabalho mais alinhado, mais intencional e mais preparado para representar a marca
-                    com força e profissionalismo.</p>
+            <div class="container bg-inner fade-in about-layout">
+                <div class="about-copy">
+                    <h2>Design com<br><em>propósito</em>.<br>Parceria de<br><span
+                            class="about-highlight">verdade</span>.</h2>
+                    <p>Antes de criar, a gente escuta. Queremos conhecer sua história, entender seu público e descobrir
+                        o que faz sua marca ser única. É dessa troca que nasce um trabalho com a sua identidade.</p>
+                    <p>Unimos design, fotografia e desenvolvimento para transformar essa essência em uma presença visual
+                        coerente. Do primeiro rascunho à entrega, você tem uma parceria próxima, com atenção aos
+                        detalhes e às necessidades do seu negócio.</p>
+                    <a class="about-cta" href="#contato">Vamos conversar sobre sua marca <span
+                            aria-hidden="true">→</span></a>
+                </div>
+                <dl class="about-stats" aria-label="Nosso trabalho em números">
+                    <div class="about-stat">
+                        <dt>Anos de experiência</dt>
+                        <dd data-about-stat="experience" data-count-to="10" data-count-duration="700"
+                            data-count-prefix="+">+10</dd>
+                    </div>
+                    <div class="about-stat">
+                        <dt>Projetos desenvolvidos</dt>
+                        <dd data-about-stat="projects" data-count-to="700" data-count-duration="2100"
+                            data-count-prefix="+">+700</dd>
+                    </div>
+                    <div class="about-stat">
+                        <dt>Foco na sua marca</dt>
+                        <dd data-about-stat="focus" data-count-to="100" data-count-duration="1400"
+                            data-count-suffix="%">100%</dd>
+                    </div>
+                </dl>
             </div>
         </div>
     </section>
@@ -512,9 +538,9 @@
                             inputmode="email" required>
                     </div>
                     <div class="field field-full">
-                        <label for="mensagem">Explique sua ideia</label>
-                        <textarea id="mensagem" name="message" rows="6" placeholder="Explique sua ideia"
-                            autocomplete="off" required></textarea>
+                        <label for="mensagem">Mensagem</label>
+                        <textarea id="mensagem" name="message" rows="6" placeholder="Mensagem" autocomplete="off"
+                            required></textarea>
                     </div>
                     <div class="form-status" id="formStatus" aria-live="polite"></div>
                     <button type="submit">Solicitar orçamento no WhatsApp</button>
@@ -575,7 +601,7 @@
     </div>
 
     <script src="year.js"></script>
-    <script src="main.js"></script>
+    <script src="main.js?v=20260918-6"></script>
 </body>
 
 </html>
