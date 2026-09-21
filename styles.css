@@ -882,6 +882,16 @@ section p {
     }
 }
 
+@media (min-width: 901px) and (max-width: 1599px) {
+    #hero .hero-text {
+        max-width: 55%;
+    }
+
+    .hero-feature-video {
+        width: 40vw;
+    }
+}
+
 @media (max-width: 900px) {
     #hero {
         padding-top: calc(4.5rem + 36px);
