@@ -435,6 +435,30 @@ body.blog-page {
     bottom: 72px;
 }
 
+@media (hover: none), (pointer: coarse) {
+    .blog-post-card {
+        touch-action: manipulation;
+    }
+
+    .blog-post-card .card-info {
+        bottom: 120px;
+        opacity: 1;
+        transition: none;
+    }
+
+    .blog-post-card .card-cta {
+        bottom: 72px;
+        opacity: 1;
+        transition: none;
+    }
+
+    .blog-post-card .color-overlay,
+    .blog-post-card:hover .color-overlay,
+    .blog-post-card:focus-visible .color-overlay {
+        background: rgba(10, 17, 25, 0.48);
+    }
+}
+
 .blog-post-card .card-cta:hover .animated-arrow,
 .blog-post-card .card-cta:focus-visible .animated-arrow {
     color: rgba(255, 255, 255, 0.72);
