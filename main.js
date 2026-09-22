@@ -1073,3 +1073,32 @@ loadProjectsFromDocument().catch(error => {
 onScrollHeader();
 setActiveNavLink();
 
+// Reveal the footer beneath the content using native scrolling.
+function setupFooterReveal() {
+    const footer = document.querySelector("body > footer");
+    const content = document.querySelector(".site-content");
+    if (!footer || !content || reducedMotion) return;
+
+    function updateFooterSpace() {
+        const footerHeight = Math.ceil(footer.getBoundingClientRect().height);
+        const headerHeight = header?.getBoundingClientRect().height || 0;
+        const fitsViewport = footerHeight + headerHeight + 32 < window.innerHeight;
+        document.body.style.setProperty("--footer-reveal-height", `${footerHeight}px`);
+        document.body.classList.toggle("footer-reveal", fitsViewport);
+    }
+
+    updateFooterSpace();
+    const observer = new ResizeObserver(updateFooterSpace);
+    observer.observe(footer);
+    window.addEventListener("resize", updateFooterSpace);
+
+    // Bring keyboard-focused footer links into view when still covered.
+    footer.addEventListener("focusin", () => {
+        if (document.body.classList.contains("footer-reveal")) {
+            window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "instant" });
+        }
+    });
+}
+
+setupFooterReveal();
+
