@@ -782,7 +782,7 @@ function observeCarouselSlides() {
     }
 }
 
-function openLightbox(projectIndex) {
+function openLightbox(projectIndex, updateHistory = true) {
     const project = projects[projectIndex];
     if (!project || !lightbox || !lightboxTitle || !lightboxCaption || !lightboxDialog) {
         return;
@@ -791,43 +791,94 @@ function openLightbox(projectIndex) {
     currentProject = {
         images: project.images,
         index: 0,
+        projectIndex,
         title: project.title,
         description: project.description
     };
     renderLightboxGallery();
     lightboxTitle.textContent = project.title;
     lightboxCaption.textContent = project.description;
-    closeProjectImageZoom();
+    closeProjectImageZoom(false);
     lightbox.hidden = false;
     lightboxDialog.scrollTop = 0;
     document.body.style.overflow = "hidden";
+
+    if (updateHistory) {
+        history.pushState({
+            ...history.state,
+            portfolioLightbox: { layer: "project", projectIndex }
+        }, "");
+    }
 }
 
-function closeLightbox() {
+function closeLightbox(updateHistory = true) {
     if (!lightbox) {
         return;
     }
 
-    closeProjectImageZoom();
+    if (updateHistory && history.state?.portfolioLightbox) {
+        const steps = history.state.portfolioLightbox.layer === "image" ? -2 : -1;
+        history.go(steps);
+        return;
+    }
+
+    closeProjectImageZoom(false);
     lightbox.hidden = true;
     document.body.style.overflow = "";
 }
 
-function openProjectImageZoom(index) {
+function openProjectImageZoom(index, updateHistory = true) {
     if (!currentProject.images.length || !lightboxZoomOverlay) {
         return;
     }
 
+    const wasHidden = lightboxZoomOverlay.hidden;
     currentProject.index = (index + currentProject.images.length) % currentProject.images.length;
     prepareProjectImageZoom(currentProject.index);
     syncLightboxGallery();
     lightboxZoomOverlay.hidden = false;
+
+    if (updateHistory && wasHidden) {
+        history.pushState({
+            ...history.state,
+            portfolioLightbox: {
+                layer: "image",
+                projectIndex: currentProject.projectIndex,
+                imageIndex: currentProject.index
+            }
+        }, "");
+    }
 }
 
-function closeProjectImageZoom() {
+function closeProjectImageZoom(updateHistory = true) {
+    if (updateHistory && history.state?.portfolioLightbox?.layer === "image") {
+        history.back();
+        return;
+    }
+
     if (lightboxZoomOverlay) {
         lightboxZoomOverlay.hidden = true;
     }
+}
+
+function syncPortfolioLightboxWithHistory(state) {
+    const overlayState = state?.portfolioLightbox;
+
+    if (!overlayState) {
+        closeLightbox(false);
+        return;
+    }
+
+    if (lightbox?.hidden || currentProject.projectIndex !== overlayState.projectIndex) {
+        openLightbox(overlayState.projectIndex, false);
+    }
+
+    if (overlayState.layer === "image") {
+        openProjectImageZoom(overlayState.imageIndex ?? 0, false);
+        return;
+    }
+
+    closeProjectImageZoom(false);
 }
 
 function renderLightboxGallery() {
@@ -1054,6 +1105,7 @@ enableSwipe(lightboxZoomOverlay, () => openProjectImageZoom(currentProject.index
 window.addEventListener("scroll", onScrollHeader, { passive: true });
 window.addEventListener("scroll", setActiveNavLink, { passive: true });
 window.addEventListener("load", setActiveNavLink);
+window.addEventListener("popstate", event => syncPortfolioLightboxWithHistory(event.state));
 
 if (document.fonts?.ready) {
     document.fonts.ready.then(() => {
