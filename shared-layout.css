@@ -156,74 +156,37 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-.site-header .hamburger .hamburger-icon {
-    position: relative;
-    inset: auto;
-    display: block;
-    width: 26px;
-    height: 19.5px;
-    border-radius: 0;
-    background: transparent;
-    opacity: 1;
-    transform: none;
-    transition: width 0.25s ease, height 0.25s ease;
-}
-
-.site-header .hamburger .hamburger-line {
-    position: absolute;
-    left: 0;
-    display: block;
-    width: 100%;
-    height: 3px;
-    border-radius: 999px;
-    background: #fff;
-    opacity: 1;
+.site-header .hamburger .ham {
+    width: 44px;
+    height: 44px;
+    overflow: visible;
+    cursor: pointer;
+    fill: none;
     transform: rotate(0deg);
-    transition: top 0.25s ease-in-out, bottom 0.25s ease-in-out, left 0.25s ease-in-out,
-        width 0.25s ease-in-out, opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+    transition: width 0.25s ease, height 0.25s ease, transform 400ms ease;
+    user-select: none;
 }
 
-.site-header .hamburger .hamburger-line--1 {
-    top: 0;
-}
-
-.site-header .hamburger .hamburger-line--2,
-.site-header .hamburger .hamburger-line--3 {
-    top: calc(50% - 1.5px);
-}
-
-.site-header .hamburger .hamburger-line--4 {
-    top: auto;
-    bottom: 0;
-}
-
-.site-header .hamburger.active .hamburger-icon {
-    inset: auto;
-    transform: none;
-}
-
-.site-header .hamburger.active .hamburger-line--1,
-.site-header .hamburger.active .hamburger-line--4 {
-    top: calc(50% - 1.5px);
-    bottom: auto;
-    left: 50%;
-    width: 0;
-}
-
-.site-header .hamburger.active .hamburger-line--2 {
-    top: calc(50% - 1.5px);
-    left: 0;
-    width: 100%;
-    opacity: 1;
+.site-header .hamburger.active .hamRotate {
     transform: rotate(45deg);
 }
 
-.site-header .hamburger.active .hamburger-line--3 {
-    top: calc(50% - 1.5px);
-    left: 0;
-    width: 100%;
-    opacity: 1;
-    transform: rotate(-45deg);
+.site-header .hamburger .ham-line {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 5.5;
+    stroke-linecap: round;
+    transition: stroke-dasharray 400ms ease, stroke-dashoffset 400ms ease;
+}
+
+.site-header .hamburger .ham4 .top,
+.site-header .hamburger .ham4 .bottom {
+    stroke-dasharray: 40 121;
+}
+
+.site-header .hamburger.active .ham4 .top,
+.site-header .hamburger.active .ham4 .bottom {
+    stroke-dashoffset: -68px;
 }
 
 .site-footer {
@@ -428,6 +391,8 @@
     .site-header .brand {
         padding-top: 0;
         font-size: 1.35rem;
+        transform: scale(0.97);
+        transform-origin: left center;
     }
 
     .site-header.scrolled .brand img {
@@ -445,9 +410,9 @@
         height: 40px;
     }
 
-    .site-header.scrolled .hamburger .hamburger-icon {
-        width: 24px;
-        height: 18px;
+    .site-header.scrolled .hamburger .ham {
+        width: 40px;
+        height: 40px;
     }
 
     .site-header nav {

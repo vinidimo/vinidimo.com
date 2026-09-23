@@ -5,8 +5,8 @@ const repoRoot = __dirname;
 const partialsRoot = path.join(repoRoot, "partials");
 const headerPartial = fs.readFileSync(path.join(partialsRoot, "header.html"), "utf8").trim();
 const footerPartial = fs.readFileSync(path.join(partialsRoot, "footer.html"), "utf8").trim();
-const sharedStyle = "<link rel=\"stylesheet\" href=\"/shared-layout.css?v=20260923-9\">";
-const sharedScript = "<script src=\"/shared-layout.js?v=20260923-9\"></script>";
+const sharedStyle = "<link rel=\"stylesheet\" href=\"/shared-layout.css?v=20260923-12\">";
+const sharedScript = "<script src=\"/shared-layout.js?v=20260923-12\"></script>";
 
 function listHtmlFiles(directory) {
     return fs.readdirSync(directory, { withFileTypes: true }).flatMap(entry => {
