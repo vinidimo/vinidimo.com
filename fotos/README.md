@@ -15,8 +15,9 @@ node fotos/generate-photo-events.js
 ```
 
 Se voce preferir, tambem pode apenas subir a pasta do evento para o GitHub em `fotos/<slug>/`.
-O workflow `.github/workflows/generate-photo-events.yml` roda automaticamente na branch `main`,
-regenera `fotos/index.html`, `fotos/events.json` e o `index.html` do evento, e faz o commit sozinho.
+O workflow `.github/workflows/generate-site.yml` roda automaticamente na branch `main`,
+regenera os artefatos do site, incluindo `fotos/index.html`, `fotos/events.json` e o `index.html`
+do evento, e faz um unico commit.
 
 ## Publicacao
 

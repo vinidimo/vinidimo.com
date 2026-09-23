@@ -20,8 +20,8 @@ Para regenerar também projetos, artigos e eventos de fotos, execute:
 node build.js
 ```
 
-O workflow `.github/workflows/generate-layout.yml` também atualiza as páginas
+O workflow `.github/workflows/generate-site.yml` também atualiza as páginas
 automaticamente quando os componentes compartilhados são alterados no GitHub.
 
-A página `404.html` mantém seu cabeçalho próprio porque ele faz parte do efeito
-visual exclusivo dessa tela.
+A página `404.html` recebe o mesmo cabeçalho das demais páginas, mas permanece
+sem rodapé para preservar o efeito visual exclusivo dessa tela.

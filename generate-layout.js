@@ -38,13 +38,14 @@ function ensureSharedAssets(html) {
 }
 
 function applySharedLayout() {
-    const pages = listHtmlFiles(repoRoot)
-        .filter(filePath => path.basename(filePath) !== "404.html");
+    const pages = listHtmlFiles(repoRoot);
 
     pages.forEach(filePath => {
         let html = fs.readFileSync(filePath, "utf8");
         html = replaceComponent(html, "header", headerPartial);
-        html = replaceComponent(html, "footer", footerPartial);
+        if (path.basename(filePath) !== "404.html") {
+            html = replaceComponent(html, "footer", footerPartial);
+        }
         html = ensureSharedAssets(html);
         fs.writeFileSync(filePath, html, "utf8");
     });
