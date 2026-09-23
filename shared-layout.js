@@ -97,8 +97,9 @@
 
         function updateFooterSpace() {
             const footerHeight = Math.ceil(footer.getBoundingClientRect().height);
+            const headerHeight = Math.ceil(header?.getBoundingClientRect().height || 0);
             document.body.style.setProperty("--footer-reveal-height", `${footerHeight}px`);
-            document.body.classList.toggle("footer-reveal", window.innerWidth >= 768);
+            document.body.classList.toggle("footer-reveal", footerHeight + headerHeight + 16 <= window.innerHeight);
         }
 
         updateFooterSpace();
