@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Aplicação da proporção áurea em um layout editorial</title>
+  <desc id="desc">Uma interface é dividida em coluna principal e lateral na proporção aproximada de 62 para 38 por cento.</desc>
+  <rect width="1200" height="760" fill="#faf7ef"/>
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="72" y="84" fill="#152235" font-size="34" font-weight="750">φ como ponto de partida para uma grade</text>
+    <text x="72" y="128" fill="#687384" font-size="22">Uma divisão de aproximadamente 61,8% e 38,2% cria hierarquia sem engessar o conteúdo.</text>
+  </g>
+  <g transform="translate(72 190)">
+    <rect width="1056" height="470" rx="20" fill="#fff" stroke="#ded5c2" stroke-width="3"/>
+    <rect width="653" height="470" rx="18" fill="#132b47"/>
+    <rect x="653" width="403" height="470" rx="18" fill="#f0cb6d"/>
+    <path d="M653 0v470" stroke="#fff" stroke-opacity=".7" stroke-width="4"/>
+    <g transform="translate(54 58)" font-family="Inter, Arial, sans-serif">
+      <rect width="118" height="28" rx="14" fill="#63b4ff" opacity=".9"/>
+      <text x="0" y="124" fill="#fff" font-size="48" font-weight="800">Conteúdo principal</text>
+      <text x="0" y="170" fill="#c9d8e8" font-size="23">Mais espaço para a mensagem que conduz a leitura.</text>
+      <rect y="226" width="470" height="13" rx="6" fill="#fff" opacity=".9"/>
+      <rect y="260" width="410" height="13" rx="6" fill="#fff" opacity=".35"/>
+      <rect y="294" width="438" height="13" rx="6" fill="#fff" opacity=".35"/>
+      <rect y="352" width="176" height="58" rx="29" fill="#fff"/>
+    </g>
+    <g transform="translate(705 58)" font-family="Inter, Arial, sans-serif">
+      <text x="0" y="28" fill="#614409" font-size="20" font-weight="800" letter-spacing="2">APOIO</text>
+      <rect y="62" width="299" height="170" rx="16" fill="#fff" opacity=".62"/>
+      <circle cx="46" cy="292" r="34" fill="#132b47"/>
+      <rect x="98" y="270" width="190" height="13" rx="6" fill="#614409" opacity=".8"/>
+      <rect x="98" y="299" width="145" height="11" rx="5" fill="#614409" opacity=".35"/>
+      <rect y="358" width="299" height="2" fill="#614409" opacity=".25"/>
+      <text x="0" y="410" fill="#614409" font-size="23" font-weight="700">38,2% para contexto</text>
+    </g>
+    <g font-family="Inter, Arial, sans-serif" font-size="18" font-weight="750">
+      <rect x="227" y="-20" width="200" height="40" rx="20" fill="#fff" stroke="#ded5c2"/>
+      <text x="327" y="6" text-anchor="middle" fill="#152235">61,8% — principal</text>
+      <rect x="754" y="-20" width="200" height="40" rx="20" fill="#fff" stroke="#ded5c2"/>
+      <text x="854" y="6" text-anchor="middle" fill="#152235">38,2% — apoio</text>
+    </g>
+  </g>
+</svg>

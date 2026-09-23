@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Definição geométrica da proporção áurea</title>
+  <desc id="desc">Um segmento dividido em partes a e b mostra que a razão do todo pela parte maior é igual à razão da parte maior pela menor.</desc>
+  <rect width="1200" height="720" fill="#faf7ef"/>
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="80" y="92" fill="#152235" font-size="34" font-weight="750">Uma proporção que se repete entre o todo e as partes</text>
+    <text x="80" y="138" fill="#687384" font-size="22">Quando (a + b) / a e a / b têm o mesmo valor, essa razão é φ.</text>
+  </g>
+  <g transform="translate(100 250)">
+    <rect width="1000" height="96" rx="18" fill="#fff" stroke="#ded5c2" stroke-width="3"/>
+    <rect width="618" height="96" rx="18" fill="#173557"/>
+    <path d="M618 0v96" stroke="#faf7ef" stroke-width="4"/>
+    <text x="309" y="61" text-anchor="middle" fill="#fff" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="750">a</text>
+    <text x="809" y="61" text-anchor="middle" fill="#966b13" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="750">b</text>
+    <path d="M0 138v24M0 150h1000M1000 138v24" fill="none" stroke="#52606d" stroke-width="3"/>
+    <text x="500" y="202" text-anchor="middle" fill="#52606d" font-family="Inter, Arial, sans-serif" font-size="24">a + b</text>
+  </g>
+  <g transform="translate(130 520)" font-family="Inter, Arial, sans-serif">
+    <rect width="940" height="118" rx="24" fill="#152235"/>
+    <text x="470" y="52" text-anchor="middle" fill="#fff" font-size="30" font-weight="700">(a + b) / a = a / b = φ</text>
+    <text x="470" y="90" text-anchor="middle" fill="#f0cb6d" font-size="24">φ = (1 + √5) / 2 ≈ 1,6180339887…</text>
+  </g>
+</svg>

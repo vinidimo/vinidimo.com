@@ -1,0 +1,30 @@
+.color-figure {
+    margin: 0.8rem 0 1.6rem;
+}
+
+.color-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid #dfe4ea;
+    border-radius: 18px;
+    background: #f7f8fa;
+}
+
+.color-figure figcaption {
+    margin-top: 0.7rem;
+    color: #52606d;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.color-comparison-note {
+    border-left-color: #3aaed8 !important;
+    background: #edf8fc !important;
+}
+
+@media (max-width: 680px) {
+    .color-figure img {
+        border-radius: 14px;
+    }
+}

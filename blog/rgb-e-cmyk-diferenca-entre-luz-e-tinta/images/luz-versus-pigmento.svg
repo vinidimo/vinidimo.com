@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">Comparação entre luz e pigmento</title>
+  <desc id="desc">A luz RGB parte do preto e chega ao branco; o pigmento CMYK parte do papel branco e caminha para o escuro.</desc>
+  <rect width="1200" height="680" rx="26" fill="#f7f8fa"/>
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="66" y="78" fill="#132238" font-size="34" font-weight="750">Dois caminhos opostos para formar cor</text>
+    <text x="66" y="120" fill="#637080" font-size="21">O nome da cor pode ser parecido. O fenômeno físico é diferente.</text>
+  </g>
+  <g transform="translate(66 178)" font-family="Inter, Arial, sans-serif">
+    <rect width="510" height="408" rx="22" fill="#101d2d"/>
+    <text x="34" y="52" fill="#fff" font-size="24" font-weight="750">LUZ · RGB</text>
+    <text x="34" y="88" fill="#aabbd0" font-size="18">fontes luminosas são somadas</text>
+    <defs><linearGradient id="rgb" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000"/><stop offset=".32" stop-color="#e21f3d"/><stop offset=".65" stop-color="#38dc77"/><stop offset="1" stop-color="#fff"/></linearGradient></defs>
+    <rect x="34" y="128" width="442" height="88" rx="16" fill="url(#rgb)" stroke="#40536a"/>
+    <text x="34" y="257" fill="#aabbd0" font-size="17">AUSÊNCIA</text><text x="476" y="257" text-anchor="end" fill="#fff" font-size="17">SOMA TOTAL</text>
+    <path d="M52 316h394" stroke="#5f748d" stroke-width="3"/><path d="m436 306 12 10-12 10" fill="none" stroke="#5f748d" stroke-width="3"/>
+    <text x="255" y="365" text-anchor="middle" fill="#fff" font-size="22" font-weight="700">preto → branco</text>
+  </g>
+  <g transform="translate(624 178)" font-family="Inter, Arial, sans-serif">
+    <rect width="510" height="408" rx="22" fill="#fff" stroke="#dddfe4" stroke-width="2"/>
+    <text x="34" y="52" fill="#132238" font-size="24" font-weight="750">PIGMENTO · CMYK</text>
+    <text x="34" y="88" fill="#637080" font-size="18">camadas absorvem luz refletida</text>
+    <defs><linearGradient id="cmyk" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff"/><stop offset=".32" stop-color="#00b8d4"/><stop offset=".65" stop-color="#d51a83"/><stop offset="1" stop-color="#191c22"/></linearGradient></defs>
+    <rect x="34" y="128" width="442" height="88" rx="16" fill="url(#cmyk)" stroke="#dddfe4"/>
+    <text x="34" y="257" fill="#637080" font-size="17">PAPEL</text><text x="476" y="257" text-anchor="end" fill="#343b45" font-size="17">MAIS ABSORÇÃO</text>
+    <path d="M52 316h394" stroke="#85909d" stroke-width="3"/><path d="m436 306 12 10-12 10" fill="none" stroke="#85909d" stroke-width="3"/>
+    <text x="255" y="365" text-anchor="middle" fill="#132238" font-size="22" font-weight="700">branco → escuro</text>
+  </g>
+</svg>

@@ -1,0 +1,122 @@
+.golden-article {
+    --gold: #d5a93f;
+    --gold-deep: #966b13;
+    --ink: #152235;
+    --paper: #faf7ef;
+}
+
+.golden-figure {
+    margin: 0.9rem 0 1.5rem;
+}
+
+.golden-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid #e7dfcd;
+    border-radius: 18px;
+    background: var(--paper);
+}
+
+.golden-figure figcaption {
+    margin-top: 0.75rem;
+    color: #52606d;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.golden-toc {
+    padding: 1.35rem 1.5rem;
+    border: 1px solid #eadfca;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #fbf8f0, #f4ecda);
+}
+
+.golden-toc ol {
+    display: grid;
+    gap: 0.4rem;
+}
+
+.golden-formula {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin: 0.5rem 0 1.25rem;
+}
+
+.golden-formula div {
+    padding: 1rem;
+    border: 1px solid #eadfca;
+    border-radius: 14px;
+    background: #fffdf8;
+    text-align: center;
+}
+
+.golden-formula strong {
+    display: block;
+    color: var(--gold-deep);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+}
+
+.golden-formula span {
+    display: block;
+    margin-top: 0.25rem;
+    color: #66717f;
+    font-size: 0.82rem;
+}
+
+.golden-checklist {
+    counter-reset: golden-step;
+    list-style: none;
+    padding-left: 0 !important;
+}
+
+.golden-checklist li {
+    position: relative;
+    min-height: 2.5rem;
+    padding-left: 3.25rem;
+    counter-increment: golden-step;
+}
+
+.golden-checklist li::before {
+    position: absolute;
+    top: -0.15rem;
+    left: 0;
+    display: grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--ink);
+    color: #fff;
+    content: counter(golden-step, decimal-leading-zero);
+    font-size: 0.74rem;
+    font-weight: 800;
+}
+
+.golden-note {
+    border-left-color: var(--gold) !important;
+    background: #fbf7eb !important;
+}
+
+.golden-reference-list {
+    font-size: 0.94rem;
+}
+
+.golden-article h2[id] {
+    scroll-margin-top: 110px;
+}
+
+@media (max-width: 680px) {
+    .blog-article-header .article-cover {
+        object-position: 76% center;
+    }
+
+    .golden-formula {
+        grid-template-columns: 1fr;
+    }
+
+    .golden-figure img {
+        border-radius: 14px;
+    }
+}

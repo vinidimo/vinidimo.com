@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Fluxo de cor entre tela e impressão</title>
+  <desc id="desc">Uma criação em RGB passa por conversão e prova de cor antes de ser impressa em CMYK.</desc>
+  <rect width="1200" height="700" rx="26" fill="#0d1b2c"/>
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="68" y="82" fill="#fff" font-size="34" font-weight="750">Da tela para o papel</text>
+    <text x="68" y="126" fill="#b9c8da" font-size="22">Converter o arquivo é uma etapa do processo, não uma garantia de cores idênticas.</text>
+  </g>
+  <g transform="translate(68 210)" font-family="Inter, Arial, sans-serif">
+    <g>
+      <rect width="260" height="300" rx="22" fill="#152d49" stroke="#36516f" stroke-width="2"/>
+      <rect x="38" y="38" width="184" height="122" rx="10" fill="#08101c" stroke="#7188a2" stroke-width="4"/>
+      <rect x="55" y="55" width="50" height="88" rx="7" fill="#ff3153"/><rect x="105" y="55" width="50" height="88" rx="7" fill="#30dc75"/><rect x="155" y="55" width="50" height="88" rx="7" fill="#3686ff"/>
+      <path d="M100 181h60M130 160v21" stroke="#7188a2" stroke-width="5"/>
+      <text x="130" y="230" text-anchor="middle" fill="#fff" font-size="24" font-weight="750">CRIAR EM RGB</text>
+      <text x="130" y="264" text-anchor="middle" fill="#aebfd3" font-size="17">mais cores luminosas</text>
+    </g>
+    <g transform="translate(402)">
+      <rect width="260" height="300" rx="22" fill="#f6f3ec"/>
+      <circle cx="130" cy="102" r="64" fill="none" stroke="#d0c4af" stroke-width="12"/>
+      <path d="M130 38a64 64 0 0 1 55 96" fill="none" stroke="#00bcd4" stroke-width="12"/><path d="M185 134a64 64 0 0 1-110 0" fill="none" stroke="#ed168c" stroke-width="12"/><path d="M75 134a64 64 0 0 1 55-96" fill="none" stroke="#ffd521" stroke-width="12"/>
+      <path d="m113 103 13 13 26-31" fill="none" stroke="#132238" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="130" y="230" text-anchor="middle" fill="#132238" font-size="24" font-weight="750">CONVERTER</text>
+      <text x="130" y="264" text-anchor="middle" fill="#637080" font-size="17">perfil + prova de cor</text>
+    </g>
+    <g transform="translate(804)">
+      <rect width="260" height="300" rx="22" fill="#fff"/>
+      <path d="M72 42h116l32 32v106H72z" fill="#f3f0e8" stroke="#c8c2b5" stroke-width="3"/><path d="M188 42v34h32" fill="none" stroke="#c8c2b5" stroke-width="3"/>
+      <circle cx="112" cy="112" r="34" fill="#00bcd4" opacity=".75"/><circle cx="148" cy="112" r="34" fill="#ed168c" opacity=".75"/><circle cx="130" cy="144" r="34" fill="#ffd521" opacity=".75"/>
+      <text x="130" y="230" text-anchor="middle" fill="#132238" font-size="24" font-weight="750">IMPRIMIR CMYK</text>
+      <text x="130" y="264" text-anchor="middle" fill="#637080" font-size="17">resultado no suporte</text>
+    </g>
+    <g fill="none" stroke="#65b9ef" stroke-width="4">
+      <path d="M294 150h74"/><path d="m354 138 14 12-14 12"/>
+      <path d="M696 150h74"/><path d="m756 138 14 12-14 12"/>
+    </g>
+  </g>
+  <g transform="translate(68 560)" font-family="Inter, Arial, sans-serif">
+    <rect width="1064" height="76" rx="18" fill="#142942"/>
+    <circle cx="38" cy="38" r="15" fill="#f0ca67"/>
+    <text x="70" y="46" fill="#d5e1ef" font-size="19">Cores muito vibrantes podem precisar de ajuste porque tela e impressão possuem capacidades de reprodução diferentes.</text>
+  </g>
+</svg>

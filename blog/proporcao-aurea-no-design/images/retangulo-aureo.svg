@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Autossimilaridade do retângulo áureo</title>
+  <desc id="desc">Ao retirar um quadrado de um retângulo áureo, o retângulo restante mantém a mesma proporção.</desc>
+  <rect width="1200" height="760" fill="#faf7ef"/>
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="72" y="86" fill="#152235" font-size="34" font-weight="750">Retire um quadrado. A mesma forma reaparece.</text>
+    <text x="72" y="130" fill="#687384" font-size="22">Essa autossimilaridade transforma o retângulo áureo em um sistema de subdivisão.</text>
+  </g>
+  <g transform="translate(100 214)">
+    <rect width="1000" height="382" rx="8" fill="#fff" stroke="#152235" stroke-width="5"/>
+    <rect width="618" height="382" rx="5" fill="#173557"/>
+    <rect x="618" width="382" height="382" fill="#f0cb6d"/>
+    <path d="M618 0v382" stroke="#152235" stroke-width="5"/>
+    <path d="M618 236h382" stroke="#152235" stroke-width="4"/>
+    <rect x="618" width="382" height="236" fill="#d7a83e" opacity=".55"/>
+    <text x="309" y="200" text-anchor="middle" fill="#fff" font-family="Inter, Arial, sans-serif" font-size="31" font-weight="700">quadrado</text>
+    <text x="809" y="110" text-anchor="middle" fill="#152235" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="700">novo retângulo</text>
+    <text x="809" y="146" text-anchor="middle" fill="#152235" font-family="Inter, Arial, sans-serif" font-size="21">também mede 1 : φ</text>
+    <path d="M0 430h1000M0 416v28M1000 416v28" stroke="#52606d" stroke-width="3"/>
+    <text x="500" y="478" text-anchor="middle" fill="#52606d" font-family="Inter, Arial, sans-serif" font-size="23">largura = altura × φ</text>
+  </g>
+  <g transform="translate(405 650)" font-family="Inter, Arial, sans-serif">
+    <rect width="390" height="62" rx="31" fill="#152235"/>
+    <text x="195" y="40" text-anchor="middle" fill="#fff" font-size="21" font-weight="650">1000 ÷ 618 ≈ 618 ÷ 382</text>
+  </g>
+</svg>

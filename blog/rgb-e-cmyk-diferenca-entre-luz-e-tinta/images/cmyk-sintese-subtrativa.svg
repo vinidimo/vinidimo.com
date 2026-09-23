@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Síntese subtrativa no sistema CMYK</title>
+  <desc id="desc">Pigmentos ciano, magenta e amarelo se sobrepõem, absorvem luz e formam verde, azul, vermelho e um centro escuro.</desc>
+  <rect width="1200" height="760" rx="26" fill="#f6f3ec"/>
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="70" y="82" fill="#122238" font-size="34" font-weight="750">CMYK subtrai luz</text>
+    <text x="70" y="126" fill="#5e6a78" font-size="22">Cada camada de pigmento absorve parte da luz que chega ao papel.</text>
+  </g>
+  <g transform="translate(196 170)" style="isolation:isolate">
+    <circle cx="250" cy="190" r="175" fill="#00bcd4" style="mix-blend-mode:multiply"/>
+    <circle cx="410" cy="190" r="175" fill="#ed168c" style="mix-blend-mode:multiply"/>
+    <circle cx="330" cy="330" r="175" fill="#ffd521" style="mix-blend-mode:multiply"/>
+  </g>
+  <g fill="#122238" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="750" text-anchor="middle">
+    <text x="342" y="285">CIANO</text><text x="666" y="285">MAGENTA</text><text x="504" y="646">AMARELO</text>
+    <text x="504" y="285" fill="#fff">AZUL</text><text x="420" y="445">VERDE</text><text x="589" y="445">VERMELHO</text>
+    <text x="504" y="393" fill="#fff">ESCURO</text>
+  </g>
+  <g transform="translate(850 210)" font-family="Inter, Arial, sans-serif">
+    <text fill="#7a6c55" font-size="18" font-weight="750" letter-spacing="2">COMEÇA NO PAPEL</text>
+    <rect y="34" width="250" height="96" rx="18" fill="#fff" stroke="#d9cfbe" stroke-width="2"/>
+    <text x="125" y="93" fill="#122238" text-anchor="middle" font-size="23" font-weight="700">luz refletida</text>
+    <path d="M125 153v55" stroke="#897a63" stroke-width="3"/><path d="m115 197 10 12 10-12" fill="none" stroke="#897a63" stroke-width="3"/>
+    <rect y="232" width="250" height="96" rx="18" fill="#20242a"/>
+    <text x="125" y="291" fill="#fff" text-anchor="middle" font-size="23" font-weight="700">C + M + Y + K</text>
+    <text y="385" fill="#5e6a78" font-size="20">Destino: impressão</text>
+    <text y="420" fill="#5e6a78" font-size="20">Modo: absorção</text>
+  </g>
+</svg>

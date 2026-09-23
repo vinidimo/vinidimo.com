@@ -22,6 +22,7 @@
         <link rel="icon" type="image/svg+xml" href="../../assets/logo-white.svg" media="(prefers-color-scheme: dark)">
         <link rel="stylesheet" href="../../styles.css">
         <link rel="stylesheet" href="../styles.css">
+        <link rel="stylesheet" href="./article.css">
         <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"RGB e CMYK: por que misturar luz não é o mesmo que misturar tinta","description":"Entenda a diferença entre RGB e CMYK e por que misturar luzes produz resultados diferentes de misturar tintas, pigmentos e cores de impressão.","image":"https://vinidimo.com/blog/rgb-e-cmyk-diferenca-entre-luz-e-tinta/cover.png","datePublished":"2026-08-26","dateModified":"2026-08-26","mainEntityOfPage":"https://vinidimo.com/blog/rgb-e-cmyk-diferenca-entre-luz-e-tinta/","author":{"@type":"Organization","name":"vinidimo"},"publisher":{"@type":"Organization","name":"vinidimo","url":"https://vinidimo.com/"}}</script>
     <link rel="stylesheet" href="/shared-layout.css?v=20260923-15">
 </head>
@@ -85,15 +86,27 @@
                         <p>O princípio é simples: partimos da ausência de luz, que percebemos como preto, e adicionamos diferentes intensidades de vermelho, verde e azul para criar novas cores.</p>
                         <p>Algumas combinações clássicas ajudam a visualizar isso:</p>
                         <p>Vermelho + verde = amarelo.<br>Verde + azul = ciano.<br>Azul + vermelho = magenta.<br>Vermelho + verde + azul = branco.</p>
+                        <figure class="color-figure">
+                            <img src="./images/rgb-sintese-aditiva.svg" alt="Diagrama da síntese aditiva: luzes vermelha, verde e azul formam amarelo, ciano, magenta e branco" width="1200" height="760">
+                            <figcaption>No RGB, as áreas de luz se somam. A sobreposição das três cores primárias produz branco.</figcaption>
+                        </figure>
                         <p>Ou seja, quanto mais luz adicionamos, mais luminoso tende a ser o resultado. É por isso que milhões de pixels RGB conseguem reproduzir uma variedade enorme de cores nas telas.</p>
                         <h2>Quando a cor vem do pigmento: o sistema CMYK</h2>
                         <p>Com tintas, pigmentos e impressão, o processo é diferente. Nesse caso, não estamos emitindo luz, mas lidando com materiais que absorvem parte da luz ambiente e refletem outra parte. O que enxergamos é justamente essa luz refletida.</p>
                         <p>Esse modelo é chamado de síntese subtrativa. Na impressão, as cores fundamentais são <strong>ciano, magenta e amarelo</strong>. A partir delas, outras tonalidades são formadas:</p>
                         <p>Ciano + amarelo = verde.<br>Magenta + amarelo = vermelho.<br>Ciano + magenta = azul.</p>
+                        <figure class="color-figure">
+                            <img src="./images/cmyk-sintese-subtrativa.svg" alt="Diagrama da síntese subtrativa: pigmentos ciano, magenta e amarelo formam verde, vermelho, azul e uma região escura" width="1200" height="760">
+                            <figcaption>No CMYK, cada camada absorve parte da luz. A tinta preta, representada pelo K, reforça profundidade, contraste e definição.</figcaption>
+                        </figure>
                         <p>Em teoria, a combinação de ciano, magenta e amarelo deveria produzir preto. Na prática, os pigmentos reais têm limitações e o resultado costuma ser um tom escuro menos puro. Por isso, a impressão acrescenta uma quarta tinta: o preto, identificado pela letra <strong>K</strong>. Assim surge o sistema <strong>CMYK</strong>.</p>
-                        <div class="article-callout">
+                        <div class="article-callout color-comparison-note">
                             <p><strong>Resumo rápido:</strong> no RGB, adicionar cor significa adicionar luz e caminhar em direção ao branco. No CMYK, adicionar cor significa absorver mais luz e caminhar em direção ao escuro.</p>
                         </div>
+                        <figure class="color-figure">
+                            <img src="./images/luz-versus-pigmento.svg" alt="Comparação visual: RGB parte do preto e chega ao branco, enquanto CMYK parte do papel branco e caminha para o escuro" width="1200" height="680">
+                            <figcaption>Os sistemas percorrem direções opostas: RGB emite e soma luz; CMYK usa pigmentos para absorver parte da luz refletida.</figcaption>
+                        </figure>
                         <h2>Por que azul com amarelo muda de resultado?</h2>
                         <p>Na pintura, aprendemos cedo que azul com amarelo produz verde. Isso continua correto no universo dos pigmentos. Mas essa regra não pode ser aplicada da mesma forma à luz.</p>
                         <p>No sistema RGB, a luz amarela é obtida pela soma de vermelho com verde. Se depois adicionamos azul, temos vermelho + verde + azul, que é justamente a combinação que nos leva ao branco.</p>
@@ -102,6 +115,10 @@
                         <p>Essa distinção não é só teórica. Ela tem impacto direto no design gráfico, na fotografia, na criação de peças digitais e na preparação de materiais impressos.</p>
                         <p>Projetos feitos para telas usam RGB porque computadores, smartphones e televisores exibem imagens por emissão de luz. Já materiais destinados à impressão usam CMYK porque impressoras trabalham depositando pigmentos sobre uma superfície.</p>
                         <p>É exatamente por isso que uma cor muito vibrante no monitor pode parecer diferente no papel. Algumas tonalidades que brilham na tela simplesmente não conseguem ser reproduzidas com a mesma intensidade pelos pigmentos disponíveis na impressão.</p>
+                        <figure class="color-figure">
+                            <img src="./images/fluxo-tela-impressao.svg" alt="Fluxo de trabalho mostrando criação em RGB, conversão com perfil e prova de cor e impressão final em CMYK" width="1200" height="700">
+                            <figcaption>Um fluxo cuidadoso inclui conversão, perfil de cor e prova. O suporte, a tinta e o processo de impressão também afetam o resultado.</figcaption>
+                        </figure>
                         <h2>Por que vale decidir isso no começo do projeto</h2>
                         <p>Quando um projeto nasce sem definição clara de uso, o risco de inconsistência aumenta. Uma arte criada pensando apenas no digital pode perder força ao ser impressa. Da mesma forma, um arquivo preparado para impressão pode parecer mais opaco em contextos digitais.</p>
                         <p>Definir desde o início se a peça será usada em ambiente digital, impresso ou nos dois ajuda a manter mais previsibilidade entre criação e resultado final. Isso evita retrabalho e melhora a consistência visual da marca.</p>

@@ -3,9 +3,19 @@
     --card-cover-image: url("./rgb-e-cmyk-diferenca-entre-luz-e-tinta/cover.png");
 }
 
+.blog-post-card--logo-logotipo-e-logomarca {
+    --tag-color: #c77dff;
+    --card-cover-image: url("./logo-logotipo-e-logomarca/cover.webp");
+}
+
 .blog-post-card--teoria-das-cores-como-compor-paletas {
     --tag-color: #e8ac64;
     --card-cover-image: url("./teoria-das-cores-como-compor-paletas/cover.png");
+}
+
+.blog-post-card--proporcao-aurea-no-design {
+    --tag-color: #d5a93f;
+    --card-cover-image: url("./proporcao-aurea-no-design/cover.png");
 }
 
 .blog-post-card--identidade-visual-para-pequenas-empresas {
@@ -28,11 +38,6 @@
     --card-cover-image: url("./quando-refazer-o-site-da-sua-empresa/cover.webp");
 }
 
-.blog-post-card--logo-logotipo-e-logomarca {
-    --tag-color: #c77dff;
-    --card-cover-image: url("./logo-logotipo-e-logomarca/cover.webp");
-}
-
 .blog-post-card--logo-novo-ou-rebranding {
     --tag-color: #f4a261;
     --card-cover-image: url("./logo-novo-ou-rebranding/cover.webp");
@@ -46,11 +51,6 @@
 .blog-post-card--identidade-visual-ou-logo-primeiro {
     --tag-color: #2ec4b6;
     --card-cover-image: url("./identidade-visual-ou-logo-primeiro/cover.webp");
-}
-
-.blog-post-card--o-que-postar-no-instagram-da-sua-empresa {
-    --tag-color: #ff4d6d;
-    --card-cover-image: url("./o-que-postar-no-instagram-da-sua-empresa/cover.webp");
 }
 
 .blog-post-card--como-saber-se-sua-marca-parece-amadora {
