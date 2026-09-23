@@ -8,8 +8,14 @@ const header = document.querySelector("header");
 const nav = document.querySelector("header nav");
 const hamburger = document.getElementById("hamburger");
 const navLinks = [...document.querySelectorAll("header nav a")];
+const usesSharedLayout = document.documentElement.hasAttribute("data-shared-layout");
 const sections = navLinks
-    .map(link => document.querySelector(link.getAttribute("href")))
+    .map(link => {
+        const url = new URL(link.href, window.location.href);
+        return url.origin === window.location.origin && url.pathname === window.location.pathname && url.hash
+            ? document.querySelector(url.hash)
+            : null;
+    })
     .filter(Boolean);
 const carousel = document.querySelector(".infinite-carousel");
 const viewport = carousel?.querySelector(".carousel-viewport") ?? null;
@@ -149,15 +155,17 @@ navLinks.forEach((link, index) => {
     link.style.setProperty("--nav-item-index", String(index));
 });
 
-if (hamburger && nav) {
+if (!usesSharedLayout && hamburger && nav) {
     hamburger.addEventListener("click", () => {
         setMenuState(!nav.classList.contains("open"));
     });
 }
 
-navLinks.forEach(link => {
-    link.addEventListener("click", () => setMenuState(false));
-});
+if (!usesSharedLayout) {
+    navLinks.forEach(link => {
+        link.addEventListener("click", () => setMenuState(false));
+    });
+}
 
 function setActiveNavLink() {
     if (!header || !navLinks.length || !sections.length) {
@@ -178,7 +186,7 @@ function setActiveNavLink() {
     }
 
     navLinks.forEach(link => {
-        link.classList.toggle("active", link.getAttribute("href") === `#${currentSection.id}`);
+        link.classList.toggle("active", new URL(link.href, window.location.href).hash === `#${currentSection.id}`);
     });
 }
 
@@ -1102,7 +1110,9 @@ document.addEventListener("keydown", event => {
 
 enableSwipe(lightboxZoomOverlay, () => openProjectImageZoom(currentProject.index + 1), () => openProjectImageZoom(currentProject.index - 1));
 
-window.addEventListener("scroll", onScrollHeader, { passive: true });
+if (!usesSharedLayout) {
+    window.addEventListener("scroll", onScrollHeader, { passive: true });
+}
 window.addEventListener("scroll", setActiveNavLink, { passive: true });
 window.addEventListener("load", setActiveNavLink);
 window.addEventListener("popstate", event => syncPortfolioLightboxWithHistory(event.state));
@@ -1122,7 +1132,9 @@ loadProjectsFromDocument().catch(error => {
     setCarouselControlsDisabled(true);
 });
 
-onScrollHeader();
+if (!usesSharedLayout) {
+    onScrollHeader();
+}
 setActiveNavLink();
 
 // Reveal the footer beneath the content using native scrolling.
@@ -1152,5 +1164,7 @@ function setupFooterReveal() {
     });
 }
 
-setupFooterReveal();
+if (!usesSharedLayout) {
+    setupFooterReveal();
+}
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html data-shared-layout lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
@@ -45,33 +45,35 @@
             ]
         }
     </script>
+    <link rel="stylesheet" href="/shared-layout.css?v=20260923-5">
 </head>
 
 <body>
-    <header>
-        <div class="container">
-            <div class="brand">
-                <img src="assets/logo-white.svg" alt="vinidimo" width="42" height="42">
-                <span class="brand-wordmark">vinidimo</span>
-            </div>
-            <nav id="site-nav">
-                <a href="#hero" class="active">Início</a>
-                <a href="#servicos">Serviços</a>
-                <a href="#portfolio">Portfólio</a>
-                <a href="#sobre">Sobre</a>
-                <a href="#contato">Contato</a>
-            </nav>
-            <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="site-nav"
-                aria-label="Abrir menu">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-                    <circle cx="50" cy="50" r="30" />
-                    <path class="line line--1" d="M0 70l28-28c2-2 2-2 7-2h64" />
-                    <path class="line line--2" d="M0 50h99" />
-                    <path class="line line--3" d="M0 30l28 28c2 2 2 2 7 2h64" />
-                </svg>
-            </button>
-        </div>
-    </header>
+    <!-- shared-header:start -->
+<header class="site-header">
+    <div class="container">
+        <a class="brand" href="/" aria-label="Página inicial">
+            <img src="/assets/logo-white.svg" alt="vinidimo" width="42" height="42">
+            <span class="brand-wordmark">vinidimo</span>
+        </a>
+        <nav aria-label="Navegação principal">
+            <a href="/#hero">Início</a>
+            <a href="/#servicos">Serviços</a>
+            <a href="/#portfolio">Portfólio</a>
+            <a href="/#sobre">Sobre</a>
+            <a href="/#contato">Contato</a>
+        </nav>
+        <button class="hamburger" id="hamburger" type="button" aria-label="Abrir menu" aria-expanded="false">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <circle cx="50" cy="50" r="30"></circle>
+                <path class="line line--1" d="M20 29h60c12.5 0 12.5 31.5 0 31.5H30"></path>
+                <path class="line line--2" d="M20 50h60"></path>
+                <path class="line line--3" d="M20 71h60c12.5 0 12.5-31.5 0-31.5H30"></path>
+            </svg>
+        </button>
+    </div>
+</header>
+<!-- shared-header:end -->
 
     <main class="site-content">
         <section id="hero" data-hero-backgrounds="assets/content/k23nf0w3hnd34da827nda.webm">
@@ -347,121 +349,105 @@
                 <div class="infinite-carousel">
                     <div class="carousel-viewport">
                         <!-- portfolio-slides:start -->
-                        <div class="slide" data-project-index="0">
-                            <img src="assets/projects/fellps-adega-barbearia/01.webp" alt="Fellps Adega e Barbearia"
-                                loading="lazy" decoding="async" width="900" height="670">
-                            <div class="slide-hover">
-                                <span class="slide-hover-eyebrow">Ver projeto</span>
-                                <span class="slide-hover-title">Fellps Adega e Barbearia</span>
-                            </div>
+                    <div class="slide" data-project-index="0">
+                        <img src="assets/projects/fellps-adega-barbearia/01.webp" alt="Fellps Adega e Barbearia" loading="lazy" decoding="async" width="900" height="670">
+                        <div class="slide-hover">
+                            <span class="slide-hover-eyebrow">Ver projeto</span>
+                            <span class="slide-hover-title">Fellps Adega e Barbearia</span>
                         </div>
-                        <div class="slide" data-project-index="1">
-                            <img src="assets/projects/landing-page-antecipacao-fgts/01.webp"
-                                alt="Landing Page Antecipação FGTS" loading="lazy" decoding="async" width="900"
-                                height="670">
-                            <div class="slide-hover">
-                                <span class="slide-hover-eyebrow">Ver projeto</span>
-                                <span class="slide-hover-title">Landing Page Antecipação FGTS</span>
-                            </div>
+                    </div>
+                    <div class="slide" data-project-index="1">
+                        <img src="assets/projects/landing-page-antecipacao-fgts/01.webp" alt="Landing Page Antecipação FGTS" loading="lazy" decoding="async" width="900" height="670">
+                        <div class="slide-hover">
+                            <span class="slide-hover-eyebrow">Ver projeto</span>
+                            <span class="slide-hover-title">Landing Page Antecipação FGTS</span>
                         </div>
-                        <div class="slide" data-project-index="2">
-                            <img src="assets/projects/da-cruz-system/01.webp" alt="Da Cruz System" loading="lazy"
-                                decoding="async" width="900" height="670">
-                            <div class="slide-hover">
-                                <span class="slide-hover-eyebrow">Ver projeto</span>
-                                <span class="slide-hover-title">Da Cruz System</span>
-                            </div>
+                    </div>
+                    <div class="slide" data-project-index="2">
+                        <img src="assets/projects/da-cruz-system/01.webp" alt="Da Cruz System" loading="lazy" decoding="async" width="900" height="670">
+                        <div class="slide-hover">
+                            <span class="slide-hover-eyebrow">Ver projeto</span>
+                            <span class="slide-hover-title">Da Cruz System</span>
                         </div>
-                        <div class="slide" data-project-index="3">
-                            <img src="assets/projects/vans-sticker/01.webp" alt="Vans Sticker" loading="lazy"
-                                decoding="async" width="900" height="670">
-                            <div class="slide-hover">
-                                <span class="slide-hover-eyebrow">Ver projeto</span>
-                                <span class="slide-hover-title">Vans Sticker</span>
-                            </div>
+                    </div>
+                    <div class="slide" data-project-index="3">
+                        <img src="assets/projects/vans-sticker/01.webp" alt="Vans Sticker" loading="lazy" decoding="async" width="900" height="670">
+                        <div class="slide-hover">
+                            <span class="slide-hover-eyebrow">Ver projeto</span>
+                            <span class="slide-hover-title">Vans Sticker</span>
                         </div>
-                        <div class="slide" data-project-index="4">
-                            <img src="assets/projects/ford-social-media/01.webp" alt="Ford Social Media" loading="lazy"
-                                decoding="async" width="900" height="670">
-                            <div class="slide-hover">
-                                <span class="slide-hover-eyebrow">Ver projeto</span>
-                                <span class="slide-hover-title">Ford Social Media</span>
-                            </div>
+                    </div>
+                    <div class="slide" data-project-index="4">
+                        <img src="assets/projects/ford-social-media/01.webp" alt="Ford Social Media" loading="lazy" decoding="async" width="900" height="670">
+                        <div class="slide-hover">
+                            <span class="slide-hover-eyebrow">Ver projeto</span>
+                            <span class="slide-hover-title">Ford Social Media</span>
                         </div>
-                        <div class="slide" data-project-index="5">
-                            <img src="assets/projects/lous-tavern/01.webp" alt="Lou&#39;s Tavern" loading="lazy"
-                                decoding="async" width="900" height="670">
-                            <div class="slide-hover">
-                                <span class="slide-hover-eyebrow">Ver projeto</span>
-                                <span class="slide-hover-title">Lou&#39;s Tavern</span>
-                            </div>
+                    </div>
+                    <div class="slide" data-project-index="5">
+                        <img src="assets/projects/lous-tavern/01.webp" alt="Lou&#39;s Tavern" loading="lazy" decoding="async" width="900" height="670">
+                        <div class="slide-hover">
+                            <span class="slide-hover-eyebrow">Ver projeto</span>
+                            <span class="slide-hover-title">Lou&#39;s Tavern</span>
                         </div>
-                        <div class="slide" data-project-index="6">
-                            <img src="assets/projects/lavazul-logo/01.webp" alt="Lavazul Logo" loading="lazy"
-                                decoding="async" width="900" height="670">
-                            <div class="slide-hover">
-                                <span class="slide-hover-eyebrow">Ver projeto</span>
-                                <span class="slide-hover-title">Lavazul Logo</span>
-                            </div>
+                    </div>
+                    <div class="slide" data-project-index="6">
+                        <img src="assets/projects/lavazul-logo/01.webp" alt="Lavazul Logo" loading="lazy" decoding="async" width="900" height="670">
+                        <div class="slide-hover">
+                            <span class="slide-hover-eyebrow">Ver projeto</span>
+                            <span class="slide-hover-title">Lavazul Logo</span>
                         </div>
-                        <div class="slide" data-project-index="7">
-                            <img src="assets/projects/dimo-street-lettering/01.webp" alt="Dimo Street Lettering"
-                                loading="lazy" decoding="async" width="900" height="670">
-                            <div class="slide-hover">
-                                <span class="slide-hover-eyebrow">Ver projeto</span>
-                                <span class="slide-hover-title">Dimo Street Lettering</span>
-                            </div>
+                    </div>
+                    <div class="slide" data-project-index="7">
+                        <img src="assets/projects/dimo-street-lettering/01.webp" alt="Dimo Street Lettering" loading="lazy" decoding="async" width="900" height="670">
+                        <div class="slide-hover">
+                            <span class="slide-hover-eyebrow">Ver projeto</span>
+                            <span class="slide-hover-title">Dimo Street Lettering</span>
                         </div>
-                        <div class="slide" data-project-index="8">
-                            <img src="assets/projects/aclimacao-boxing-club/01.webp" alt="Aclimação Boxing Club"
-                                loading="lazy" decoding="async" width="900" height="670">
-                            <div class="slide-hover">
-                                <span class="slide-hover-eyebrow">Ver projeto</span>
-                                <span class="slide-hover-title">Aclimação Boxing Club</span>
-                            </div>
+                    </div>
+                    <div class="slide" data-project-index="8">
+                        <img src="assets/projects/aclimacao-boxing-club/01.webp" alt="Aclimação Boxing Club" loading="lazy" decoding="async" width="900" height="670">
+                        <div class="slide-hover">
+                            <span class="slide-hover-eyebrow">Ver projeto</span>
+                            <span class="slide-hover-title">Aclimação Boxing Club</span>
                         </div>
-                        <div class="slide" data-project-index="9">
-                            <img src="assets/projects/bradesco-seguros-social-media/01.webp"
-                                alt="Bradesco Seguros Social Media" loading="lazy" decoding="async" width="900"
-                                height="670">
-                            <div class="slide-hover">
-                                <span class="slide-hover-eyebrow">Ver projeto</span>
-                                <span class="slide-hover-title">Bradesco Seguros Social Media</span>
-                            </div>
+                    </div>
+                    <div class="slide" data-project-index="9">
+                        <img src="assets/projects/bradesco-seguros-social-media/01.webp" alt="Bradesco Seguros Social Media" loading="lazy" decoding="async" width="900" height="670">
+                        <div class="slide-hover">
+                            <span class="slide-hover-eyebrow">Ver projeto</span>
+                            <span class="slide-hover-title">Bradesco Seguros Social Media</span>
                         </div>
-                        <div class="slide" data-project-index="10">
-                            <img src="assets/projects/certificacao-pci/01.webp" alt="Certificação PCI" loading="lazy"
-                                decoding="async" width="900" height="670">
-                            <div class="slide-hover">
-                                <span class="slide-hover-eyebrow">Ver projeto</span>
-                                <span class="slide-hover-title">Certificação PCI</span>
-                            </div>
+                    </div>
+                    <div class="slide" data-project-index="10">
+                        <img src="assets/projects/certificacao-pci/01.webp" alt="Certificação PCI" loading="lazy" decoding="async" width="900" height="670">
+                        <div class="slide-hover">
+                            <span class="slide-hover-eyebrow">Ver projeto</span>
+                            <span class="slide-hover-title">Certificação PCI</span>
                         </div>
-                        <div class="slide" data-project-index="11">
-                            <img src="assets/projects/jiu-jitsu-lettering/01.webp" alt="Jiu Jitsu Lettering"
-                                loading="lazy" decoding="async" width="900" height="670">
-                            <div class="slide-hover">
-                                <span class="slide-hover-eyebrow">Ver projeto</span>
-                                <span class="slide-hover-title">Jiu Jitsu Lettering</span>
-                            </div>
+                    </div>
+                    <div class="slide" data-project-index="11">
+                        <img src="assets/projects/jiu-jitsu-lettering/01.webp" alt="Jiu Jitsu Lettering" loading="lazy" decoding="async" width="900" height="670">
+                        <div class="slide-hover">
+                            <span class="slide-hover-eyebrow">Ver projeto</span>
+                            <span class="slide-hover-title">Jiu Jitsu Lettering</span>
                         </div>
-                        <div class="slide" data-project-index="12">
-                            <img src="assets/projects/ryu-dragon-vetorizacao/01.webp" alt="Ryu Dragon Vetorização"
-                                loading="lazy" decoding="async" width="900" height="670">
-                            <div class="slide-hover">
-                                <span class="slide-hover-eyebrow">Ver projeto</span>
-                                <span class="slide-hover-title">Ryu Dragon Vetorização</span>
-                            </div>
+                    </div>
+                    <div class="slide" data-project-index="12">
+                        <img src="assets/projects/ryu-dragon-vetorizacao/01.webp" alt="Ryu Dragon Vetorização" loading="lazy" decoding="async" width="900" height="670">
+                        <div class="slide-hover">
+                            <span class="slide-hover-eyebrow">Ver projeto</span>
+                            <span class="slide-hover-title">Ryu Dragon Vetorização</span>
                         </div>
-                        <div class="slide" data-project-index="13">
-                            <img src="assets/projects/cielo-social-media/01.webp" alt="Cielo Social Media"
-                                loading="lazy" decoding="async" width="900" height="670">
-                            <div class="slide-hover">
-                                <span class="slide-hover-eyebrow">Ver projeto</span>
-                                <span class="slide-hover-title">Cielo Social Media</span>
-                            </div>
+                    </div>
+                    <div class="slide" data-project-index="13">
+                        <img src="assets/projects/cielo-social-media/01.webp" alt="Cielo Social Media" loading="lazy" decoding="async" width="900" height="670">
+                        <div class="slide-hover">
+                            <span class="slide-hover-eyebrow">Ver projeto</span>
+                            <span class="slide-hover-title">Cielo Social Media</span>
                         </div>
-                        <!-- portfolio-slides:end -->
+                    </div>
+                    <!-- portfolio-slides:end -->
                     </div>
                     <button type="button" class="carousel-control-previous" aria-label="Projeto anterior">‹</button>
                     <button type="button" class="carousel-control-next" aria-label="Próximo projeto">›</button>
@@ -569,61 +555,62 @@
 
     </main>
 
-    <footer class="site-footer">
-        <div class="container footer-main">
-            <div class="footer-about">
-                <div class="footer-brand">
-                    <img src="assets/logo-white.svg" alt="vinidimo" width="32" height="32">
-                    <span class="footer-name">vinidimo∴</span>
-                </div>
-                <p>Uma agência independente que valoriza o trabalho artesanal e criativo, feito para expressar a
-                    essência de cada cliente.</p>
+    <!-- shared-footer:start -->
+<footer class="site-footer">
+    <div class="container footer-main">
+        <div class="footer-about">
+            <div class="footer-brand">
+                <img src="/assets/logo-white.svg" alt="vinidimo" width="38" height="38">
+                <span class="footer-name">vinidimo∴</span>
             </div>
-
-            <div class="footer-navigation" role="navigation" aria-label="Navegação do rodapé">
-                <div class="footer-link-group">
-                    <h2>Navegação</h2>
-                    <a href="#servicos">Serviços</a>
-                    <a href="#portfolio">Portfólio</a>
-                    <a href="#sobre">Sobre</a>
-                    <a href="#contato">Contato</a>
-                </div>
-                <div class="footer-link-group">
-                    <h2>Conteúdo</h2>
-                    <a href="/blog/">Blog</a>
-                </div>
-            </div>
+            <p>Criamos soluções visuais que transformam ideias em marcas mais fortes, claras e preparadas para
+                se conectar com o público.</p>
         </div>
 
-        <div class="container footer-divider" aria-hidden="true"></div>
-
-        <div class="container footer-bottom">
-            <p class="copyright-text">Copyright © <span id="year"></span> vinidimo — Todos os direitos reservados</p>
-            <div class="social">
-                <a href="https://instagram.com/vinidimo" target="_blank" rel="noopener noreferrer"
-                    aria-label="Instagram">
-                    <img src="assets/icons/instagram.svg" alt="Instagram" width="24" height="24">
-                </a>
-                <a href="https://behance.net/vinidimo" target="_blank" rel="noopener noreferrer" aria-label="Behance">
-                    <img src="assets/icons/behance.svg" alt="Behance" width="24" height="24">
-                </a>
-                <a href="https://www.linkedin.com/company/vini-dimo/" target="_blank" rel="noopener noreferrer"
-                    aria-label="LinkedIn">
-                    <img src="assets/icons/linkedin.svg" alt="LinkedIn" width="24" height="24">
-                </a>
-                <a href="mailto:contato@vinidimo.com" aria-label="E-mail">
-                    <img src="assets/icons/gmail.svg" alt="E-mail" width="24" height="24">
-                </a>
-                <a href="https://www.youtube.com/@dimovinicius" target="_blank" rel="noopener noreferrer"
-                    aria-label="YouTube">
-                    <img src="assets/icons/youtube.svg" alt="YouTube" width="24" height="24">
-                </a>
-                <a href="https://github.com/vinidimo" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                    <img src="assets/icons/github.svg" alt="GitHub" width="24" height="24">
-                </a>
+        <div class="footer-navigation" role="navigation" aria-label="Navegação do rodapé">
+            <div class="footer-link-group">
+                <h2>Navegação</h2>
+                <a href="/#servicos">Serviços</a>
+                <a href="/#portfolio">Portfólio</a>
+                <a href="/#sobre">Sobre</a>
+                <a href="/#contato">Contato</a>
+            </div>
+            <div class="footer-link-group">
+                <h2>Conteúdo</h2>
+                <a href="/blog/">Blog</a>
             </div>
         </div>
-    </footer>
+    </div>
+
+    <div class="container footer-divider" aria-hidden="true"></div>
+
+    <div class="container footer-bottom">
+        <p class="copyright-text">Copyright © <span data-current-year></span> vinidimo — Todos os direitos reservados</p>
+        <div class="social">
+            <a href="https://instagram.com/vinidimo" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <img src="/assets/icons/instagram.svg" alt="Instagram" width="24" height="24">
+            </a>
+            <a href="https://behance.net/vinidimo" target="_blank" rel="noopener noreferrer" aria-label="Behance">
+                <img src="/assets/icons/behance.svg" alt="Behance" width="24" height="24">
+            </a>
+            <a href="https://www.linkedin.com/company/vini-dimo/" target="_blank" rel="noopener noreferrer"
+                aria-label="LinkedIn">
+                <img src="/assets/icons/linkedin.svg" alt="LinkedIn" width="24" height="24">
+            </a>
+            <a href="mailto:contato@vinidimo.com" aria-label="E-mail">
+                <img src="/assets/icons/gmail.svg" alt="E-mail" width="24" height="24">
+            </a>
+            <a href="https://www.youtube.com/@dimovinicius" target="_blank" rel="noopener noreferrer"
+                aria-label="YouTube">
+                <img src="/assets/icons/youtube.svg" alt="YouTube" width="24" height="24">
+            </a>
+            <a href="https://github.com/vinidimo" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <img src="/assets/icons/github.svg" alt="GitHub" width="24" height="24">
+            </a>
+        </div>
+    </div>
+</footer>
+<!-- shared-footer:end -->
 
     <div id="projectLightbox" hidden>
         <div class="lightbox-dialog" role="dialog" aria-modal="true" aria-labelledby="projectTitle">
@@ -647,9 +634,8 @@
         </div>
 
     </div>
-
-    <script src="year.js"></script>
     <script src="main.js?v=20260922-2"></script>
+    <script src="/shared-layout.js?v=20260923-5"></script>
 </body>
 
 </html>

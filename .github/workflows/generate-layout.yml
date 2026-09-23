@@ -1,0 +1,48 @@
+name: Generate Shared Layout
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "partials/**"
+      - "generate-layout.js"
+      - "shared-layout.css"
+      - "shared-layout.js"
+      - ".github/workflows/generate-layout.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-layout:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Generate shared header and footer
+        run: node generate-layout.js
+
+      - name: Commit generated pages
+        run: |
+          if git diff --quiet -- '*.html' 'blog/**/*.html' 'fotos/**/*.html'; then
+            echo "No shared layout changes detected."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add '*.html' 'blog/**/*.html' 'fotos/**/*.html'
+          git commit -m "chore: update shared layout"
+          git push

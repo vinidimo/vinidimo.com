@@ -439,6 +439,8 @@ events.forEach(event => {
 
 console.log(`Updated ${path.relative(repoRoot, homeOutputPath)}`);
 console.log(`Updated ${path.relative(repoRoot, generatedStylesPath)}`);
+require("../generate-layout").applySharedLayout();
+console.log("Applied shared header and footer templates.");
 console.log(`Updated ${path.relative(repoRoot, eventsJsonOutputPath)}`);
 events.forEach(event => {
     console.log(`Updated ${path.relative(repoRoot, path.join(photosRoot, event.slug, "index.html"))}`);

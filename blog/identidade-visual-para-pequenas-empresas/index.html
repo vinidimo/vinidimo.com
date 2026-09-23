@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html data-shared-layout lang="pt-BR">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,18 +23,35 @@
         <link rel="stylesheet" href="../../styles.css">
         <link rel="stylesheet" href="../styles.css">
         <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Identidade visual para pequenas empresas: quando ela começa a fazer diferença de verdade","description":"Entenda quando investir em identidade visual para pequenas empresas e como isso melhora percepção, confiança e apresentação comercial.","image":"https://vinidimo.com/blog/identidade-visual-para-pequenas-empresas/cover.webp","datePublished":"2026-02-09","dateModified":"2026-06-08","mainEntityOfPage":"https://vinidimo.com/blog/identidade-visual-para-pequenas-empresas/","author":{"@type":"Organization","name":"vinidimo"},"publisher":{"@type":"Organization","name":"vinidimo","url":"https://vinidimo.com/"}}</script>
-    </head>
+    <link rel="stylesheet" href="/shared-layout.css?v=20260923-5">
+</head>
     <body class="blog-page">
         <div class="blog-shell">
-            <header class="blog-header">
-                <div class="blog-header-inner">
-                    <a class="blog-brand" href="/">
-                        <img src="../../assets/logo-white.svg" alt="vinidimo" width="42" height="42">
-                        <span>vinidimo</span>
-                    </a>
-                    <a class="blog-home-link" href="/">Voltar para o site</a>
-                </div>
-            </header>
+            <!-- shared-header:start -->
+<header class="site-header">
+    <div class="container">
+        <a class="brand" href="/" aria-label="Página inicial">
+            <img src="/assets/logo-white.svg" alt="vinidimo" width="42" height="42">
+            <span class="brand-wordmark">vinidimo</span>
+        </a>
+        <nav aria-label="Navegação principal">
+            <a href="/#hero">Início</a>
+            <a href="/#servicos">Serviços</a>
+            <a href="/#portfolio">Portfólio</a>
+            <a href="/#sobre">Sobre</a>
+            <a href="/#contato">Contato</a>
+        </nav>
+        <button class="hamburger" id="hamburger" type="button" aria-label="Abrir menu" aria-expanded="false">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <circle cx="50" cy="50" r="30"></circle>
+                <path class="line line--1" d="M20 29h60c12.5 0 12.5 31.5 0 31.5H30"></path>
+                <path class="line line--2" d="M20 50h60"></path>
+                <path class="line line--3" d="M20 71h60c12.5 0 12.5-31.5 0-31.5H30"></path>
+            </svg>
+        </button>
+    </div>
+</header>
+<!-- shared-header:end -->
             <div class="article-progress" aria-hidden="true">
                 <span class="article-progress-bar">
                 </span>
@@ -106,20 +123,65 @@
                         </div>
                     </article>
                 </main>
-                <footer class="blog-footer">
-                    <div class="blog-footer-inner">
-                        <p>Copyright &copy; <span data-current-year>
-                        </span> vinidimo</p>
-                        <div class="blog-footer-links">
-                            <a href="/#contato">Contato</a>
-                            <a href="/blog/">Blog</a>
-                        </div>
-                    </div>
-                </footer>
+                <!-- shared-footer:start -->
+<footer class="site-footer">
+    <div class="container footer-main">
+        <div class="footer-about">
+            <div class="footer-brand">
+                <img src="/assets/logo-white.svg" alt="vinidimo" width="38" height="38">
+                <span class="footer-name">vinidimo∴</span>
             </div>
-            <script src="../../year.js">
-            </script>
+            <p>Criamos soluções visuais que transformam ideias em marcas mais fortes, claras e preparadas para
+                se conectar com o público.</p>
+        </div>
+
+        <div class="footer-navigation" role="navigation" aria-label="Navegação do rodapé">
+            <div class="footer-link-group">
+                <h2>Navegação</h2>
+                <a href="/#servicos">Serviços</a>
+                <a href="/#portfolio">Portfólio</a>
+                <a href="/#sobre">Sobre</a>
+                <a href="/#contato">Contato</a>
+            </div>
+            <div class="footer-link-group">
+                <h2>Conteúdo</h2>
+                <a href="/blog/">Blog</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container footer-divider" aria-hidden="true"></div>
+
+    <div class="container footer-bottom">
+        <p class="copyright-text">Copyright © <span data-current-year></span> vinidimo — Todos os direitos reservados</p>
+        <div class="social">
+            <a href="https://instagram.com/vinidimo" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <img src="/assets/icons/instagram.svg" alt="Instagram" width="24" height="24">
+            </a>
+            <a href="https://behance.net/vinidimo" target="_blank" rel="noopener noreferrer" aria-label="Behance">
+                <img src="/assets/icons/behance.svg" alt="Behance" width="24" height="24">
+            </a>
+            <a href="https://www.linkedin.com/company/vini-dimo/" target="_blank" rel="noopener noreferrer"
+                aria-label="LinkedIn">
+                <img src="/assets/icons/linkedin.svg" alt="LinkedIn" width="24" height="24">
+            </a>
+            <a href="mailto:contato@vinidimo.com" aria-label="E-mail">
+                <img src="/assets/icons/gmail.svg" alt="E-mail" width="24" height="24">
+            </a>
+            <a href="https://www.youtube.com/@dimovinicius" target="_blank" rel="noopener noreferrer"
+                aria-label="YouTube">
+                <img src="/assets/icons/youtube.svg" alt="YouTube" width="24" height="24">
+            </a>
+            <a href="https://github.com/vinidimo" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <img src="/assets/icons/github.svg" alt="GitHub" width="24" height="24">
+            </a>
+        </div>
+    </div>
+</footer>
+<!-- shared-footer:end -->
+            </div>
             <script src="../article-progress.js">
             </script>
-        </body>
+    <script src="/shared-layout.js?v=20260923-5"></script>
+</body>
     </html>
