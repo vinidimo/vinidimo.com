@@ -4,6 +4,11 @@
         const nav = header?.querySelector("nav") ?? null;
         const hamburger = header?.querySelector(".hamburger") ?? null;
         const navLinks = nav ? [...nav.querySelectorAll("a")] : [];
+        const articleProgress = document.querySelector(".article-progress");
+
+        if (header && articleProgress) {
+            header.append(articleProgress);
+        }
 
         function setMenuState(isOpen) {
             if (!nav || !hamburger) return;
@@ -17,6 +22,12 @@
             header?.classList.toggle("scrolled", window.scrollY > 40);
         }
 
+        function updateHeaderHeight() {
+            if (!header) return;
+            const headerBottom = header.getBoundingClientRect().bottom;
+            document.documentElement.style.setProperty("--site-header-height", `${headerBottom}px`);
+        }
+
         navLinks.forEach((link, index) => {
             link.style.setProperty("--nav-item-index", String(index));
             link.addEventListener("click", () => setMenuState(false));
@@ -25,6 +36,11 @@
         hamburger?.addEventListener("click", () => setMenuState(!nav?.classList.contains("open")));
         window.addEventListener("scroll", updateHeader, { passive: true });
         updateHeader();
+        updateHeaderHeight();
+
+        if (typeof ResizeObserver === "function" && header) {
+            new ResizeObserver(updateHeaderHeight).observe(header);
+        }
 
         const currentYear = String(new Date().getFullYear());
         document.querySelectorAll("[data-current-year], #year").forEach(element => {
@@ -78,7 +94,10 @@
         });
 
         measureLogoLockups();
-        window.addEventListener("resize", measureLogoLockups);
+        window.addEventListener("resize", () => {
+            measureLogoLockups();
+            updateHeaderHeight();
+        });
         document.fonts?.ready.then(measureLogoLockups);
 
         const footer = document.querySelector(".site-footer");
