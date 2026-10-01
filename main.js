@@ -40,49 +40,6 @@ const currentScales = new WeakMap();
 const visibleBackgrounds = new Set();
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-// Animate the About statistics once when they become visible.
-function initAboutCounters() {
-    const stats = document.querySelector(".about-stats");
-    if (!stats || reducedMotion || !("IntersectionObserver" in window)) return;
-
-    const counters = [...stats.querySelectorAll("[data-count-to]")].map(element => {
-        const target = Number(element.dataset.countTo);
-        const duration = Number(element.dataset.countDuration) || 1600;
-        const prefix = element.dataset.countPrefix || "";
-        const suffix = element.dataset.countSuffix || "";
-        const value = document.createElement("span");
-        value.setAttribute("aria-hidden", "true");
-        element.setAttribute("aria-label", element.textContent.trim());
-        element.replaceChildren(value);
-        const render = number => {
-            value.textContent = `${prefix}${number}${suffix}`;
-        };
-        render(0);
-        return { target, duration, render };
-    });
-
-    const observer = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        observer.disconnect();
-
-        counters.forEach(({ target, duration, render }) => {
-            let start;
-            function animate(timestamp) {
-                start ??= timestamp;
-                const progress = Math.min((timestamp - start) / duration, 1);
-                // A gentle ease-in-out keeps small integer counts moving near the end.
-                const eased = 0.65 * progress + 0.35 * (1 - Math.cos(Math.PI * progress)) / 2;
-                render(progress === 1 ? target : Math.floor(target * eased));
-                if (progress < 1) requestAnimationFrame(animate);
-            }
-            requestAnimationFrame(animate);
-        });
-    }, { threshold: 0.25 });
-
-    observer.observe(stats);
-}
-
-initAboutCounters();
 const heroVideoReplayDelay = 4000;
 
 const heroFeatureVideo = document.querySelector(".hero-feature-video");

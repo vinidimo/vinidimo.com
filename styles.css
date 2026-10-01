@@ -1441,37 +1441,35 @@ section p {
     outline-offset: 5px;
 }
 
-.about-stats {
+.about-principles {
     margin: 0;
 }
 
-.about-stat {
+.about-principle {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    padding: 1.75rem 0;
+    padding: clamp(1.25rem, 2vw, 1.75rem) 0;
     border-top: 1px solid rgba(255, 255, 255, 0.25);
 }
 
-.about-stat:last-child {
+.about-principle:last-child {
     border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 }
 
-.about-stat dt {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 1rem;
-    line-height: 1.5;
+.about-principle dt {
+    color: var(--brand);
+    font-size: clamp(1.125rem, 1.65vw, 1.5rem);
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
 }
 
-.about-stat dd {
-    order: -1;
+.about-principle dd {
     margin: 0;
-    font-size: clamp(3.5rem, 5vw, 5.5rem);
-    font-weight: 800;
-    color: var(--brand);
-    line-height: 1.1;
-    letter-spacing: -0.04em;
-    font-variant-numeric: tabular-nums;
+    font-size: clamp(0.9375rem, 1.1vw, 1.0625rem);
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
 }
 
 @media (max-width: 760px) {
@@ -1482,7 +1480,7 @@ section p {
     .about-copy,
     .about-copy h2,
     .about-copy p,
-    .about-stats {
+    .about-principles {
         text-align: center;
     }
 
