@@ -375,6 +375,10 @@
     box-shadow: none;
 }
 
+.footer-reveal .photo-shell > .footer-reveal-surface::before {
+    content: none;
+}
+
 .footer-reveal .footer-reveal-surface::before {
     position: absolute;
     z-index: -1;
