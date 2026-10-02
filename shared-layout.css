@@ -371,6 +371,10 @@
     box-shadow: 0 18px 34px rgba(0, 0, 0, 0.28);
 }
 
+.footer-reveal .photo-shell > .footer-reveal-surface {
+    box-shadow: none;
+}
+
 .footer-reveal .footer-reveal-surface::before {
     position: absolute;
     z-index: -1;
