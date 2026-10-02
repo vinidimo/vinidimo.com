@@ -43,10 +43,7 @@ body {
     margin: 0;
     font-family: Inter, "Segoe UI", Arial, sans-serif;
     color: var(--photo-ink);
-    background:
-        radial-gradient(circle at top left, rgba(0, 170, 255, 0.12), transparent 28%),
-        radial-gradient(circle at right 15%, rgba(84, 160, 255, 0.14), transparent 24%),
-        linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
+    background: #fff;
     padding-top: 96px;
 }
 
